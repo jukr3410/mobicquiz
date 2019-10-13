@@ -1,2 +1,1 @@
 # mobicquiz
-WebApp for Quiz
