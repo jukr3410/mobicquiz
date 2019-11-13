@@ -35,7 +35,7 @@
                     </ul><br>
                     <div class="page-header">
                         <h1>
-                            MOBIC QUIZ NaJaaaaaaaaa
+                            MOBIC QUIZ
                         </h1>
                     </div>
                 </div>
