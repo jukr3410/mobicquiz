@@ -29,14 +29,14 @@
                             <label for="exampleInputEmail1">
                                 ID
                             </label>
-                            <input type="text" name="id" class="form-control" id="exampleInputEmail1" />
+                            <input type="text" name="id" class="form-control" id="exampleInputEmail1" required/>
                         </div>
                         <div class="form-group">
 
                             <label for="exampleInputPassword1">
                                 Password
                             </label>
-                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" />
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" required/>
                         </div>
                         
                         <div class="radio">
@@ -49,7 +49,10 @@
                         <button type="submit" class="btn btn-primary">
                             Login
                         </button>
-                    </form>
+                    </form><br>
+                    <div style="color: red">
+                        ${errorlogin}
+                    </div>
                 </div>
             </div>
         </div>
