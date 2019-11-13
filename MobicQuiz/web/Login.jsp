@@ -23,20 +23,20 @@
                             MOBIC QUIZ!
                         </h1>
                     </div>
-                    <form role="form">
+                    <form role="form" action="Login" method="post">
                         <div class="form-group">
 
                             <label for="exampleInputEmail1">
-                                Email address
+                                ID
                             </label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" />
+                            <input type="text" name="id" class="form-control" id="exampleInputEmail1" />
                         </div>
                         <div class="form-group">
 
                             <label for="exampleInputPassword1">
                                 Password
                             </label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" />
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" />
                         </div>
                         
                         <div class="radio">
@@ -47,7 +47,7 @@
                             </label>
                         </div> 
                         <button type="submit" class="btn btn-primary">
-                            Submit
+                            Login
                         </button>
                     </form>
                 </div>
