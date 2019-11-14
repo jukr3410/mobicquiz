@@ -27,11 +27,13 @@ import model.Students;
  * @author Jn
  */
 public class RegisterServlet extends HttpServlet {
+
     @PersistenceUnit(unitName = "MobicQuizPU")
     EntityManagerFactory emf;
-    
+
     @Resource
     UserTransaction utx;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,16 +51,16 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String grade = request.getParameter("grade");
-        if (usertype!=null&&name!=null&&id!=null&&password!=null&&email!=null&&grade!=null) {
+        if (usertype != null && name != null && id != null && password != null && email != null && grade != null) {
             if (usertype.equals("student")) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
                 Students student = sjc.findStudents(Integer.valueOf(id));
-                if (student==null) {
+                if (student == null) {
                     student.setStudentno(Integer.valueOf(id));
                     student.setName(name);
                     student.setEmail(email);
                     student.setPassword(password);
-                    Levels level = new  Levels(Integer.valueOf(grade));
+                    Levels level = new Levels(Integer.valueOf(grade));
                     student.setLevelno(level);
                     try {
                         sjc.create(student);
@@ -67,13 +69,15 @@ public class RegisterServlet extends HttpServlet {
                     } catch (Exception ex) {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }else{
-                    request.setAttribute("errorregister", "User already exists!");
+                    response.sendRedirect("/MobicQuiz/Login");
+                    return;
                 }
             } else if (usertype.equals("teacher")) {
-                
-            }
 
+                response.sendRedirect("/MobicQuiz/Login");
+                return;
+            }
+            request.setAttribute("errorregister", "User already exists!");
         }
         getServletContext().getRequestDispatcher("/Register.jsp").forward(request, response);
     }
