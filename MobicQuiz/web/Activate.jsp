@@ -35,7 +35,7 @@
                         <h1 class="text-muted text-center">Activate</h1>
                         <br>
                         <div style="font-weight: bold ">
-                            ! Check In Your Email : ${register.email}
+                            ! Check In Your Email : ${sessionScope.email}
                         </div>
                         <br>
                         <form role="form" action="Activate" method="post">

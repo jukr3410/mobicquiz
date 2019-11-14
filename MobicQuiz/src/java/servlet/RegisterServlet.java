@@ -97,7 +97,7 @@ public class RegisterServlet extends HttpServlet {
                     sentKey(email, name, activateKey);
                     session.setAttribute("email", email); 
                     session.setAttribute("id", id);
-                    getServletContext().getRequestDispatcher("/Activate").forward(request, response);
+                    response.sendRedirect("/MobicQuiz/Activate");
                     return;
                 }
             } else if (usertype.equals("teacher")) {
@@ -116,12 +116,13 @@ public class RegisterServlet extends HttpServlet {
                     sentKey(email, name, activateKey);
                     session.setAttribute("email", email); 
                     session.setAttribute("id", id);
-                    getServletContext().getRequestDispatcher("/Activate").forward(request, response);
+                    response.sendRedirect("/MobicQuiz/Activate");
                     return;
                 }
 
-            }
+            }else{
             request.setAttribute("errorregister", "User already exists!");
+            }
         }
         getServletContext().getRequestDispatcher("/Register.jsp").forward(request, response);
     }

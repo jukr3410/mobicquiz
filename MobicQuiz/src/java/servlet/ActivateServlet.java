@@ -24,7 +24,7 @@ import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
 import model.Students;
 import model.Teachers;
-import org.jboss.weld.context.http.HttpRequestContext;
+
 
 /**
  *
@@ -49,18 +49,16 @@ public class ActivateServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         String activateCode = request.getParameter("activatecode");
-        String id = request.getParameter("id");
-        String email = request.getParameter("email");
+        String id = (String) session.getAttribute("id");      
         if (activateCode != null && id != null) {
             StudentsJpaController sjc = new StudentsJpaController(utx, emf);
             Students student = sjc.findStudents(Integer.valueOf(id));
             
             TeachersJpaController tjc = new TeachersJpaController(utx, emf);
             Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
-            
-            
+                       
             if (student!=null&&student.getActivated()==null&&student.getActivatekey().equals(activateCode)) {
                 student.setActivated("activated");
                 try {
@@ -73,6 +71,7 @@ public class ActivateServlet extends HttpServlet {
                     Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 response.sendRedirect("/MobicQuiz/Login");
+                session.invalidate();
                 return;
             }else if (teacher!=null&&teacher.getActivated()==null&&teacher.getActivatekey().equals(activateCode)) {
                 teacher.setActivated("activated");
@@ -86,15 +85,13 @@ public class ActivateServlet extends HttpServlet {
                     Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 response.sendRedirect("/MobicQuiz/Login");
+                session.invalidate();
                 return;
             }else{
                 request.setAttribute("erroractivate", "! This account does not exist or has been Activated.");
-            }
-            
-            
-
+            }                     
         }
-        request.setAttribute("email", email);
+      
         getServletContext().getRequestDispatcher("/Activate.jsp").forward(request, response);
     }
 
