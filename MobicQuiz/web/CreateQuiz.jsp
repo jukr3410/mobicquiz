@@ -19,7 +19,7 @@
             <input type="text" name="subject" required value="${param.subject}"/><br><br>
             Name<br><br>
             <input type="text" name="name" required value="${param.name}"/><br><br>
-            Time<br><br>
+            Time<br><br>ๅ
             <input type="number" name="time" required value="${param.time}"/><br><br>
             Full Score<br><br>
             <input type="number" name="time" required value="${param.fullscore}"/><br><br>

@@ -26,7 +26,6 @@ import jpacontroller.exceptions.RollbackFailureException;
  * @author Student
  */
 public class RemoveServlet extends HttpServlet {
-
     @PersistenceUnit(unitName = "MobicQuizPU")
     EntityManagerFactory emf;
 
