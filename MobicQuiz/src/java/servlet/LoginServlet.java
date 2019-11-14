@@ -74,10 +74,8 @@ public class LoginServlet extends HttpServlet {
             }else{
                 request.setAttribute("errorlogin", "Please choose type !!");
             }
-            
-        }else if(id.length()>0){
-                request.setAttribute("errorlogin", "Wrong ID or password !!");
-            }
+            request.setAttribute("errorlogin", "Please choose type !!");
+        }
 
         getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 
