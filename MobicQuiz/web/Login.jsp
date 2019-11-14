@@ -44,10 +44,10 @@
                         <br>
                         <form role="form" action="Login" method="post">
                             <div class="form-group">
-                                <input type="text" name="id" class="form-control" placeholder="ID" required/>
+                                <input type="text" name="id" class="form-control" placeholder="ID" value="${param.id}" required/>
                             </div>
                             <div class="form-group">                               
-                                <input type="password" name="password" class="form-control" placeholder="Password" required/>
+                                <input type="password" name="password" class="form-control" placeholder="Password" value="${param.password}" required/>
                             </div>
 
                             <div class="radio">
