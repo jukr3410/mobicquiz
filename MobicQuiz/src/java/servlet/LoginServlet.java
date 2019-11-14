@@ -45,40 +45,34 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String id = request.getParameter("id");
+        String id = request.getParameter("id");      
         String password = request.getParameter("password");
         String usertype = request.getParameter("usertype");
-        
-
-        if (id != null && id.length()>3 && id.length()<8 && password != null && password.length()>3 && password.length()<8 && usertype != null) {
+        int ids = Integer.valueOf(id);
+        if (id != null && password != null && usertype != null) {
             if (usertype.equals("student")) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
                 Students student = sjc.findStudents(Integer.valueOf(id));
                 if (student != null && student.getPassword().equals(password)) {
                     session.setAttribute("student", student);
-                    response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");                   
+                    response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
                     return;
-                } else {
+                }else{
                     request.setAttribute("errorlogin", "Wrong ID or password !!");
                 }
-            }else if(usertype.equals("teacher")) {
+            } else if (usertype.equals("teacher")) {
                 TeachersJpaController tjc = new TeachersJpaController(utx, emf);
                 Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
-                if (teacher!=null && teacher.getPassword().equals(password)) {
+                if (teacher != null && teacher.getPassword().equals(password)) {
                     session.setAttribute("teacher", teacher);
                     response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
                     return;
-                }else {
+                }else{
                     request.setAttribute("errorlogin", "Wrong ID or password !!");
                 }
-            }else{
-                request.setAttribute("errorlogin", "Please choose type !!");
             }
             
-        }else if (id.length()<=3||password.length()>=8) {
-            request.setAttribute("errorlogin", "Wrong ID or password !!");
         }
-
 
         getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 
