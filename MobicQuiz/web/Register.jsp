@@ -33,7 +33,11 @@
                                 <a href="Login"><h3 class="text-muted">MOBIC QUIZ</h3></a>
                             </div>
                             <div class="jumbotron">
-                                <h1 class="text-muted text-center">Sign up</h1><br>
+                                <h1 class="text-muted text-center">Sign up</h1>
+                                <div style="color: red">
+                                    ${errorregister}
+                                </div>
+                                <br>
                                 <form role="form" action="Register" method="post">
                                     <div class="form-group">
                                         <div class="radio">
