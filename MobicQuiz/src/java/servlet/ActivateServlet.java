@@ -88,7 +88,7 @@ public class ActivateServlet extends HttpServlet {
                 session.invalidate();
                 return;
             }else{
-                request.setAttribute("erroractivate", "! This account does not exist or has been Activated.");
+                request.setAttribute("erroractivate", "! Incorrect activate code or account has been activated.");
             }                     
         }
       
