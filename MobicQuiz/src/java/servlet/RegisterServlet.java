@@ -51,15 +51,12 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String grade = request.getParameter("grade");
-        if (usertype != null && name != null && id != null && password != null && email != null && grade != null) {
-            if (usertype.equals("student")) {
+        if (usertype != null && name != null && id != null && password != null && email != null) {
+            if (usertype.equals("student")&&grade!=null) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
                 Students student = sjc.findStudents(Integer.valueOf(id));
                 if (student == null) {
-                    student.setStudentno(Integer.valueOf(id));
-                    student.setName(name);
-                    student.setEmail(email);
-                    student.setPassword(password);
+                    student = new Students(Integer.valueOf(id), name, email, password);
                     Levels level = new Levels(Integer.valueOf(grade));
                     student.setLevelno(level);
                     try {
@@ -69,12 +66,12 @@ public class RegisterServlet extends HttpServlet {
                     } catch (Exception ex) {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    response.sendRedirect("/MobicQuiz/Login");
+                    response.sendRedirect("/MobicQuiz/Activation");
                     return;
                 }
             } else if (usertype.equals("teacher")) {
 
-                response.sendRedirect("/MobicQuiz/Login");
+                response.sendRedirect("/MobicQuiz/Activation");
                 return;
             }
             request.setAttribute("errorregister", "User already exists!");
