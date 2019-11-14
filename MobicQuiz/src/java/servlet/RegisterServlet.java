@@ -72,8 +72,15 @@ public class RegisterServlet extends HttpServlet {
             } else if (usertype.equals("teacher")) {
                 TeachersJpaController tjc = new TeachersJpaController(utx, emf);
                 Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
-                if (teacher!=null) {
-                    teacher = new Teachers(Integer.valueOf(id), name, email, password);
+                if (teacher==null) {
+                    teacher = new Teachers(Integer.valueOf(id), name, email, password, grade);
+                    try {
+                        tjc.create(teacher);
+                    } catch (RollbackFailureException ex) {
+                        Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 response.sendRedirect("/MobicQuiz/Activation.jsp");
                 return;

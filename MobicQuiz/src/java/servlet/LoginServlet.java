@@ -55,6 +55,7 @@ public class LoginServlet extends HttpServlet {
                 Students student = sjc.findStudents(Integer.valueOf(id));
                 if (student != null && student.getPassword().equals(password)) {
                     session.setAttribute("student", student);
+                    session.setAttribute("usertype", usertype);
                     response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
                     return;
                 }else{
@@ -65,6 +66,7 @@ public class LoginServlet extends HttpServlet {
                 Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
                 if (teacher != null && teacher.getPassword().equals(password)) {
                     session.setAttribute("teacher", teacher);
+                    session.setAttribute("usertype", usertype);
                     response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
                     return;
                 }else{
