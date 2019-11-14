@@ -20,6 +20,7 @@ import javax.transaction.UserTransaction;
 import jpacontroller.StudentsJpaController;
 import jpacontroller.TeachersJpaController;
 import jpacontroller.exceptions.RollbackFailureException;
+import model.EmailUtility;
 import model.Levels;
 import model.Students;
 import model.Teachers;
@@ -35,6 +36,30 @@ public class RegisterServlet extends HttpServlet {
 
     @Resource
     UserTransaction utx;
+
+    private String host = "smtp.gmail.com";
+    private String port = "587";
+    private String user = "mobicquiz@gmail.com";
+    private String pass = "mobic303";
+
+    public String activateKey() {
+        int ramdom = (int) (Math.random() * 100000);
+        String activateKey = String.valueOf(ramdom);
+        return activateKey;
+    }
+
+    public void sentKey(String email, String name, String activateKey) {
+        String subject = "[MobicQuiz] Please activate your account";
+        String content = "Hi " + name + "\nPlease use this code to Activate your account.\nActivate Key :"
+                + activateKey + "\nThanks,\nThe Mobic Quiz";
+        if (email != null) {
+            try {
+                EmailUtility.sendEmail(host, port, user, pass, email, subject, content);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,11 +79,12 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String grade = request.getParameter("grade");
         if (usertype != null && name != null && id != null && password != null && email != null) {
-            if (usertype.equals("student")&&grade!=null) {
+            if (usertype.equals("student") && grade != null) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
                 Students student = sjc.findStudents(Integer.valueOf(id));
                 if (student == null) {
-                    student = new Students(Integer.valueOf(id), name, email, password, grade, new Levels(Integer.valueOf(grade)));                  
+                    String activateKey = activateKey();
+                    student = new Students(Integer.valueOf(id), name, email, password, activateKey, new Levels(Integer.valueOf(grade)));
                     try {
                         sjc.create(student);
                     } catch (RollbackFailureException ex) {
@@ -66,14 +92,17 @@ public class RegisterServlet extends HttpServlet {
                     } catch (Exception ex) {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    sentKey(email, name, activateKey);
+                    request.setAttribute("register", student);                  
                     response.sendRedirect("/MobicQuiz/Activation.jsp");
                     return;
                 }
             } else if (usertype.equals("teacher")) {
                 TeachersJpaController tjc = new TeachersJpaController(utx, emf);
                 Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
-                if (teacher==null) {
-                    teacher = new Teachers(Integer.valueOf(id), name, email, password, grade);
+                if (teacher == null) {
+                    String activateKey = activateKey();
+                    teacher = new Teachers(Integer.valueOf(id), name, email, password, activateKey);
                     try {
                         tjc.create(teacher);
                     } catch (RollbackFailureException ex) {
@@ -81,9 +110,12 @@ public class RegisterServlet extends HttpServlet {
                     } catch (Exception ex) {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    sentKey(email, name, activateKey);
+                    request.setAttribute("register", teacher);                   
+                    response.sendRedirect("/MobicQuiz/Activation.jsp");
+                    return;
                 }
-                response.sendRedirect("/MobicQuiz/Activation.jsp");
-                return;
+
             }
             request.setAttribute("errorregister", "User already exists!");
         }

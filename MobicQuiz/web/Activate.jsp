@@ -1,5 +1,5 @@
 <%-- 
-    Document   : Activation
+    Document   : Activate
     Created on : Nov 14, 2019, 9:09:18 PM
     Author     : Student
 --%>
@@ -29,17 +29,22 @@
                             Sign in
                         </button></a>
                     <div class="header clearfix">
-                        <a href="Login"><h3 class="text-muted">MOBIC QUIZ</h3></a>
+                        <h3 class="">MOBIC QUIZ</h3>
                     </div>
                     <div class="jumbotron">
-                        <h1 class="text-muted text-center">Sign in</h1>
-                        <div style="color: red">
-                            ${erroractivation}
+                        <h1 class="text-muted text-center">Activate</h1>
+                        <br>
+                        <div style="font-weight: bold ">
+                            ! Check In Your Email : ${register.email}
                         </div>
                         <br>
-                        <form role="form" action="Activation" method="post">
+                        <form role="form" action="Activate" method="post">
+                            
                             <div class="form-group text-center">                   
-                                <input type="number" name="activatecode" class="form-control" placeholder="Activate Code" required/><br>      
+                                <input type="text" name="activatecode" class="form-control" placeholder="Activate Code" style="width: " required/><br>      
+                                <div style="color: red">
+                                    ${erroractivate}
+                                </div>
                                 <button type="submit" class="btn btn-primary">
                                     Activate
                                 </button>
@@ -50,6 +55,10 @@
                 <div class="col-md-2">
                 </div>
             </div>
+            <hr>
+            <footer class="footer text-center">
+                <p>© Mobicquiz 2019</p>
+            </footer>
         </div>
     </body>
 </html>

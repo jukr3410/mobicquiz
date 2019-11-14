@@ -26,7 +26,7 @@
 
         <div class="container">
             <div class="header clearfix">
-                <h3 class="text-muted">MOBIC QUIZ</h3>
+                <h3 class="">MOBIC QUIZ</h3>
             </div>
             <div class="row">
                 <div class="col-md-1">
