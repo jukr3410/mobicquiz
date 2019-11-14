@@ -83,6 +83,16 @@ public class Teachers implements Serializable {
         this.password = password;
     }
 
+    public Teachers(Integer teacherno, String name, String email, String password, String activatekey) {
+        this.teacherno = teacherno;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.activatekey = activatekey;
+    }
+    
+    
+
     public Integer getTeacherno() {
         return teacherno;
     }

@@ -18,9 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
 import jpacontroller.StudentsJpaController;
+import jpacontroller.TeachersJpaController;
 import jpacontroller.exceptions.RollbackFailureException;
 import model.Levels;
 import model.Students;
+import model.Teachers;
 
 /**
  *
@@ -56,9 +58,7 @@ public class RegisterServlet extends HttpServlet {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
                 Students student = sjc.findStudents(Integer.valueOf(id));
                 if (student == null) {
-                    student = new Students(Integer.valueOf(id), name, email, password);
-                    Levels level = new Levels(Integer.valueOf(grade));
-                    student.setLevelno(level);
+                    student = new Students(Integer.valueOf(id), name, email, password, grade, new Levels(Integer.valueOf(grade)));                  
                     try {
                         sjc.create(student);
                     } catch (RollbackFailureException ex) {
@@ -66,12 +66,16 @@ public class RegisterServlet extends HttpServlet {
                     } catch (Exception ex) {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    response.sendRedirect("/MobicQuiz/Activation");
+                    response.sendRedirect("/MobicQuiz/Activation.jsp");
                     return;
                 }
             } else if (usertype.equals("teacher")) {
-
-                response.sendRedirect("/MobicQuiz/Activation");
+                TeachersJpaController tjc = new TeachersJpaController(utx, emf);
+                Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
+                if (teacher!=null) {
+                    teacher = new Teachers(Integer.valueOf(id), name, email, password);
+                }
+                response.sendRedirect("/MobicQuiz/Activation.jsp");
                 return;
             }
             request.setAttribute("errorregister", "User already exists!");

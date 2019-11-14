@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
         String id = request.getParameter("id");      
         String password = request.getParameter("password");
         String usertype = request.getParameter("usertype");
-        int ids = Integer.valueOf(id);
+        
         if (id != null && password != null && usertype != null) {
             if (usertype.equals("student")) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);

@@ -90,6 +90,17 @@ public class Students implements Serializable {
         this.password = password;
     }
 
+    public Students(Integer studentno, String name, String email, String password, String activatekey, Levels levelno) {
+        this.studentno = studentno;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.activatekey = activatekey;
+        this.levelno = levelno;
+    }
+    
+    
+
     public Integer getStudentno() {
         return studentno;
     }
