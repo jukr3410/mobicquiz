@@ -67,6 +67,8 @@ public class RegisterServlet extends HttpServlet {
                     } catch (Exception ex) {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }else{
+                    request.setAttribute("errorregister", "User already exists!");
                 }
             } else if (usertype.equals("teacher")) {
                 
