@@ -30,21 +30,20 @@
                                 <h3 class="text-muted">MOBIC QUIZ</h3>
                             </div>
                             <div class="jumbotron">
-                                <form role="form" action="Login" method="post">
+                                <form role="form" action="Register" method="post">
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="usertype" value="student" checked/> Student
                                             <input type="radio" name="usertype" value="teacher"/> Teacher
                                         </label>
                                     </div> 
-                                    <br>
+                                    
                                     <div class="form-group">
-                                        <input type="text" name="id" class="form-control" placeholder="ID" required/>
+                                        Your ID<input type="text" name="id" class="form-control" placeholder="ID" required/>                                                                                                   
+                                        Password<input type="password" name="password" class="form-control" placeholder="Password" required/>
+                                        Confirm Password<input type="password" name="password" class="form-control" placeholder="Confirm Password" required/>
+                                        Email<input type="text" name="id" class="form-control" placeholder="Email" required/>
                                     </div>
-                                    <div class="form-group">                               
-                                        AAAA<input type="password" name="password" class="form-control" placeholder="Password" required/>
-                                    </div>
-
                                     
                                     <button type="submit" class="btn btn-primary">
                                         Sign up
