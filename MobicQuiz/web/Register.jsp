@@ -30,6 +30,7 @@
                                 <h3 class="text-muted">MOBIC QUIZ</h3>
                             </div>
                             <div class="jumbotron">
+                                <h1 class="text-muted text-center">Sign up</h1>
                                 <form role="form" action="Register" method="post">
                                     <div class="radio">
                                         <label>
@@ -42,7 +43,8 @@
                                         Your ID<input type="text" name="id" class="form-control" placeholder="ID" required/>                                                                                                   
                                         Password<input type="password" name="password" class="form-control" placeholder="Password" required/>
                                         Confirm Password<input type="password" name="password" class="form-control" placeholder="Confirm Password" required/>
-                                        Email<input type="text" name="id" class="form-control" placeholder="Email" required/>
+                                        Email<input type="email" name="id" class="form-control" placeholder="Email" required/>
+                                        Grade
                                     </div>
                                     
                                     <button type="submit" class="btn btn-primary">
