@@ -7,6 +7,8 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -15,6 +17,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
+import jpacontroller.StudentsJpaController;
+import jpacontroller.exceptions.RollbackFailureException;
+import model.Levels;
+import model.Students;
 
 /**
  *
@@ -37,7 +43,36 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String usertype = request.getParameter("usertype");
+        String name = request.getParameter("name");
+        String id = request.getParameter("id");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String grade = request.getParameter("grade");
+        if (usertype!=null&&name!=null&&id!=null&&password!=null&&email!=null&&grade!=null) {
+            if (usertype.equals("student")) {
+                StudentsJpaController sjc = new StudentsJpaController(utx, emf);
+                Students student = sjc.findStudents(Integer.valueOf(id));
+                if (student==null) {
+                    student.setStudentno(Integer.valueOf(id));
+                    student.setName(name);
+                    student.setEmail(email);
+                    student.setPassword(password);
+                    Levels level = new  Levels(Integer.valueOf(grade));
+                    student.setLevelno(level);
+                    try {
+                        sjc.create(student);
+                    } catch (RollbackFailureException ex) {
+                        Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } else if (usertype.equals("teacher")) {
+                
+            }
+
+        }
         getServletContext().getRequestDispatcher("/Register.jsp").forward(request, response);
     }
 
