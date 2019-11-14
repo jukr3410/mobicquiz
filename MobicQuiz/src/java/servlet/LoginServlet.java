@@ -75,7 +75,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("errorlogin", "Please choose type !!");
             }
             
-        }else{
+        }else if(id.length()>0){
                 request.setAttribute("errorlogin", "Wrong ID or password !!");
             }
 
