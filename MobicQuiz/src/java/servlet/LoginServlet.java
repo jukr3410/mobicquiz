@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
         String usertype = request.getParameter("usertype");
         
 
-        if (id != null && id.length()>3 && password != null && password.length()>3 && usertype != null) {
+        if (id != null && id.length()>3 && id.length()<8 && password != null && password.length()>3 && password.length()<8 && usertype != null) {
             if (usertype.equals("student")) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
                 Students student = sjc.findStudents(Integer.valueOf(id));
