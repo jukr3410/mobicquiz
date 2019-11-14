@@ -51,7 +51,7 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
 
-        </div> <!-- /container -->AAAAAa
+        </div> <!-- /container -->
 
     </body>
 </html>
