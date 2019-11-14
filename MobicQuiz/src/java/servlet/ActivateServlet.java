@@ -7,6 +7,8 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -15,6 +17,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
+import jpacontroller.StudentsJpaController;
+import jpacontroller.TeachersJpaController;
+import jpacontroller.exceptions.NonexistentEntityException;
+import jpacontroller.exceptions.RollbackFailureException;
+import model.Students;
+import model.Teachers;
+import org.jboss.weld.context.http.HttpRequestContext;
 
 /**
  *
@@ -27,7 +36,7 @@ public class ActivateServlet extends HttpServlet {
 
     @Resource
     UserTransaction utx;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,10 +49,50 @@ public class ActivateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String activateCode = request.getParameter("activatecode");
-        
-        if (activateCode!=null) {
+        String id = request.getParameter("id");
+        String email = request.getParameter("email");
+        if (activateCode != null && id != null) {
+            StudentsJpaController sjc = new StudentsJpaController(utx, emf);
+            Students student = sjc.findStudents(Integer.valueOf(id));
             
+            TeachersJpaController tjc = new TeachersJpaController(utx, emf);
+            Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
+            
+            
+            if (student!=null&&student.getActivated()==null) {
+                student.setActivated("activated");
+                try {
+                    sjc.edit(student);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                response.sendRedirect("/MobicQuiz/Login");
+                return;
+            }else if (teacher!=null&&teacher.getActivated()==null) {
+                teacher.setActivated("activated");
+                try {
+                    tjc.edit(teacher);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                response.sendRedirect("/MobicQuiz/Login");
+                return;
+            }else{
+                request.setAttribute("erroractivate", "! This account does not exist or has been Activated.");
+            }
+            
+            
+
         }
+        request.setAttribute("email", email);
         getServletContext().getRequestDispatcher("/Activate.jsp").forward(request, response);
     }
 

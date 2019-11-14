@@ -93,8 +93,9 @@ public class RegisterServlet extends HttpServlet {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     sentKey(email, name, activateKey);
-                    request.setAttribute("register", student);                  
-                    response.sendRedirect("/MobicQuiz/Activation.jsp");
+                    request.setAttribute("email", email); 
+                    request.setAttribute("id", id);
+                    getServletContext().getRequestDispatcher("/MobicQuiz/Activate").forward(request, response);
                     return;
                 }
             } else if (usertype.equals("teacher")) {
@@ -111,8 +112,9 @@ public class RegisterServlet extends HttpServlet {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     sentKey(email, name, activateKey);
-                    request.setAttribute("register", teacher);                   
-                    response.sendRedirect("/MobicQuiz/Activation.jsp");
+                    request.setAttribute("email", email); 
+                    request.setAttribute("id", id);
+                    getServletContext().getRequestDispatcher("/MobicQuiz/Activate").forward(request, response);
                     return;
                 }
 
