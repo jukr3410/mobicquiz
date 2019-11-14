@@ -26,8 +26,13 @@
                         <div class="col-md-2">
                         </div>
                         <div class="col-md-8">
+                            <a href="Login"><button class="btn btn-success float-right">
+                                    Sign in
+                                </button></a>
                             <div class="header clearfix">
-                                <h3 class="text-muted">MOBIC QUIZ</h3>
+                                
+                                <a href="Login"><h3 class="text-muted">MOBIC QUIZ</h3></a>
+                                
                             </div>
                             <div class="jumbotron">
                                 <h1 class="text-muted text-center">Sign up</h1>
@@ -38,18 +43,30 @@
                                             <input type="radio" name="usertype" value="teacher"/> Teacher
                                         </label>
                                     </div> 
-                                    
+
                                     <div class="form-group">
+                                        Your Name(firstname lastname) <input type="text" name="name" class="form-control" placeholder="Name" required/>   
                                         Your ID<input type="text" name="id" class="form-control" placeholder="ID" required/>                                                                                                   
                                         Password<input type="password" name="password" class="form-control" placeholder="Password" required/>
-                                        Confirm Password<input type="password" name="password" class="form-control" placeholder="Confirm Password" required/>
-                                        Email<input type="email" name="id" class="form-control" placeholder="Email" required/>
+                                        Confirm Password<input type="password" name="confirmpassword" class="form-control" placeholder="Confirm Password" required/>
+                                        Email<input type="email" name="email" class="form-control" placeholder="Email" required/><br>
                                         Grade
-                                    </div>
-                                    
-                                    <button type="submit" class="btn btn-primary">
-                                        Sign up
-                                    </button>
+                                        <div class="radio">
+                                        <label>
+                                            <input type="radio" name="grade" value="1"/> M.1
+                                            <input type="radio" name="grade" value="2"/> M.2
+                                            <input type="radio" name="grade" value="3"/> M.3
+                                            <input type="radio" name="grade" value="4"/> M.4
+                                            <input type="radio" name="grade" value="5"/> M.5
+                                            <input type="radio" name="grade" value="6"/> M.6
+                                        </label>
+                                    </div> 
+                            </div>
+                            
+
+                                <button type="submit" class="btn btn-primary">
+                                    Sign up
+                                </button>
                                 </form>
                             </div>
                         </div>
