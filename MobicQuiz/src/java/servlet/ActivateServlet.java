@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.StudentsJpaController;
 import jpacontroller.TeachersJpaController;
@@ -48,6 +49,7 @@ public class ActivateServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       // HttpSession session = request.getSession();
         String activateCode = request.getParameter("activatecode");
         String id = request.getParameter("id");
         String email = request.getParameter("email");
@@ -59,7 +61,7 @@ public class ActivateServlet extends HttpServlet {
             Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
             
             
-            if (student!=null&&student.getActivated()==null) {
+            if (student!=null&&student.getActivated()==null&&student.getActivatekey().equals(activateCode)) {
                 student.setActivated("activated");
                 try {
                     sjc.edit(student);
@@ -72,7 +74,7 @@ public class ActivateServlet extends HttpServlet {
                 }
                 response.sendRedirect("/MobicQuiz/Login");
                 return;
-            }else if (teacher!=null&&teacher.getActivated()==null) {
+            }else if (teacher!=null&&teacher.getActivated()==null&&teacher.getActivatekey().equals(activateCode)) {
                 teacher.setActivated("activated");
                 try {
                     tjc.edit(teacher);

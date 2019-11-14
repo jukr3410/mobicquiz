@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.StudentsJpaController;
 import jpacontroller.TeachersJpaController;
@@ -72,6 +73,7 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String usertype = request.getParameter("usertype");
         String name = request.getParameter("name");
         String id = request.getParameter("id");
@@ -93,9 +95,9 @@ public class RegisterServlet extends HttpServlet {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     sentKey(email, name, activateKey);
-                    request.setAttribute("email", email); 
-                    request.setAttribute("id", id);
-                    getServletContext().getRequestDispatcher("/MobicQuiz/Activate").forward(request, response);
+                    session.setAttribute("email", email); 
+                    session.setAttribute("id", id);
+                    getServletContext().getRequestDispatcher("/Activate").forward(request, response);
                     return;
                 }
             } else if (usertype.equals("teacher")) {
@@ -112,9 +114,9 @@ public class RegisterServlet extends HttpServlet {
                         Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     sentKey(email, name, activateKey);
-                    request.setAttribute("email", email); 
-                    request.setAttribute("id", id);
-                    getServletContext().getRequestDispatcher("/MobicQuiz/Activate").forward(request, response);
+                    session.setAttribute("email", email); 
+                    session.setAttribute("id", id);
+                    getServletContext().getRequestDispatcher("/Activate").forward(request, response);
                     return;
                 }
 
