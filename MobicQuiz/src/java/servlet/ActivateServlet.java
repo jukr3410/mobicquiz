@@ -7,6 +7,8 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -18,14 +20,17 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.StudentsJpaController;
 import jpacontroller.TeachersJpaController;
+import jpacontroller.exceptions.NonexistentEntityException;
+import jpacontroller.exceptions.RollbackFailureException;
 import model.Students;
 import model.Teachers;
+
 
 /**
  *
  * @author Jn
  */
-public class LoginServlet extends HttpServlet {
+public class ActivateServlet extends HttpServlet {
 
     @PersistenceUnit(unitName = "MobicQuizPU")
     EntityManagerFactory emf;
@@ -45,39 +50,49 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String id = request.getParameter("id");      
-        String password = request.getParameter("password");
-        String usertype = request.getParameter("usertype");
-        
-        if (id != null && password != null && usertype != null) {
-            if (usertype.equals("student")) {
-                StudentsJpaController sjc = new StudentsJpaController(utx, emf);
-                Students student = sjc.findStudents(Integer.valueOf(id));
-                if (student != null && student.getPassword().equals(password)) {
-                    session.setAttribute("student", student);
-                    session.setAttribute("usertype", usertype);
-                    response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
-                    return;
-                }else{
-                    request.setAttribute("errorlogin", "Wrong ID or password !!");
-                }
-            } else if (usertype.equals("teacher")) {
-                TeachersJpaController tjc = new TeachersJpaController(utx, emf);
-                Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
-                if (teacher != null && teacher.getPassword().equals(password)) {
-                    session.setAttribute("teacher", teacher);
-                    session.setAttribute("usertype", usertype);
-                    response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
-                    return;
-                }else{
-                    request.setAttribute("errorlogin", "Wrong ID or password !!");
-                }
-            }
+        String activateCode = request.getParameter("activatecode");
+        String id = (String) session.getAttribute("id");      
+        if (activateCode != null && id != null) {
+            StudentsJpaController sjc = new StudentsJpaController(utx, emf);
+            Students student = sjc.findStudents(Integer.valueOf(id));
             
+            TeachersJpaController tjc = new TeachersJpaController(utx, emf);
+            Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
+                       
+            if (student!=null&&student.getActivated()==null&&student.getActivatekey().equals(activateCode)) {
+                student.setActivated("activated");
+                try {
+                    sjc.edit(student);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                response.sendRedirect("/MobicQuiz/Login");
+                session.invalidate();
+                return;
+            }else if (teacher!=null&&teacher.getActivated()==null&&teacher.getActivatekey().equals(activateCode)) {
+                teacher.setActivated("activated");
+                try {
+                    tjc.edit(teacher);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ActivateServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                response.sendRedirect("/MobicQuiz/Login");
+                session.invalidate();
+                return;
+            }else{
+                request.setAttribute("erroractivate", "! This account does not exist or has been Activated.");
+            }                     
         }
-
-        getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
-
+      
+        getServletContext().getRequestDispatcher("/Activate.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

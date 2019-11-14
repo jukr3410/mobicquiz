@@ -32,7 +32,7 @@
                         </li>
                     </ul>
                 </nav>
-                <h3 class="text-muted">MOBIC QUIZ</h3>
+                <h3 class="text-muted">MOBIC QUIZ !!!!!</h3>
             </div>
             <br>
             <div class="jumbotron text-center">
