@@ -60,9 +60,9 @@ public class LoginServlet extends HttpServlet {
                 if (studentId != null && studentId.getPassword().equals(password)||
                         studentEmail != null && studentEmail.getPassword().equals(password)) {
                     if (studentId!=null) {
-                        session.setAttribute("student", studentId);
+                        session.setAttribute("user", studentId);
                     } else {
-                        session.setAttribute("student", studentEmail);
+                        session.setAttribute("user", studentEmail);
                     }
                     
                     session.setAttribute("usertype", usertype);
@@ -81,9 +81,9 @@ public class LoginServlet extends HttpServlet {
                 if (teacherId != null && teacherId.getPassword().equals(password)||
                         teacherEmail !=null && teacherEmail.getPassword().equals(password)) {
                     if (teacherId!=null) {
-                        session.setAttribute("teacher", teacherId);
+                        session.setAttribute("user", teacherId);
                     }else{
-                        session.setAttribute("teacher", teacherEmail);
+                        session.setAttribute("user", teacherEmail);
                     }                    
                     session.setAttribute("usertype", usertype);
                     response.sendRedirect("/MobicQuiz/Homepage.jsp");
