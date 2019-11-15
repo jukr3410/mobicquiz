@@ -31,7 +31,7 @@
                                     Back
                                 </button></a>
                             <div class="header clearfix">
-                                <a href="Homepage.jsp"><h3 class="">MOBIC QUIZ</h3></a>
+                                <h3 class="">MOBIC QUIZ</h3>
                             </div>
                             <div class="jumbotron">
                                 <h1 class="text-muted text-center">My Account</h1>
