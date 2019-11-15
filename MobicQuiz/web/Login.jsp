@@ -44,10 +44,10 @@
                         <br>
                         <form role="form" action="Login" method="post">
                             <div class="form-group">
-                                <input type="text" name="id" class="form-control" placeholder="ID" value="${param.id}" minlength="4" maxlength="8" required/>
+                                <input type="text" name="id" class="form-control" placeholder="ID or Email" value="${param.id}" minlength="4" maxlength="30" required/>
                             </div>
                             <div class="form-group">                               
-                                <input type="password" name="password" class="form-control" placeholder="Password" minlength="4" maxlength="8" required/>
+                                <input type="password" name="password" class="form-control" placeholder="Password" minlength="4" required/>
                             </div>
 
                             <div class="radio">

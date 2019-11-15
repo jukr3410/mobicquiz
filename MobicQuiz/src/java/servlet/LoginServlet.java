@@ -52,9 +52,12 @@ public class LoginServlet extends HttpServlet {
         if (id != null && password != null && usertype != null) {
             if (usertype.equals("student")) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
-                Students student = sjc.findStudents(Integer.valueOf(id));
-                if (student != null && student.getPassword().equals(password)) {
-                    session.setAttribute("student", student);
+                Students studentId = sjc.findStudents(Integer.valueOf(id));
+                Students studentEmail = sjc.findStudentsByEmail(id);
+                
+                if (studentId != null && studentId.getPassword().equals(password)||
+                        studentEmail != null && studentEmail.getPassword().equals(password)) {
+                    session.setAttribute("student", studentId);
                     session.setAttribute("usertype", usertype);
                     response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
                     return;
