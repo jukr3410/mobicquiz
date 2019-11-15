@@ -130,7 +130,7 @@
 
 
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                            Create
+                            Create Question
                         </button>
                         <br><br>
                         <button type="submit" class="btn btn-primary">
@@ -162,7 +162,7 @@
                                         </label>
                                         <input type="text" class="form-control" id="subject" />
                                     </div>
-                                    
+
                                     <div class="form-group">
 
                                         <label for="time">
@@ -176,22 +176,16 @@
                                         <label for="email"><b>Correct Answer</b></label><br>
                                         <input type="text" class="form-control" placeholder="Answer" name="ans" required>
                                     </div>
-                                    <div class="form-group">
-
-                                        <label for="time">
-                                            Score123456
-                                        </label>
-                                        <input type="number" class="form-control" id="score" min="0"/>
-
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Add</button>
                                     </div>
+
 
 
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Add</button>
-                            </div>
+
                         </div>
                     </div>
                 </div>
