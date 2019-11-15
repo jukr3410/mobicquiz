@@ -4,6 +4,7 @@
     Author     : Student
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,17 +26,41 @@
                 <div class="col-md-12">
                     <h1>Mobic Quiz</h1>
                     <h4>Welcome : </h4>
-                    <div class="dropdown">
+                    <select>
+                        <option value="thsi">Thai</option>
+                        <option value="science">Science</option>
+                        <option value="social">Social</option>
 
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                            Action
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item disabled" href="#">Science</a> 
-                            <a class="dropdown-item" href="#">Math</a> 
-                            <a class="dropdown-item" href="#">Thai</a>
-                        </div>
-                    </div>
+                    </select>
+                    <br>
+                    <br>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Subject</th>
+                                <th>Name</th>
+                                <th>Time</th>
+                                <th>Score</th>
+                                <th>Ready</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${quizs}" var="q">
+                                <tr>
+                                    <td></td>
+                                    <td>${q.subjectno}</td>
+                                    <td>${q.title}</td>
+                                    <td>${q.time}</td>
+                                    <td>${q.fullscore}</td>
+                                    <td></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+
+
                 </div>
             </div>
         </div>
