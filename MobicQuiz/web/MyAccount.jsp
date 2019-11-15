@@ -35,11 +35,14 @@
                             </div>
                             <div class="jumbotron">
                                 <h1 class="text-muted text-center">My Account</h1>
-                                
+
                                 <br>
+                                <div class="col-md-12"><center>
+                                    <img src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png" width="170" height="170" class="rounded-circle" />
+                                    </center></div>
                                 <form role="form" action="Register" method="post">
                                     <div class="form-group">
-                                         
+
                                         Name<input type="text" name="name" class="form-control" value="${sessionScope.name}" readonly />   
                                         ID<input type="text" name="id" class="form-control" value="${sessionScope.name}" readonly />                                
                                         Email<input type="email" name="email" class="form-control" value="${sessionScope.name}" readonly /><br>
