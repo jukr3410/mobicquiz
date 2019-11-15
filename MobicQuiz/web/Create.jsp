@@ -179,7 +179,7 @@
                                     <div class="form-group">
 
                                         <label for="time">
-                                            Score
+                                            Score123456
                                         </label>
                                         <input type="number" class="form-control" id="score" min="0"/>
 
