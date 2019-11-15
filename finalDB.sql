@@ -103,6 +103,7 @@ CREATE TABLE quizs
  fullscore decimal NOT NULL ,
  levelno   int NOT NULL ,
  subjectno int NOT NULL ,
+ status varchar(45),
 
 PRIMARY KEY (quizno),
   FOREIGN KEY  (levelno) REFERENCES levels (levelno),
