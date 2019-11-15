@@ -27,11 +27,11 @@
                         <div class="col-md-2">
                         </div>
                         <div class="col-md-8">
-                            <a href="Logout"><button class="btn btn-danger float-right">
-                                    Sign out
+                            <a href="Homepage.jsp"><button class="btn btn-primary float-right">
+                                    Back
                                 </button></a>
                             <div class="header clearfix">
-                                <a href="Homepage.jsp"><h3 class="text-muted">MOBIC QUIZ</h3></a>
+                                <h3 class="">MOBIC QUIZ</h3>
                             </div>
                             <div class="jumbotron">
                                 <h1 class="text-muted text-center">My Account</h1>

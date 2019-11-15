@@ -27,7 +27,9 @@
                             <ul class="nav nav-pills float-right">
 
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="Logout" role="button" style="float: none; opacity: 1;">Sign out</a>
+                                    <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
+                                    Sign out
+                                </button></a>
                                 </li>
                                 <li class="nav-item">
 
@@ -43,7 +45,7 @@
                             <a class="nav-link" href="Homepage.jsp">Home</a>                          
                             <a class="nav-link" href="Quiz">My Quiz</a>                           
                             <a class="nav-link" href="History">History</a>
-                            <a class="nav-link" href="Account">My Account</a>
+                            <a class="nav-link" href="MyAccount.jsp">My Account</a>
                         </div>
                         <div class="col-md-10">
                             <div class="jumbotron text-center">
