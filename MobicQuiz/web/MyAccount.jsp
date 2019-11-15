@@ -46,17 +46,6 @@
                                         Name<input type="text" name="name" class="form-control" value="${sessionScope.name}" readonly />   
                                         ID<input type="text" name="id" class="form-control" value="${sessionScope.name}" readonly />                                
                                         Email<input type="email" name="email" class="form-control" value="${sessionScope.name}" readonly /><br>
-                                        Grade ( Teacher Don't Check This )
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="grade" value="1"/> M.1
-                                                <input type="radio" name="grade" value="2"/> M.2
-                                                <input type="radio" name="grade" value="3"/> M.3
-                                                <input type="radio" name="grade" value="4"/> M.4
-                                                <input type="radio" name="grade" value="5"/> M.5
-                                                <input type="radio" name="grade" value="6"/> M.6
-                                            </label>
-                                        </div> 
                                     </div>
                                     <button type="submit" class="btn btn-primary">
                                         Sign up
