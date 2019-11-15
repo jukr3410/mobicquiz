@@ -41,7 +41,7 @@
                         <form role="form" action="Activate" method="post">
                             
                             <div class="form-group text-center">                   
-                                <input type="text" name="activatecode" class="form-control" placeholder="Activate Code" style="width: " value="${register.id}" required/>   
+                                <input type="text" name="activatecode" class="form-control" placeholder="Activate Code" style="width: " required/>   
                                 <div style="color: red">
                                     ${erroractivate}
                                 </div><br>

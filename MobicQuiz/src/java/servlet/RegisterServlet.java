@@ -82,8 +82,8 @@ public class RegisterServlet extends HttpServlet {
         String grade = request.getParameter("grade");
         if (usertype != null && name != null && id != null && password != null && email != null) {
             if (usertype.equals("student") && grade != null) {
-                StudentsJpaController sjc = new StudentsJpaController(utx, emf);
-                Students student = sjc.findStudents(Integer.valueOf(id));
+                StudentsJpaController sjc = new StudentsJpaController(utx, emf);               
+                Students student = sjc.findStudents(Integer.valueOf(id));                
                 if (student == null) {
                     String activateKey = activateKey();
                     student = new Students(Integer.valueOf(id), name, email, password, activateKey, new Levels(Integer.valueOf(grade)));
@@ -98,6 +98,10 @@ public class RegisterServlet extends HttpServlet {
                     session.setAttribute("email", email); 
                     session.setAttribute("id", id);
                     response.sendRedirect("/MobicQuiz/Activate");
+                    return;
+                }else{
+                    request.setAttribute("errorregister", "ID or Email already exists!");
+                    getServletContext().getRequestDispatcher("/Register.jsp").forward(request, response);
                     return;
                 }
             } else if (usertype.equals("teacher")) {
@@ -118,11 +122,13 @@ public class RegisterServlet extends HttpServlet {
                     session.setAttribute("id", id);
                     response.sendRedirect("/MobicQuiz/Activate");
                     return;
+                }else{
+                    request.setAttribute("errorregister", "ID or Email already exists!");
+                    getServletContext().getRequestDispatcher("/Register.jsp").forward(request, response);
+                    return;
                 }
-
-            }else{
-            request.setAttribute("errorregister", "User already exists!");
             }
+            
         }
         getServletContext().getRequestDispatcher("/Register.jsp").forward(request, response);
     }

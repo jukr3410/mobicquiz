@@ -50,8 +50,8 @@
                                         </div> 
                                         Your Name (firstname lastname)<input type="text" name="name" class="form-control" placeholder="Name" required/>   
                                         Your ID<input type="text" name="id" class="form-control" placeholder="ID" required/>                                                                                                   
-                                        Password<input type="password" name="password" class="form-control" placeholder="Password" required/>
-                                        Confirm Password<input type="password" name="confirmpassword" class="form-control" placeholder="Confirm Password" required/>
+                                        Password<input type="password" name="password" id="password" class="form-control" placeholder="Password" required/>
+                                        Confirm Password<input type="password" name="confirmpassword" id="confirm_password" class="form-control" placeholder="Confirm Password" required/>
                                         Email<input type="email" name="email" class="form-control" placeholder="Email" required/><br>
                                         Grade ( Teacher Don't Check This )
                                         <div class="radio">
@@ -81,5 +81,18 @@
                 </div>
             </div>
         </div>
+s        <script>
+            var password = document.getElementById("password")
+                    , confirm_password = document.getElementById("confirm_password");
+            function validatePassword() {
+                if (password.value !== confirm_password.value) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                } else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        </script>
     </body>
 </html>

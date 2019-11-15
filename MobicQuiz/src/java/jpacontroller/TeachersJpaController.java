@@ -20,6 +20,7 @@ import jpacontroller.exceptions.IllegalOrphanException;
 import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.PreexistingEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
+import model.Students;
 import model.Teachers;
 
 /**
@@ -214,6 +215,18 @@ public class TeachersJpaController implements Serializable {
         }
     }
 
+    public Teachers findTeachersByEmail(String email) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Teachers.findByEmail");
+        query.setParameter("email", email);
+        List resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : (Teachers) resultList.get(0);
+        } finally {
+            em.close();
+        }
+    }
+
     public int getTeachersCount() {
         EntityManager em = getEntityManager();
         try {
@@ -226,5 +239,5 @@ public class TeachersJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

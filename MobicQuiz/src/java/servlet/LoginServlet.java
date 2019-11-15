@@ -52,12 +52,19 @@ public class LoginServlet extends HttpServlet {
         if (id != null && password != null && usertype != null) {
             if (usertype.equals("student")) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
-                Students studentId = sjc.findStudents(Integer.valueOf(id));
                 Students studentEmail = sjc.findStudentsByEmail(id);
-                
+                Students studentId = null;
+                if(studentEmail==null){
+                    studentId = sjc.findStudents(Integer.valueOf(id));
+                }               
                 if (studentId != null && studentId.getPassword().equals(password)||
                         studentEmail != null && studentEmail.getPassword().equals(password)) {
-                    session.setAttribute("student", studentId);
+                    if (studentId!=null) {
+                        session.setAttribute("student", studentId);
+                    } else {
+                        session.setAttribute("student", studentEmail);
+                    }
+                    
                     session.setAttribute("usertype", usertype);
                     response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
                     return;
@@ -66,9 +73,18 @@ public class LoginServlet extends HttpServlet {
                 }
             } else if (usertype.equals("teacher")) {
                 TeachersJpaController tjc = new TeachersJpaController(utx, emf);
-                Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
-                if (teacher != null && teacher.getPassword().equals(password)) {
-                    session.setAttribute("teacher", teacher);
+                Teachers teacherEmail = tjc.findTeachersByEmail(id);
+                Teachers teacherId = null;
+                if (teacherEmail==null) {
+                    teacherId = tjc.findTeachers(Integer.valueOf(id));
+                }                
+                if (teacherId != null && teacherId.getPassword().equals(password)||
+                        teacherEmail !=null && teacherEmail.getPassword().equals(password)) {
+                    if (teacherId!=null) {
+                        session.setAttribute("teacher", teacherId);
+                    }else{
+                        session.setAttribute("teacher", teacherEmail);
+                    }                    
                     session.setAttribute("usertype", usertype);
                     response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
                     return;
