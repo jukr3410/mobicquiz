@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
                     }
                     
                     session.setAttribute("usertype", usertype);
-                    response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
+                    response.sendRedirect("/MobicQuiz/Homepage.jsp");
                     return;
                 }else{
                     request.setAttribute("errorlogin", "Wrong ID or password !!");
@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
                         session.setAttribute("teacher", teacherEmail);
                     }                    
                     session.setAttribute("usertype", usertype);
-                    response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
+                    response.sendRedirect("/MobicQuiz/Homepage.jsp");
                     return;
                 }else{
                     request.setAttribute("errorlogin", "Wrong ID or password !!");

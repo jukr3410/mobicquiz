@@ -39,9 +39,11 @@
                     <br>
 
                     <div class="row">
-                        <div class="col-md-2">
-
-
+                        <div class="col-md-2 text-center ">
+                            <a class="nav-link" href="Homepage.jsp">Home</a>                          
+                            <a class="nav-link" href="Quiz">My Quiz</a>                           
+                            <a class="nav-link" href="History">History</a>
+                            <a class="nav-link" href="Account">My Account</a>
                         </div>
                         <div class="col-md-10">
                             <div class="jumbotron text-center">
@@ -51,13 +53,14 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
+            <hr>
+            <footer class="footer text-center ">
+                <p>© Mobicquiz 2019</p>
+            </footer>
         </div>
-        <hr>
-        <footer class="footer text-center ">
-            <p>© Mobicquiz 2019</p>
-        </footer>
+
 
     </body>
 </html>
