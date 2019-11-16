@@ -217,3 +217,20 @@ INSERT INTO MOBIC.TEACHERS (TEACHERNO, "NAME", EMAIL, PASSWORD, ACTIVATEKEY, ACT
 	VALUES ('1234567890', 'Marl willson', 'jaturong.3410@mail.kmutt.ac.th', '1234567890', '34237', 'activated');
 
 
+
+INSERT INTO MOBIC.QUIZS (QUIZNO, TITLE, "TIME", FULLSCORE, LEVELNO, SUBJECTNO, STATUS) 
+	VALUES ('1', 'Find the answer of Math', 10, 10, '1', '101', 'on');
+INSERT INTO MOBIC.QUIZS (QUIZNO, TITLE, "TIME", FULLSCORE, LEVELNO, SUBJECTNO, STATUS) 
+	VALUES ('2', 'Find the answer of Sci', 20, 20, '1', '201', 'on');
+
+
+
+INSERT INTO MOBIC.QUESTIONS (QUESTIONNO, QUESTION, ANS1, ANS2, ANS3, ANS4, CORRECTANS, QUIZNO) 
+	VALUES ('1', '2 + 1 = ?', '1', '2', '3', '3', '3', '1');
+INSERT INTO MOBIC.QUESTIONS (QUESTIONNO, QUESTION, ANS1, ANS2, ANS3, ANS4, CORRECTANS, QUIZNO) 
+	VALUES ('2', '100 + 32 = ?', '132', '45', '234', '7897', '132', '1');
+INSERT INTO MOBIC.QUESTIONS (QUESTIONNO, QUESTION, ANS1, ANS2, ANS3, ANS4, CORRECTANS, QUIZNO) 
+	VALUES ('3', 'How many minutes does the light shine from the sun to the earth?', '2', '12', '20', '8', '8', '2');
+INSERT INTO MOBIC.QUESTIONS (QUESTIONNO, QUESTION, ANS1, ANS2, ANS3, ANS4, CORRECTANS, QUIZNO) 
+	VALUES ('4', 'Sound caused by what?', 'wind', 'Vibration of the object', 'soil', 'sky', 'Vibration of the object', '2');
+
