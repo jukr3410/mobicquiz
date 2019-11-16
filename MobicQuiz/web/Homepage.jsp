@@ -29,8 +29,8 @@
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
-                                    Sign out
-                                </button></a>
+                                            Sign out
+                                        </button></a>
                                 </li>
                                 <li class="nav-item">
 
@@ -52,7 +52,7 @@
                                     <a class="nav-link" href="ManageQuiz">Manage Quiz</a> 
                                 </c:otherwise>
                             </c:choose>
-                                                      
+
                             <a class="nav-link" href="History">History</a>
                             <a class="nav-link" href="MyAccount.jsp">My Account</a>
                         </div>
@@ -60,14 +60,13 @@
                             <div class="jumbotron text-center">
                                 <h1 class="display-3">Online Quiz</h1>
                                 <c:choose>
-                                <c:when test="${usertype=='student'}">
-                                    <p class="lead">You can take the exam anywhere. Go ahead!</p>
-                                </c:when>
-                                <c:otherwise>
-                                    <p class="lead">You can create the exam anywhere. Go ahead!</p>
-                                </c:otherwise>
-                            </c:choose>
-                                
+                                    <c:when test="${usertype=='student'}">
+                                        <p class="lead">You can take the exam anywhere. Go ahead!</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p class="lead">You can create the exam anywhere. Go ahead!</p>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
