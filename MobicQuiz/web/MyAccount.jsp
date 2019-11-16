@@ -55,6 +55,7 @@
                             <a class="nav-link" href="History">History</a>
                             <a class="nav-link" href="MyAccount.jsp">My Account</a>
                         </div>
+
                         <div class="col-md-10">
                             
 
@@ -62,62 +63,7 @@
                                 
                                 
                                 <!--    !! write content in this    -->
-                                
-                                                                <h1 class="text-muted text-center">My Account</h1>
 
-                                <br>
-                                <div class="col-md-12"><center>
-                                        <img src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png" width="170" height="170" class="rounded-circle" />
-                                    </center></div>
-
-                                <div class="form-group">
-
-                                    ID<input type="text" name="name" class="form-control" value="${sessionScope.user.studentno}" readonly />   
-                                    Name<input type="text" name="id" class="form-control" value="${sessionScope.user.name}" readonly />                                
-                                    Email<input type="email" name="email" class="form-control" value="${sessionScope.user.email}" readonly /><br>
-
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                        Edit
-                                    </button>
-
-                                </div>
-                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">Edit Your Account</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form role="form" action="MyAccount.jsp" method="post">                                                    
-                                                    <div class="form-group">
-                                                        
-                                                        Name<input type="text" class="form-control" value="${sessionScope.user.name}" name="name" required><br><hr>
-                                                        <div class="text-center" style="font-weight:bold ">
-                                                            Change Password
-                                                        </div>
-                                                        Current Password<input type="password" class="form-control" name="password"><br>
-                                                        New Password<input type="password" class="form-control" name="newpassword"><br>
-                                                        Confirm New Password<input type="password" class="form-control" name="confirmnewpassword"><br>
-                                                    </div>                                              
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-primary">Edit</button>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                            
-                        </div>
                     </div>
                 </div>
 
