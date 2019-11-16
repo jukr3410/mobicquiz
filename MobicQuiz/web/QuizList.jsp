@@ -59,10 +59,10 @@
                             
 
                             <div class="jumbotron ">
-                                
+                                <h1 class="text-muted text-center">My Quiz</h1>
                                 
                                 <!--    !! write content in this    -->
-                                
+                                <%@include file="Choose.jsp" %>
                             </div>
                             
                             
