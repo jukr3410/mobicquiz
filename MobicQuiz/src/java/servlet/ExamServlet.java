@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
@@ -51,8 +52,17 @@ public class ExamServlet extends HttpServlet {
             
             QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
             List<Questions> questions = qjc.findQuestionsByQuizNo(quizno);
+            int noq = questions.size();
+            List<String> aoq = new ArrayList();
             
-            request.setAttribute("numberofquestion", questions.size());
+            String[][] aoqs = new String[noq][noq];
+            for (int i = 0; i < noq; i++) {
+               
+                if (questions.get(i).getQuestionno()!=null) {
+                    
+                }
+            }
+            request.setAttribute("numberofquestion", noq);
             request.setAttribute("questions", questions);
 
         }
