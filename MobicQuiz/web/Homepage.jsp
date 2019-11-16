@@ -4,6 +4,7 @@
     Author     : Jn
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -42,15 +43,31 @@
 
                     <div class="row">
                         <div class="col-md-2 text-center ">
-                            <a class="nav-link" href="Homepage.jsp">Home</a>                          
-                            <a class="nav-link" href="Quiz">My Quiz</a>                           
+                            <a class="nav-link" href="Homepage.jsp">Home</a> 
+                            <c:choose>
+                                <c:when test="${usertype=='student'}">
+                                    <a class="nav-link" href="QuizList.jsp">My Quiz</a> 
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="nav-link" href="ManageQuiz">Manage Quiz</a> 
+                                </c:otherwise>
+                            </c:choose>
+                                                      
                             <a class="nav-link" href="History">History</a>
                             <a class="nav-link" href="MyAccount.jsp">My Account</a>
                         </div>
                         <div class="col-md-10">
                             <div class="jumbotron text-center">
                                 <h1 class="display-3">Online Quiz</h1>
-                                <p class="lead">You can take the exam anywhere. Go ahead!</p>
+                                <c:choose>
+                                <c:when test="${usertype=='student'}">
+                                    <p class="lead">You can take the exam anywhere. Go ahead!</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="lead">You can create the exam anywhere. Go ahead!</p>
+                                </c:otherwise>
+                            </c:choose>
+                                
                             </div>
                         </div>
                     </div>
