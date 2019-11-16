@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
+import jpacontroller.QuizsJpaController;
+import model.Quizs;
 
 /**
  *
@@ -40,6 +43,11 @@ public class QuizListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
+        QuizsJpaController qjc = new QuizsJpaController(utx, emf);
+        List<Quizs> quizs = qjc.findQuizsEntities();
+        request.setAttribute("myquizs", quizs);
+        getServletContext().getRequestDispatcher("/QuizList.jsp").forward(request, response);
         
     }
         // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
