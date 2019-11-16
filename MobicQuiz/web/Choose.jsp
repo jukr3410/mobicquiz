@@ -17,8 +17,27 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-        <title>JSP Page</title>
+        <title>Choose</title>
+
+
+
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
+
     <body>
 
         <div class="container-fluid">
@@ -34,31 +53,64 @@
                     </select>
                     <br>
                     <br>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Subject</th>
-                                <th>Name</th>
-                                <th>Time</th>
-                                <th>Score</th>
-                                <th>Ready</th>
+                    <div class="container">
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${quizs}" var="q">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td></td>
-                                    <td>${q.subjectno}</td>
-                                    <td>${q.title}</td>
-                                    <td>${q.time}</td>
-                                    <td>${q.fullscore}</td>
-                                    <td></td>
+                                    <th>No</th>
+                                    <th>Subject</th>
+                                    <th>Name</th>
+
+                                    <th>Go</th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Math</td>
+                                    <td>Calculus</td>
+                                    <td><div class="container">
+
+                                            <!-- Trigger the modal with a button -->
+                                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">View</button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="myModal" role="dialog">
+                                                <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p><center>Subject</center><p>
+
+                                                            <p><center>Name</center></p>
+
+                                                            <p><center>Time</center></p>
+
+                                                            <p><center>Score</center></p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a href="Homepage.jsp"><button type="button" class="btn btn-success">Success</button></a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div><td>
+
+
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
 
                 </div>
