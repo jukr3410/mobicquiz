@@ -29,9 +29,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-8">
+
+                    <div>
                         <form action="FinishExam" method="post">
                             <input type="submit" class="btn btn-danger float-right" value="Finished">      
 
@@ -40,13 +39,13 @@
                             </div>
                             <br>
 
-                            <div class="jumbotron" style="width: 100%; text-align: left; padding: 35px; font-size: medium">
-                                <h3>Time</h3>
-                                <div class="swiper-container" style="height: 600px; width: 1000px">
+                            <div class="jumbotron" style="font-size: medium">
+                                <h3>Time:  minutes</h3>
+                                <div class="swiper-container">
                                     <div class="swiper-wrapper">
                                         <c:forEach items="${questions}" var="que" varStatus="theCount">
                                             <div class="swiper-slide">
-                                                <div class="" >
+                                                <div class="" ><br>
                                                     ${theCount.count}. ${que.question}
                                                     <br><hr>
                                                     <div style="width: 100%; text-align: left;padding: 35px">
@@ -67,8 +66,7 @@
 
                         </form>
                     </div>
-                    <div class="col-md-2">
-                    </div>
+
                 </div>
             </div>
             <hr>
@@ -88,8 +86,6 @@
                 var j = i + 1;
                 menu.push(j.toString());
             }
-
-
             var mySwiper = new Swiper('.swiper-container', {
                 // If we need pagination
                 pagination: {
@@ -98,13 +94,7 @@
                     renderBullet: function (index, className) {
                         return '<span class="' + className + '">' + (menu[index]) + '</span>';
                     }
-                },
-
-                // Navigation arrows
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev'
-                }
+                },              
             });
 
             // the selector will match all input controls of type :checkbox
