@@ -3,7 +3,7 @@
 
 CREATE TABLE levels
 (
- levelno int NOT NULL ,
+ levelno varchar(45) NOT NULL ,
  level   varchar(45) NOT NULL ,
 
 PRIMARY KEY (levelno)
@@ -16,7 +16,7 @@ PRIMARY KEY (levelno)
 
 CREATE TABLE subjects
 (
- subjectno int NOT NULL ,
+ subjectno varchar(45) NOT NULL ,
  subject   varchar(45) NOT NULL ,
 
 PRIMARY KEY (subjectno)
@@ -27,7 +27,7 @@ PRIMARY KEY (subjectno)
 
 CREATE TABLE teachers
 (
- teacherno   int NOT NULL ,
+ teacherno   varchar(45) NOT NULL ,
  name        varchar(45) NOT NULL ,
  email       varchar(45) NOT NULL ,
  password    varchar(45) NOT NULL ,
@@ -60,7 +60,7 @@ PRIMARY KEY (teachersubjectno),
 
 CREATE TABLE students
 (
- studentno   int NOT NULL ,
+ studentno   varchar(45) NOT NULL ,
  name        varchar(45) NOT NULL ,
  email       varchar(45) NOT NULL ,
  password    varchar(45) NOT NULL ,
@@ -97,12 +97,12 @@ PRIMARY KEY (studentsubjectno),
 
 CREATE TABLE quizs
 (
- quizno    int NOT NULL ,
- title     varchar(45) NOT NULL ,
+ quizno    varchar(45) NOT NULL ,
+ title     varchar(100) NOT NULL ,
  time      decimal NOT NULL ,
  fullscore decimal NOT NULL ,
- levelno   int NOT NULL ,
- subjectno int NOT NULL ,
+ levelno   varchar(45) NOT NULL ,
+ subjectno varchar(45) NOT NULL ,
  status varchar(45),
 
 PRIMARY KEY (quizno),
@@ -117,14 +117,14 @@ PRIMARY KEY (quizno),
 
 CREATE TABLE questions
 (
- questionno int NOT NULL ,
- question   varchar(45) NOT NULL ,
+ questionno varchar(45) NOT NULL ,
+ question   varchar(100) NOT NULL ,
  ans1       varchar(45) ,
  ans2       varchar(45) ,
  ans3       varchar(45) ,
  ans4       varchar(45) ,
  correctans varchar(45) ,
- quizno     int NOT NULL ,
+ quizno     varchar(45) NOT NULL ,
 
 PRIMARY KEY (questionno),  FOREIGN KEY  (quizno) REFERENCES quizs (quizno)
 );
@@ -135,11 +135,11 @@ PRIMARY KEY (questionno),  FOREIGN KEY  (quizno) REFERENCES quizs (quizno)
 
 CREATE TABLE historys
 (
- historyno int NOT NULL ,
+ historyno varchar(45) NOT NULL ,
  score     decimal NOT NULL ,
  date      date NOT NULL ,
- quizno    int NOT NULL ,
- studentno int NOT NULL ,
+ quizno    varchar(45) NOT NULL ,
+ studentno varchar(45) NOT NULL ,
 
 PRIMARY KEY (historyno),  FOREIGN KEY  (quizno) REFERENCES quizs (quizno),
  FOREIGN KEY  (studentno) REFERENCES students (studentno)
