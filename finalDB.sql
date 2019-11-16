@@ -43,9 +43,9 @@ PRIMARY KEY (teacherno)
 
 CREATE TABLE teachersubjects
 (
- teachersubjectno int NOT NULL ,
- teacherno        int NOT NULL ,
- subjectno        int NOT NULL ,
+ teachersubjectno varchar(45) NOT NULL ,
+ teacherno        varchar(45) NOT NULL ,
+ subjectno        varchar(45) NOT NULL ,
 
 PRIMARY KEY (teachersubjectno),
  FOREIGN KEY  (teacherno) REFERENCES teachers (teacherno),
@@ -66,7 +66,7 @@ CREATE TABLE students
  password    varchar(45) NOT NULL ,
  activatekey varchar(45) ,
  activated   varchar(45) ,
- levelno     int NOT NULL ,
+ levelno     varchar(45) NOT NULL ,
 
 PRIMARY KEY (studentno),
   FOREIGN KEY  (levelno) REFERENCES levels (levelno)
@@ -80,9 +80,9 @@ PRIMARY KEY (studentno),
 
 CREATE TABLE studentsubjects
 (
- studentsubjectno int NOT NULL ,
- studentno        int NOT NULL ,
- subjectno        int NOT NULL ,
+ studentsubjectno varchar(45) NOT NULL ,
+ studentno        varchar(45) NOT NULL ,
+ subjectno        varchar(45) NOT NULL ,
 
 PRIMARY KEY (studentsubjectno),
  FOREIGN KEY  (studentno) REFERENCES students (studentno),
@@ -149,64 +149,64 @@ PRIMARY KEY (historyno),  FOREIGN KEY  (quizno) REFERENCES quizs (quizno),
 
 
 INSERT INTO MOBIC.LEVELS (LEVELNO, "LEVEL") 
-	VALUES (1, 'Grade 1');
+	VALUES ('1', 'Grade 1');
 INSERT INTO MOBIC.LEVELS (LEVELNO, "LEVEL") 
-	VALUES (2, 'Grade 2');
+	VALUES ('2', 'Grade 2');
 INSERT INTO MOBIC.LEVELS (LEVELNO, "LEVEL") 
-	VALUES (3, 'Grade 3');
+	VALUES ('3', 'Grade 3');
 INSERT INTO MOBIC.LEVELS (LEVELNO, "LEVEL") 
-	VALUES (4, 'Grade 4');
+	VALUES ('4', 'Grade 4');
 INSERT INTO MOBIC.LEVELS (LEVELNO, "LEVEL") 
-	VALUES (5, 'Grade 5');
+	VALUES ('5', 'Grade 5');
 INSERT INTO MOBIC.LEVELS (LEVELNO, "LEVEL") 
-	VALUES (6, 'Grade 6');
+	VALUES ('6', 'Grade 6');
 
 
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (101, 'Math 1');
+	VALUES ('101', 'Math 1');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (102, 'Math 2');
+	VALUES ('102', 'Math 2');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (201, 'Science 1');
+	VALUES ('201', 'Science 1');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (202, 'Science 2');
+	VALUES ('202', 'Science 2');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (301, 'Art 1');
+	VALUES ('301', 'Art 1');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (302, 'Art 2');
+	VALUES ('302', 'Art 2');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (103, 'Math 3');
+	VALUES ('103', 'Math 3');
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (203, 'Science 3');
+	VALUES ('203', 'Science 3');
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (303, 'Art 3');
+	VALUES ('303', 'Art 3');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (104, 'Math 4');
+	VALUES ('104', 'Math 4');
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (204, 'Science 4');
+	VALUES ('204', 'Science 4');
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (304, 'Art 4');
+	VALUES ('304', 'Art 4');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (105, 'Math 5');
+	VALUES ('105', 'Math 5');
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (205, 'Science 5');
+	VALUES ('205', 'Science 5');
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (305, 'Art 5');
+	VALUES ('305', 'Art 5');
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (106, 'Math 6');
+	VALUES ('106', 'Math 6');
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (206, 'Science 6');
+	VALUES ('206', 'Science 6');
 
 INSERT INTO MOBIC.SUBJECTS (SUBJECTNO, SUBJECT) 
-	VALUES (306, 'Art 6');
+	VALUES ('306', 'Art 6');
 
 
 
