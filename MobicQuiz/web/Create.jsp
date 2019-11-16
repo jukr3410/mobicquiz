@@ -102,7 +102,11 @@
                             <label for="subject">
                                 Subject
                             </label>
-                            <input type="text" class="form-control" id="subject" />
+                            <select class="form-control">
+                                <option value="thai">Thai</option>
+                                <option value="science">Science</option>
+                                <option value="social">Social</option>
+                            </select>
                         </div>
                         <div class="form-group">
 
@@ -148,10 +152,8 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Create</h5>
+                                
                             </div>
                             <div class="modal-body">
                                 <form role="form">
