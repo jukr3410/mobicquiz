@@ -46,7 +46,7 @@
                             <a class="nav-link" href="Homepage.jsp">Home</a> 
                             <c:choose>
                                 <c:when test="${usertype=='student'}">
-                                    <a class="nav-link" href="QuizList.jsp">My Quiz</a> 
+                                    <a class="nav-link" href="QuizList">My Quiz</a> 
                                 </c:when>
                                 <c:otherwise>
                                     <a class="nav-link" href="ManageQuiz">Manage Quiz</a> 
