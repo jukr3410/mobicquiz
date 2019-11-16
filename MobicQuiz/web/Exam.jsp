@@ -50,10 +50,10 @@
                                     <div class="swiper-wrapper">
                                         <c:forEach items="${questions}" var="que" varStatus="theCount">
                                             <div class="swiper-slide">
-                                                <div class="" style="width: 100%">
+                                                <div class="" style="width: 100%; text-align: left; padding: 35px">
                                                     ${theCount.count}. ${que.question}
                                                     <br><hr>
-                                                    <div>
+                                                    <div style="width: 100%; text-align: left;padding: 35px">
                                                         <label><input type="checkbox" class="radio" value="${que.ans1}" name="ansofque[${theCount.count}]" />1. ${que.ans1}</label><br>
                                                         <label><input type="checkbox" class="radio" value="${que.ans2}" name="ansofque[${theCount.count}]" />2. ${que.ans2}</label><br>
                                                         <label><input type="checkbox" class="radio" value="${que.ans3}" name="ansofque[${theCount.count}]" />3. ${que.ans3}</label><br>
