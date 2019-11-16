@@ -46,7 +46,7 @@
                             <a class="nav-link" href="Homepage.jsp">Home</a> 
                             <c:choose>
                                 <c:when test="${usertype=='student'}">
-                                    <a class="nav-link" href="QuizList.jsp">My Quiz</a> 
+                                    <a class="nav-link" href="QuizList">My Quiz</a> 
                                 </c:when>
                                 <c:otherwise>
                                     <a class="nav-link" href="ManageQuiz">Manage Quiz</a> 
@@ -68,13 +68,15 @@
                                     <div>
                                         <c:choose>
                                             <c:when test="${myquizs!=null}">
-                                                
+
+
                                                 <select class="form-control">
                                                     <option value="thsi">Thai</option>
                                                     <option value="science">Science</option>
                                                     <option value="social">Social</option>
-                                                </select>
-                                                <table class="table table-hover text-center">
+                                                </select><br>
+
+                                                <table class="table table-hover text-center" style="background-color: azure">
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
@@ -83,18 +85,48 @@
                                                             <th></th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <c:forEach items="${quiz}" var="q">
+                                                    <tbody class="table-sm" style="background-color: white">
+                                                        <c:forEach items="${myquizs}" var="q" varStatus="theCount">
                                                             <tr>
-                                                                <td></td>
-                                                                <td>Math</td>
-                                                                <td>Calculus</td>
+                                                                <td>${theCount.count}</td>
+                                                                <td>${q.subjectno.subject}</td>
+                                                                <td>${q.title}</td>
                                                                 <td>
                                                                     <div>                           
                                                                         <button type="button" class="btn btn-info btn-lg align-middle" data-toggle="modal" data-target="#myModal">View</button>
+                                                                        <!-- Modal -->
+                                                                        <div class="modal fade" id="myModal" role="dialog">
+                                                                            <div class="modal-dialog">
+
+                                                                                <!-- Modal content-->
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                                                                    </div>
+                                                                                    <div class="modal-body text-center">
+                                                                                        <div>
+                                                                                            <h5>Subject</h5><br>
+                                                                                            ${q.subjectno.subject}
+                                                                                        </div> <br>                                                      
+                                                                                        <div><h5>Title</h5><br>${q.title}</div><br>
+
+                                                                                        <div><h5>Time</h5><br>${q.time}</div><br>
+
+                                                                                        <div><h5>Full Score</h5><br>${q.fullscore}</div><br>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <a href="Homepage.jsp"><button type="button" class="btn btn-success">Start</button></a>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </td>
                                                             </tr>
+
+
                                                         </c:forEach>
                                                     </tbody>
                                                 </table>
@@ -106,32 +138,7 @@
                                             </c:otherwise>
                                         </c:choose>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="myModal" role="dialog">
-                                            <div class="modal-dialog">
 
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p><center>Subject</center></p>
-
-                                                        <p><center>Name</center></p>
-
-                                                        <p><center>Time</center></p>
-
-                                                        <p><center>Score</center></p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <a href="Homepage.jsp"><button type="button" class="btn btn-success">Start</button></a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
                                     </div>
 
 

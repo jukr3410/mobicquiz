@@ -53,7 +53,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <a class="nav-link" href="History">History</a>
-                            <a class="nav-link" href="MyAccount.jsp">My Account</a>
+                            <a class="nav-link" href="MyAccount">My Account</a>
                         </div>
                         <div class="col-md-10">
                             

@@ -325,6 +325,20 @@ public class QuizsJpaController implements Serializable {
             em.close();
         }
     }
+    
+        public List<Quizs> findQuizsByLevelNo(String levelno) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Quizs.findByLevelno");
+        query.setParameter("levelno", levelno);
+        List<Quizs> resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : resultList;
+        } finally {
+            em.close();
+        }
+    }
+    
+    
 
     public int getQuizsCount() {
         EntityManager em = getEntityManager();

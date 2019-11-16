@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Quizs.findByTitle", query = "SELECT q FROM Quizs q WHERE q.title = :title")
     , @NamedQuery(name = "Quizs.findByTime", query = "SELECT q FROM Quizs q WHERE q.time = :time")
     , @NamedQuery(name = "Quizs.findByFullscore", query = "SELECT q FROM Quizs q WHERE q.fullscore = :fullscore")
+    , @NamedQuery(name = "Quizs.findByLevelno", query = "SELECT q FROM Quizs q WHERE q.levelno.levelno = :levelno and q.status like 'on'")
     , @NamedQuery(name = "Quizs.findByStatus", query = "SELECT q FROM Quizs q WHERE q.status = :status")})
 public class Quizs implements Serializable {
 

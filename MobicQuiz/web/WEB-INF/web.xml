@@ -20,6 +20,10 @@
         <servlet-name>QuizListServlet</servlet-name>
         <servlet-class>servlet.QuizListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MyAccountServlet</servlet-name>
+        <servlet-class>servlet.MyAccountServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>QuizListServlet</servlet-name>
         <url-pattern>/QuizList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyAccountServlet</servlet-name>
+        <url-pattern>/MyAccount</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

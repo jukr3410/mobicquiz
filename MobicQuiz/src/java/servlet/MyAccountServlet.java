@@ -7,32 +7,16 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.annotation.Resource;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.transaction.UserTransaction;
-import jpacontroller.QuizsJpaController;
-import model.Levels;
-import model.Quizs;
-import model.Students;
 
 /**
  *
  * @author Student
  */
-public class QuizListServlet extends HttpServlet {
-
-    @PersistenceUnit(unitName = "MobicQuizPU")
-    EntityManagerFactory emf;
-
-    @Resource
-    UserTransaction utx;
+public class MyAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,23 +29,10 @@ public class QuizListServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        Students student = (Students) session.getAttribute("user");
-        QuizsJpaController qjc = new QuizsJpaController(utx, emf);
-        if (student != null) {
-
-            List<Quizs> quizs = qjc.findQuizsByLevelNo(student.getLevelno().getLevelno());
-            if (quizs != null) {
-                request.setAttribute("myquizs", quizs);
-            }
-        }
-
-        getServletContext().getRequestDispatcher("/QuizList.jsp").forward(request, response);
-
+        getServletContext().getRequestDispatcher("/MyAccount.jsp").forward(request, response);
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
