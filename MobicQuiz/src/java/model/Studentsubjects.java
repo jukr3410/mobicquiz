@@ -16,11 +16,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 @Entity
 @Table(name = "STUDENTSUBJECTS")
@@ -34,8 +35,9 @@ public class Studentsubjects implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "STUDENTSUBJECTNO")
-    private Integer studentsubjectno;
+    private String studentsubjectno;
     @JoinColumn(name = "STUDENTNO", referencedColumnName = "STUDENTNO")
     @ManyToOne(optional = false)
     private Students studentno;
@@ -46,15 +48,15 @@ public class Studentsubjects implements Serializable {
     public Studentsubjects() {
     }
 
-    public Studentsubjects(Integer studentsubjectno) {
+    public Studentsubjects(String studentsubjectno) {
         this.studentsubjectno = studentsubjectno;
     }
 
-    public Integer getStudentsubjectno() {
+    public String getStudentsubjectno() {
         return studentsubjectno;
     }
 
-    public void setStudentsubjectno(Integer studentsubjectno) {
+    public void setStudentsubjectno(String studentsubjectno) {
         this.studentsubjectno = studentsubjectno;
     }
 

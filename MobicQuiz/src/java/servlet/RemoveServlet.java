@@ -46,7 +46,7 @@ public class RemoveServlet extends HttpServlet {
         QuizsJpaController qjc = new QuizsJpaController(utx, emf);
        String remove = request.getParameter("remove");
         try {
-            qjc.destroy(Integer.valueOf(remove));
+            qjc.destroy(remove);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RollbackFailureException ex) {

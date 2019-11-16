@@ -27,7 +27,7 @@ import model.Quizs;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 public class QuizsJpaController implements Serializable {
 
@@ -224,7 +224,7 @@ public class QuizsJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = quizs.getQuizno();
+                String id = quizs.getQuizno();
                 if (findQuizs(id) == null) {
                     throw new NonexistentEntityException("The quizs with id " + id + " no longer exists.");
                 }
@@ -237,7 +237,7 @@ public class QuizsJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -317,7 +317,7 @@ public class QuizsJpaController implements Serializable {
         }
     }
 
-    public Quizs findQuizs(Integer id) {
+    public Quizs findQuizs(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Quizs.class, id);

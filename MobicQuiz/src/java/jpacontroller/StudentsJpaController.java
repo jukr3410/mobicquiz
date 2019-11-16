@@ -26,7 +26,7 @@ import model.Students;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 public class StudentsJpaController implements Serializable {
 
@@ -200,7 +200,7 @@ public class StudentsJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = students.getStudentno();
+                String id = students.getStudentno();
                 if (findStudents(id) == null) {
                     throw new NonexistentEntityException("The students with id " + id + " no longer exists.");
                 }
@@ -213,7 +213,7 @@ public class StudentsJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -288,7 +288,7 @@ public class StudentsJpaController implements Serializable {
         }
     }
 
-    public Students findStudents(Integer id) {
+    public Students findStudents(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Students.class, id);
@@ -308,7 +308,6 @@ public class StudentsJpaController implements Serializable {
             em.close();
         }
     }
-    
 
     public int getStudentsCount() {
         EntityManager em = getEntityManager();

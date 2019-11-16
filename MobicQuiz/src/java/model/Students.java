@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 @Entity
 @Table(name = "STUDENTS")
@@ -44,8 +44,9 @@ public class Students implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "STUDENTNO")
-    private Integer studentno;
+    private String studentno;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -79,18 +80,18 @@ public class Students implements Serializable {
     public Students() {
     }
 
-    public Students(Integer studentno) {
+    public Students(String studentno) {
         this.studentno = studentno;
     }
 
-    public Students(Integer studentno, String name, String email, String password) {
+    public Students(String studentno, String name, String email, String password) {
         this.studentno = studentno;
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    public Students(Integer studentno, String name, String email, String password, String activatekey, Levels levelno) {
+    public Students(String studentno, String name, String email, String password, String activatekey, Levels levelno) {
         this.studentno = studentno;
         this.name = name;
         this.email = email;
@@ -101,11 +102,11 @@ public class Students implements Serializable {
     
     
 
-    public Integer getStudentno() {
+    public String getStudentno() {
         return studentno;
     }
 
-    public void setStudentno(Integer studentno) {
+    public void setStudentno(String studentno) {
         this.studentno = studentno;
     }
 

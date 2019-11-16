@@ -25,7 +25,7 @@ import model.Students;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 public class LevelsJpaController implements Serializable {
 
@@ -176,7 +176,7 @@ public class LevelsJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = levels.getLevelno();
+                String id = levels.getLevelno();
                 if (findLevels(id) == null) {
                     throw new NonexistentEntityException("The levels with id " + id + " no longer exists.");
                 }
@@ -189,7 +189,7 @@ public class LevelsJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -259,7 +259,7 @@ public class LevelsJpaController implements Serializable {
         }
     }
 
-    public Levels findLevels(Integer id) {
+    public Levels findLevels(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Levels.class, id);

@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 @Entity
 @Table(name = "QUESTIONS")
@@ -41,11 +41,12 @@ public class Questions implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "QUESTIONNO")
-    private Integer questionno;
+    private String questionno;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 100)
     @Column(name = "QUESTION")
     private String question;
     @Size(max = 45)
@@ -70,20 +71,20 @@ public class Questions implements Serializable {
     public Questions() {
     }
 
-    public Questions(Integer questionno) {
+    public Questions(String questionno) {
         this.questionno = questionno;
     }
 
-    public Questions(Integer questionno, String question) {
+    public Questions(String questionno, String question) {
         this.questionno = questionno;
         this.question = question;
     }
 
-    public Integer getQuestionno() {
+    public String getQuestionno() {
         return questionno;
     }
 
-    public void setQuestionno(Integer questionno) {
+    public void setQuestionno(String questionno) {
         this.questionno = questionno;
     }
 

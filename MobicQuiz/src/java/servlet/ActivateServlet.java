@@ -54,10 +54,10 @@ public class ActivateServlet extends HttpServlet {
         String id = (String) session.getAttribute("id");      
         if (activateCode != null && id != null) {
             StudentsJpaController sjc = new StudentsJpaController(utx, emf);
-            Students student = sjc.findStudents(Integer.valueOf(id));
+            Students student = sjc.findStudents(id);
             
             TeachersJpaController tjc = new TeachersJpaController(utx, emf);
-            Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
+            Teachers teacher = tjc.findTeachers(id);
                        
             if (student!=null&&student.getActivated()==null&&student.getActivatekey().equals(activateCode)) {
                 student.setActivated("activated");

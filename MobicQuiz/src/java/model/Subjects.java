@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 @Entity
 @Table(name = "SUBJECTS")
@@ -38,8 +38,9 @@ public class Subjects implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "SUBJECTNO")
-    private Integer subjectno;
+    private String subjectno;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -55,20 +56,20 @@ public class Subjects implements Serializable {
     public Subjects() {
     }
 
-    public Subjects(Integer subjectno) {
+    public Subjects(String subjectno) {
         this.subjectno = subjectno;
     }
 
-    public Subjects(Integer subjectno, String subject) {
+    public Subjects(String subjectno, String subject) {
         this.subjectno = subjectno;
         this.subject = subject;
     }
 
-    public Integer getSubjectno() {
+    public String getSubjectno() {
         return subjectno;
     }
 
-    public void setSubjectno(Integer subjectno) {
+    public void setSubjectno(String subjectno) {
         this.subjectno = subjectno;
     }
 

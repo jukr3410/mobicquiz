@@ -20,12 +20,11 @@ import jpacontroller.exceptions.IllegalOrphanException;
 import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.PreexistingEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
-import model.Students;
 import model.Teachers;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 public class TeachersJpaController implements Serializable {
 
@@ -130,7 +129,7 @@ public class TeachersJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = teachers.getTeacherno();
+                String id = teachers.getTeacherno();
                 if (findTeachers(id) == null) {
                     throw new NonexistentEntityException("The teachers with id " + id + " no longer exists.");
                 }
@@ -143,7 +142,7 @@ public class TeachersJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -206,7 +205,7 @@ public class TeachersJpaController implements Serializable {
         }
     }
 
-    public Teachers findTeachers(Integer id) {
+    public Teachers findTeachers(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Teachers.class, id);
@@ -214,8 +213,8 @@ public class TeachersJpaController implements Serializable {
             em.close();
         }
     }
-
-    public Teachers findTeachersByEmail(String email) {
+    
+        public Teachers findTeachersByEmail(String email) {
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Teachers.findByEmail");
         query.setParameter("email", email);
@@ -239,5 +238,5 @@ public class TeachersJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

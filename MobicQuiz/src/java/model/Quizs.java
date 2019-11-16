@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 @Entity
 @Table(name = "QUIZS")
@@ -35,18 +35,20 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Quizs.findByQuizno", query = "SELECT q FROM Quizs q WHERE q.quizno = :quizno")
     , @NamedQuery(name = "Quizs.findByTitle", query = "SELECT q FROM Quizs q WHERE q.title = :title")
     , @NamedQuery(name = "Quizs.findByTime", query = "SELECT q FROM Quizs q WHERE q.time = :time")
-    , @NamedQuery(name = "Quizs.findByFullscore", query = "SELECT q FROM Quizs q WHERE q.fullscore = :fullscore")})
+    , @NamedQuery(name = "Quizs.findByFullscore", query = "SELECT q FROM Quizs q WHERE q.fullscore = :fullscore")
+    , @NamedQuery(name = "Quizs.findByStatus", query = "SELECT q FROM Quizs q WHERE q.status = :status")})
 public class Quizs implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "QUIZNO")
-    private Integer quizno;
+    private String quizno;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 100)
     @Column(name = "TITLE")
     private String title;
     @Basic(optional = false)
@@ -57,6 +59,9 @@ public class Quizs implements Serializable {
     @NotNull
     @Column(name = "FULLSCORE")
     private int fullscore;
+    @Size(max = 45)
+    @Column(name = "STATUS")
+    private String status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quizno")
     private List<Questions> questionsList;
     @JoinColumn(name = "LEVELNO", referencedColumnName = "LEVELNO")
@@ -71,22 +76,22 @@ public class Quizs implements Serializable {
     public Quizs() {
     }
 
-    public Quizs(Integer quizno) {
+    public Quizs(String quizno) {
         this.quizno = quizno;
     }
 
-    public Quizs(Integer quizno, String title, int time, int fullscore) {
+    public Quizs(String quizno, String title, int time, int fullscore) {
         this.quizno = quizno;
         this.title = title;
         this.time = time;
         this.fullscore = fullscore;
     }
 
-    public Integer getQuizno() {
+    public String getQuizno() {
         return quizno;
     }
 
-    public void setQuizno(Integer quizno) {
+    public void setQuizno(String quizno) {
         this.quizno = quizno;
     }
 
@@ -112,6 +117,14 @@ public class Quizs implements Serializable {
 
     public void setFullscore(int fullscore) {
         this.fullscore = fullscore;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @XmlTransient

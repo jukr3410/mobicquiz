@@ -22,7 +22,7 @@ import model.Quizs;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 public class QuestionsJpaController implements Serializable {
 
@@ -100,7 +100,7 @@ public class QuestionsJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = questions.getQuestionno();
+                String id = questions.getQuestionno();
                 if (findQuestions(id) == null) {
                     throw new NonexistentEntityException("The questions with id " + id + " no longer exists.");
                 }
@@ -113,7 +113,7 @@ public class QuestionsJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -170,7 +170,7 @@ public class QuestionsJpaController implements Serializable {
         }
     }
 
-    public Questions findQuestions(Integer id) {
+    public Questions findQuestions(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Questions.class, id);

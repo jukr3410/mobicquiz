@@ -19,11 +19,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 @Entity
 @Table(name = "HISTORYS")
@@ -39,8 +40,9 @@ public class Historys implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "HISTORYNO")
-    private Integer historyno;
+    private String historyno;
     @Basic(optional = false)
     @NotNull
     @Column(name = "SCORE")
@@ -60,21 +62,21 @@ public class Historys implements Serializable {
     public Historys() {
     }
 
-    public Historys(Integer historyno) {
+    public Historys(String historyno) {
         this.historyno = historyno;
     }
 
-    public Historys(Integer historyno, int score, Date date) {
+    public Historys(String historyno, int score, Date date) {
         this.historyno = historyno;
         this.score = score;
         this.date = date;
     }
 
-    public Integer getHistoryno() {
+    public String getHistoryno() {
         return historyno;
     }
 
-    public void setHistoryno(Integer historyno) {
+    public void setHistoryno(String historyno) {
         this.historyno = historyno;
     }
 

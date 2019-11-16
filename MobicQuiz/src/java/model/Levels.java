@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jn
+ * @author Student
  */
 @Entity
 @Table(name = "LEVELS")
@@ -38,8 +38,9 @@ public class Levels implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "LEVELNO")
-    private Integer levelno;
+    private String levelno;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -53,20 +54,20 @@ public class Levels implements Serializable {
     public Levels() {
     }
 
-    public Levels(Integer levelno) {
+    public Levels(String levelno) {
         this.levelno = levelno;
     }
 
-    public Levels(Integer levelno, String level) {
+    public Levels(String levelno, String level) {
         this.levelno = levelno;
         this.level = level;
     }
 
-    public Integer getLevelno() {
+    public String getLevelno() {
         return levelno;
     }
 
-    public void setLevelno(Integer levelno) {
+    public void setLevelno(String levelno) {
         this.levelno = levelno;
     }
 

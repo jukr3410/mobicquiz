@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
                 Students studentEmail = sjc.findStudentsByEmail(id);
                 Students studentId = null;
                 if(studentEmail==null){
-                    studentId = sjc.findStudents(Integer.valueOf(id));
+                    studentId = sjc.findStudents(id);
                 }               
                 if (studentId != null && studentId.getPassword().equals(password)||
                         studentEmail != null && studentEmail.getPassword().equals(password)) {
@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
                 Teachers teacherEmail = tjc.findTeachersByEmail(id);
                 Teachers teacherId = null;
                 if (teacherEmail==null) {
-                    teacherId = tjc.findTeachers(Integer.valueOf(id));
+                    teacherId = tjc.findTeachers(id);
                 }                
                 if (teacherId != null && teacherId.getPassword().equals(password)||
                         teacherEmail !=null && teacherEmail.getPassword().equals(password)) {
