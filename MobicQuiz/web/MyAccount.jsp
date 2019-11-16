@@ -56,14 +56,14 @@
                             <a class="nav-link" href="MyAccount.jsp">My Account</a>
                         </div>
                         <div class="col-md-10">
-                            
+
 
                             <div class="jumbotron ">
-                                
-                                
+
+
                                 <!--    !! write content in this    -->
-                                
-                                                                <h1 class="text-muted text-center">My Account</h1>
+
+                                <h1 class="text-muted text-center">My Account</h1>
 
                                 <br>
                                 <div class="col-md-12"><center>
@@ -76,35 +76,39 @@
                                     Name<input type="text" name="id" class="form-control" value="${sessionScope.user.name}" readonly />                                
                                     Email<input type="email" name="email" class="form-control" value="${sessionScope.user.email}" readonly /><br>
 
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong1">
+                                        Change Image
+                                    </button>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                        Edit
+                                        Change Password
                                     </button>
 
                                 </div>
-                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">Edit Your Account</h5>
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Change Your Image</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form role="form" action="MyAccount.jsp" method="post">                                                    
-                                                    <div class="form-group">
-                                                        
-                                                        Name<input type="text" class="form-control" value="${sessionScope.user.name}" name="name" required><br><hr>
-                                                        <div class="text-center" style="font-weight:bold ">
-                                                            Change Password
+                                                <form role="form" action="MyAccount.jsp" method="post">
+
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                                                         </div>
-                                                        Current Password<input type="password" class="form-control" name="password"><br>
-                                                        New Password<input type="password" class="form-control" name="newpassword"><br>
-                                                        Confirm New Password<input type="password" class="form-control" name="confirmnewpassword"><br>
-                                                    </div>                                              
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                                                   aria-describedby="inputGroupFileAddon01">
+                                                            <label class="custom-file-label" for="inputGroupFile01">Choose image</label>
+                                                        </div>
+                                                    </div>                                             
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                                        <button type="submit" class="btn btn-primary">Save</button>
                                                     </div>
                                                 </form>
 
@@ -112,20 +116,41 @@
 
                                         </div>
                                     </div>
-                                </div>
-                                
-                            </div>
-                            
-                            
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-            <hr>
-            <footer class="footer text-center ">
-                <p>© Mobicquiz 2019</p>
-            </footer>
-        </div>
-    </body>
-</html>
+                                </div>
+                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Change Your Password</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <form role="form" action="MyAccount.jsp" method="post">
+                                                    <div class="form-group">
+
+                                                        Current Password<input type="password" class="form-control" name="password" required /><br>
+                                                        New Password<input type="password" class="form-control" name="newpassword" required /><br>
+                                                        Confirm New Password<input type="password" class="form-control" name="confirmnewpassword" required /><br>
+                                                    </div>                                              
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <hr>
+                                <footer class="footer text-center ">
+                                    <p>© Mobicquiz 2019</p>
+                                </footer>
+                                </body>
+                                </html>
