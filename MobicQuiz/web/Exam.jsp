@@ -19,8 +19,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css'>
         <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-        <title>Home</title>
+
+        <title>Exam</title>
     </head>
     <body>
         <br>
@@ -31,52 +33,42 @@
                         <div class="header clearfix">
                             <nav>
                                 <ul class="nav nav-pills float-right">
-
                                     <li class="nav-item">
-                                        <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
-                                                Finished
-                                            </button></a>
+                                        <input type="submit" class="btn btn-danger float-right" value="Finished">      
                                     </li>
                                     <li class="nav-item">
-
                                     </li>
                                 </ul>
                             </nav>
                             <h3>MOBIC QUIZ</h3>
                         </div>
                         <br>
-
                         <div class="row">
-
-
-                            <div class="jumbotron text-center">
+                            <div class="jumbotron">
                                 <h3>Time</h3>
-                                <div class="swiper-container jumbotron" style="height: 600px; width: 1000px">
+                                <div class="swiper-container" style="height: 600px; width: 1000px">
                                     <div class="swiper-wrapper">
-                                       
                                         <c:forEach items="${questions}" var="que" varStatus="theCount">
                                             <div class="swiper-slide">
                                                 <div>
                                                     ${theCount.count}.${que.question}
-                                                </div>
-                                                <div>
+                                                    <br>
 
                                                     <div class="form-check">
                                                         <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-                                                        <label class="form-check-label" for="materialUnchecked">1.${que.ans1}</label>
+                                                        <label class="form-check-label" for="materialUnchecked">1.${que.ans1}</label><br>
                                                         <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-                                                        <label class="form-check-label" for="materialUnchecked">2.${que.ans2}</label>
+                                                        <label class="form-check-label" for="materialUnchecked">2.${que.ans2}</label><br>
                                                         <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-                                                        <label class="form-check-label" for="materialUnchecked">3.${que.ans3}</label>
+                                                        <label class="form-check-label" for="materialUnchecked">3.${que.ans3}</label><br>
                                                         <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-                                                        <label class="form-check-label" for="materialUnchecked">4.${que.ans4}</label>
+                                                        <label class="form-check-label" for="materialUnchecked">4.${que.ans4}</label><br>
                                                     </div>
                                                 </div>
                                             </div>
                                         </c:forEach>
-
                                     </div>                                                      
-                                    <div class="text-center">                                                                  
+                                    <div class="">                                                                  
                                         <div class="swiper-pagination"></div>                                                                                                
                                     </div>
                                 </div>
@@ -85,7 +77,6 @@
                     </form>
                 </div>
             </div>
-
             <hr>
             <footer class="footer text-center ">
                 <p>© Mobicquiz 2019</p>

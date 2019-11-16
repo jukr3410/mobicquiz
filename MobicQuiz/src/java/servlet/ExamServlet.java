@@ -7,16 +7,29 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.annotation.Resource;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
+import jpacontroller.QuestionsJpaController;
+import model.Questions;
 
 /**
  *
  * @author Student
  */
 public class ExamServlet extends HttpServlet {
+
+    @PersistenceUnit(unitName = "MobicQuizPU")
+    EntityManagerFactory emf;
+
+    @Resource
+    UserTransaction utx;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,7 +42,11 @@ public class ExamServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
+        List<Questions> questions = qjc.findQuestionsEntities();
         request.setAttribute("numberofquestion", 10);
+        request.setAttribute("questions", questions);
         getServletContext().getRequestDispatcher("/Exam.jsp").forward(request, response);
     }
 
