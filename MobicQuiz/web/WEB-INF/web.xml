@@ -16,6 +16,10 @@
         <servlet-name>ActivateServlet</servlet-name>
         <servlet-class>servlet.ActivateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>QuizListServlet</servlet-name>
+        <servlet-class>servlet.QuizListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>ActivateServlet</servlet-name>
         <url-pattern>/Activate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizListServlet</servlet-name>
+        <url-pattern>/QuizList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
