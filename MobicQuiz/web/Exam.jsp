@@ -54,10 +54,10 @@
                                                     ${theCount.count}. ${que.question}
                                                     <br><hr>
                                                     <div style="width: 100%; text-align: left;padding: 35px">
-                                                        <label><input type="checkbox" class="radio" value="${que.ans1}" name="ansofque[${theCount.count}]" /> 1. ${que.ans1}</label><br>
-                                                        <label><input type="checkbox" class="radio" value="${que.ans2}" name="ansofque[${theCount.count}]" /> 2. ${que.ans2}</label><br>
-                                                        <label><input type="checkbox" class="radio" value="${que.ans3}" name="ansofque[${theCount.count}]" /> 3. ${que.ans3}</label><br>
-                                                        <label><input type="checkbox" class="radio" value="${que.ans4}" name="ansofque[${theCount.count}]" /> 4. ${que.ans4}</label><br>
+                                                        <label><input type="checkbox" class="radio" value="${que.ans1}" name="aoq[${theCount.count}]" /> 1. ${que.ans1}</label><br>
+                                                        <label><input type="checkbox" class="radio" value="${que.ans2}" name="aoq[${theCount.count}]" /> 2. ${que.ans2}</label><br>
+                                                        <label><input type="checkbox" class="radio" value="${que.ans3}" name="aoq[${theCount.count}]" /> 3. ${que.ans3}</label><br>
+                                                        <label><input type="checkbox" class="radio" value="${que.ans4}" name="aoq[${theCount.count}]" /> 4. ${que.ans4}</label><br>
                                                     </div>
                                                 </div>
                                             </div>

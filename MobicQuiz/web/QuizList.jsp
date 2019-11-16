@@ -116,7 +116,7 @@
                                                                                         <div><h5>Full Score</h5><br>${q.fullscore}</div><br>
                                                                                     </div>
                                                                                     <div class="modal-footer">
-                                                                                        <a href="Homepage.jsp"><button type="button" class="btn btn-success">Start</button></a>
+                                                                                        <a href="Exam"><button type="button" class="btn btn-success">Start</button></a>
                                                                                     </div>
                                                                                 </div>
 

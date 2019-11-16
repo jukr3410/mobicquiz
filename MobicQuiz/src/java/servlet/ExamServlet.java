@@ -42,7 +42,7 @@ public class ExamServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
         List<Questions> questions = qjc.findQuestionsEntities();
         request.setAttribute("numberofquestion", 10);
