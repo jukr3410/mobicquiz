@@ -18,7 +18,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css'>
-        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="style.css">
 
         <title>Home</title>
     </head>
@@ -54,7 +54,7 @@
                                 <div class="swiper-container jumbotron" style="height: 600px; width: 1000px">
                                     <div class="swiper-wrapper">
                                        
-                                        <c:forEach items="questions" var="que" varStatus="theCount">
+                                        <c:forEach items="${questions}" var="que" varStatus="theCount">
                                             <div class="swiper-slide">
                                                 <div>
                                                     ${theCount.count}.${que.question}
