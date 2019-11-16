@@ -26,31 +26,27 @@
     </head>
     <body>
         <br>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div>
-                    <form action="Exam" method="post">
-                        <div class="header clearfix">
-                            <nav>
-                                <ul class="nav nav-pills float-right">
-                                    <li class="nav-item">
-                                        <input type="submit" class="btn btn-danger float-right" value="Finished">      
-                                    </li>
-                                    <li class="nav-item">
-                                    </li>
-                                </ul>
-                            </nav>
-                            <h3>MOBIC QUIZ</h3>
-                        </div>
-                        <br>
-                        <div class="row" >
-                            <div class="jumbotron">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-8">
+                        <form action="FinishExam" method="post">
+                            <input type="submit" class="btn btn-danger float-right" value="Finished">      
+
+                            <div class="header clearfix">
+                                <h3>MOBIC QUIZ</h3>
+                            </div>
+                            <br>
+
+                            <div class="jumbotron" style="width: 100%; text-align: left; padding: 35px; font-size: medium">
                                 <h3>Time</h3>
                                 <div class="swiper-container" style="height: 600px; width: 1000px">
                                     <div class="swiper-wrapper">
                                         <c:forEach items="${questions}" var="que" varStatus="theCount">
                                             <div class="swiper-slide">
-                                                <div class="" style="width: 100%; text-align: left; padding: 35px">
+                                                <div class="" >
                                                     ${theCount.count}. ${que.question}
                                                     <br><hr>
                                                     <div style="width: 100%; text-align: left;padding: 35px">
@@ -68,8 +64,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
                 </div>
             </div>
             <hr>

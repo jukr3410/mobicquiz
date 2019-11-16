@@ -72,6 +72,16 @@ public class Historys implements Serializable {
         this.date = date;
     }
 
+    public Historys(String historyno, int score, Date date, Quizs quizno, Students studentno) {
+        this.historyno = historyno;
+        this.score = score;
+        this.date = date;
+        this.quizno = quizno;
+        this.studentno = studentno;
+    }
+    
+    
+
     public String getHistoryno() {
         return historyno;
     }

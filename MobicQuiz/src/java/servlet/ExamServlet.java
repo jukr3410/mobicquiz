@@ -8,7 +8,10 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -18,8 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
+import jpacontroller.HistorysJpaController;
 import jpacontroller.QuestionsJpaController;
+import jpacontroller.exceptions.RollbackFailureException;
+import model.Historys;
 import model.Questions;
+import model.Quizs;
 import model.Students;
 
 /**
@@ -53,18 +60,11 @@ public class ExamServlet extends HttpServlet {
             QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
             List<Questions> questions = qjc.findQuestionsByQuizNo(quizno);
             int noq = questions.size();
-            List<String> aoq = new ArrayList();
-            
-            String[][] aoqs = new String[noq][noq];
-            for (int i = 0; i < noq; i++) {
-               
-                if (questions.get(i).getQuestionno()!=null) {
-                    
-                }
-            }
+            //List<String> aoq = new ArrayList();
+                       
             request.setAttribute("numberofquestion", noq);
             request.setAttribute("questions", questions);
-
+            session.setAttribute("quizno", quizno);
         }
         getServletContext().getRequestDispatcher("/Exam.jsp").forward(request, response);
     }
