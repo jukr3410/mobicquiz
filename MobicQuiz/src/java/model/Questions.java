@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Questions.findByAns2", query = "SELECT q FROM Questions q WHERE q.ans2 = :ans2")
     , @NamedQuery(name = "Questions.findByAns3", query = "SELECT q FROM Questions q WHERE q.ans3 = :ans3")
     , @NamedQuery(name = "Questions.findByAns4", query = "SELECT q FROM Questions q WHERE q.ans4 = :ans4")
+    , @NamedQuery(name = "Questions.findByQuizno", query = "SELECT q FROM Questions q WHERE q.quizno = :quizno")
     , @NamedQuery(name = "Questions.findByCorrectans", query = "SELECT q FROM Questions q WHERE q.correctans = :correctans")})
 public class Questions implements Serializable {
 
@@ -168,5 +169,5 @@ public class Questions implements Serializable {
     public String toString() {
         return "model.Questions[ questionno=" + questionno + " ]";
     }
-    
+
 }

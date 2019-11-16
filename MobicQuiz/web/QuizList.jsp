@@ -116,7 +116,7 @@
                                                                                         <div><h5>Full Score</h5><br>${q.fullscore}</div><br>
                                                                                     </div>
                                                                                     <div class="modal-footer">
-                                                                                        <a href="Exam"><button type="button" class="btn btn-success">Start</button></a>
+                                                                                        <a href="Exam?quizno=${q.quizno}"><button type="button" class="btn btn-success">Start</button></a>
                                                                                     </div>
                                                                                 </div>
 
@@ -137,15 +137,9 @@
                                                 </div>
                                             </c:otherwise>
                                         </c:choose>
-
-
                                     </div>
-
-
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

@@ -15,9 +15,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.QuestionsJpaController;
 import model.Questions;
+import model.Students;
 
 /**
  *
@@ -42,11 +44,18 @@ public class ExamServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
-        List<Questions> questions = qjc.findQuestionsEntities();
-        request.setAttribute("numberofquestion", 10);
-        request.setAttribute("questions", questions);
+        HttpSession session = request.getSession();
+        Students student = (Students) session.getAttribute("user");
+        String quizno = request.getParameter("quizno");
+        if (quizno != null && student != null) {
+            
+            QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
+            List<Questions> questions = qjc.findQuestionsByQuizNo(quizno);
+            
+            request.setAttribute("numberofquestion", questions.size());
+            request.setAttribute("questions", questions);
+
+        }
         getServletContext().getRequestDispatcher("/Exam.jsp").forward(request, response);
     }
 
