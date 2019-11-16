@@ -52,19 +52,21 @@
                                     <a class="nav-link" href="ManageQuiz">Manage Quiz</a> 
                                 </c:otherwise>
                             </c:choose>
-
                             <a class="nav-link" href="History">History</a>
                             <a class="nav-link" href="MyAccount.jsp">My Account</a>
                         </div>
                         <div class="col-md-10">
+                            
+<!--    !! write content in this    -->
                             <div class="jumbotron text-center">
+                                
                                 <h1 class="display-3">Online Quiz</h1>
                                 <c:choose>
                                     <c:when test="${usertype=='student'}">
-                                        <p class="lead">You can take the exam anywhere. Go ahead!</p>
+                                        <p class="lead">You can Take the exam anywhere. Go ahead!</p>
                                     </c:when>
                                     <c:otherwise>
-                                        <p class="lead">You can create the exam anywhere. Go ahead!</p>
+                                        <p class="lead">You can Create the exam anywhere. Go ahead!</p>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -78,7 +80,5 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
         </div>
-
-
     </body>
 </html>
