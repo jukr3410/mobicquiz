@@ -1,39 +1,68 @@
 <%-- 
-    Document   : MyAccount
-    Created on : Nov 14, 2019, 11:42:52 PM
-    Author     : Wine.N
+    Document   : Homepage
+    Created on : Nov 14, 2019, 1:13:43 AM
+    Author     : Jn
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-        <title>My Account | MOBIC Quiz</title>
+        <title>Home</title>
     </head>
     <body>
-
+        <br>
         <div class="container-fluid">
-            <br><br>
             <div class="row">
                 <div class="col-md-12">
+                    <div class="header clearfix">
+                        <nav>
+                            <ul class="nav nav-pills float-right">
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
+                                            Sign out
+                                        </button></a>
+                                </li>
+                                <li class="nav-item">
+
+                                </li>
+                            </ul>
+                        </nav>
+                        <h3 class="">MOBIC QUIZ</h3>
+                    </div>
+                    <br>
+
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-2 text-center ">
+                            <a class="nav-link" href="Homepage.jsp">Home</a> 
+                            <c:choose>
+                                <c:when test="${usertype=='student'}">
+                                    <a class="nav-link" href="QuizList.jsp">My Quiz</a> 
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="nav-link" href="ManageQuiz">Manage Quiz</a> 
+                                </c:otherwise>
+                            </c:choose>
+                            <a class="nav-link" href="History">History</a>
+                            <a class="nav-link" href="MyAccount.jsp">My Account</a>
                         </div>
-                        <div class="col-md-8">
-                            <a href="Homepage.jsp"><button class="btn btn-primary float-right">
-                                    Back
-                                </button></a>
-                            <div class="header clearfix">
-                                <h3 class="">MOBIC QUIZ</h3>
-                            </div>
-                            <div class="jumbotron">
+                        <div class="col-md-10">
+
+
+                            <div class="jumbotron ">
+
+
+                                <!--    !! write content in this    -->
+
                                 <h1 class="text-muted text-center">My Account</h1>
 
                                 <br>
@@ -64,7 +93,7 @@
                                             <div class="modal-body">
                                                 <form role="form" action="MyAccount.jsp" method="post">                                                    
                                                     <div class="form-group">
-                                                        
+
                                                         Name<input type="text" class="form-control" value="${sessionScope.user.name}" name="name" required><br><hr>
                                                         <div class="text-center" style="font-weight:bold ">
                                                             Change Password
@@ -85,18 +114,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                            </div>
-                        </div>
-                        <hr>
 
+
+                        </div>
                     </div>
-                    <hr>
-                    <footer class="footer text-center">
-                        <p>© Mobicquiz 2019</p>
-                    </footer>
                 </div>
 
             </div>
+            <hr>
+            <footer class="footer text-center ">
+                <p>© Mobicquiz 2019</p>
+            </footer>
+        </div>
     </body>
 </html>
