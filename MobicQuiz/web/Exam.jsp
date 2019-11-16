@@ -27,40 +27,62 @@
         <div class="container">
             <div class="row">
                 <div>
-                    <div class="header clearfix">
-                        <nav>
-                            <ul class="nav nav-pills float-right">
+                    <form action="Exam" method="post">
+                        <div class="header clearfix">
+                            <nav>
+                                <ul class="nav nav-pills float-right">
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
-                                            Finished
-                                        </button></a>
-                                </li>
-                                <li class="nav-item">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
+                                                Finished
+                                            </button></a>
+                                    </li>
+                                    <li class="nav-item">
 
-                                </li>
-                            </ul>
-                        </nav>
-                        <h3>MOBIC QUIZ</h3>
-                    </div>
-                    <br>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <h3>MOBIC QUIZ</h3>
+                        </div>
+                        <br>
 
-                    <div class="row">
+                        <div class="row">
 
 
-                        <div class="jumbotron text-center">
-                            <h3>Time</h3>
-                            <div class="swiper-container jumbotron" style="height: 600px; width: 1000px">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">Slide 1</div>
-                                    <div class="swiper-slide">Slide 2</div>
-                                </div>                                                      
-                                <div class="text-center">                                                                  
-                                    <div class="swiper-pagination"></div>                                                                                                
+                            <div class="jumbotron text-center">
+                                <h3>Time</h3>
+                                <div class="swiper-container jumbotron" style="height: 600px; width: 1000px">
+                                    <div class="swiper-wrapper">
+                                       
+                                        <c:forEach items="questions" var="que" varStatus="theCount">
+                                            <div class="swiper-slide">
+                                                <div>
+                                                    ${theCount.count}.${que.question}
+                                                </div>
+                                                <div>
+
+                                                    <div class="form-check">
+                                                        <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
+                                                        <label class="form-check-label" for="materialUnchecked">1.${que.ans1}</label>
+                                                        <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
+                                                        <label class="form-check-label" for="materialUnchecked">2.${que.ans2}</label>
+                                                        <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
+                                                        <label class="form-check-label" for="materialUnchecked">3.${que.ans3}</label>
+                                                        <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
+                                                        <label class="form-check-label" for="materialUnchecked">4.${que.ans4}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+
+                                    </div>                                                      
+                                    <div class="text-center">                                                                  
+                                        <div class="swiper-pagination"></div>                                                                                                
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -69,15 +91,21 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
         </div>
-        
-        
-        
+
+
+
         <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min.js'></script>
         <!--                            <script  src="./script.js"></script>-->
 
         <script>
 
-            var menu = ['1', '2'];
+            var menu = new Array();
+            for (let i = 0; i < 10; i++)
+            {
+                var j = i + 1;
+                menu.push(j.toString());
+            }
+
 
             var mySwiper = new Swiper('.swiper-container', {
                 // If we need pagination
@@ -86,15 +114,15 @@
                     clickable: true,
                     renderBullet: function (index, className) {
                         return '<span class="' + className + '">' + (menu[index]) + '</span>';
-                    },
+                    }
                 },
 
                 // Navigation arrows
                 navigation: {
                     nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-            })
+                    prevEl: '.swiper-button-prev'
+                }
+            });
         </script>
     </body>
 </html>
