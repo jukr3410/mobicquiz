@@ -43,26 +43,21 @@
                             <h3>MOBIC QUIZ</h3>
                         </div>
                         <br>
-                        <div class="row">
+                        <div class="row" >
                             <div class="jumbotron">
                                 <h3>Time</h3>
                                 <div class="swiper-container" style="height: 600px; width: 1000px">
                                     <div class="swiper-wrapper">
                                         <c:forEach items="${questions}" var="que" varStatus="theCount">
                                             <div class="swiper-slide">
-                                                <div>
-                                                    ${theCount.count}.${que.question}
-                                                    <br>
-
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-                                                        <label class="form-check-label" for="materialUnchecked">1.${que.ans1}</label><br>
-                                                        <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-                                                        <label class="form-check-label" for="materialUnchecked">2.${que.ans2}</label><br>
-                                                        <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-                                                        <label class="form-check-label" for="materialUnchecked">3.${que.ans3}</label><br>
-                                                        <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-                                                        <label class="form-check-label" for="materialUnchecked">4.${que.ans4}</label><br>
+                                                <div class="" style="width: 100%">
+                                                    ${theCount.count}. ${que.question}
+                                                    <br><hr>
+                                                    <div>
+                                                        <label><input type="checkbox" class="radio" value="${que.ans1}" name="ansofque[${theCount.count}]" />1. ${que.ans1}</label><br>
+                                                        <label><input type="checkbox" class="radio" value="${que.ans2}" name="ansofque[${theCount.count}]" />2. ${que.ans2}</label><br>
+                                                        <label><input type="checkbox" class="radio" value="${que.ans3}" name="ansofque[${theCount.count}]" />3. ${que.ans3}</label><br>
+                                                        <label><input type="checkbox" class="radio" value="${que.ans4}" name="ansofque[${theCount.count}]" />4. ${que.ans4}</label><br>
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,8 +77,6 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
         </div>
-
-
 
         <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min.js'></script>
         <!--                            <script  src="./script.js"></script>-->
@@ -112,6 +105,24 @@
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev'
+                }
+            });
+
+            // the selector will match all input controls of type :checkbox
+            // and attach a click event handler 
+            $("input:checkbox").on('click', function () {
+                // in the handler, 'this' refers to the box clicked on
+                var $box = $(this);
+                if ($box.is(":checked")) {
+                    // the name of the box is retrieved using the .attr() method
+                    // as it is assumed and expected to be immutable
+                    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                    // the checked state of the group/box on the other hand will change
+                    // and the current value is retrieved using .prop() method
+                    $(group).prop("checked", false);
+                    $box.prop("checked", true);
+                } else {
+                    $box.prop("checked", false);
                 }
             });
         </script>
