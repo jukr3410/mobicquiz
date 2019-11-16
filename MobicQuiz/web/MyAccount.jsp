@@ -56,14 +56,14 @@
                             <a class="nav-link" href="MyAccount.jsp">My Account</a>
                         </div>
                         <div class="col-md-10">
-
+                            
 
                             <div class="jumbotron ">
-
-
+                                
+                                
                                 <!--    !! write content in this    -->
-
-                                <h1 class="text-muted text-center">My Account</h1>
+                                
+                                                                <h1 class="text-muted text-center">My Account</h1>
 
                                 <br>
                                 <div class="col-md-12"><center>
@@ -93,7 +93,7 @@
                                             <div class="modal-body">
                                                 <form role="form" action="MyAccount.jsp" method="post">                                                    
                                                     <div class="form-group">
-
+                                                        
                                                         Name<input type="text" class="form-control" value="${sessionScope.user.name}" name="name" required><br><hr>
                                                         <div class="text-center" style="font-weight:bold ">
                                                             Change Password
@@ -113,9 +113,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
-
-
+                            
+                            
                         </div>
                     </div>
                 </div>
