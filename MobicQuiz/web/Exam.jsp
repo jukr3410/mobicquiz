@@ -41,37 +41,27 @@
                                 </li>
                             </ul>
                         </nav>
-                        <h3 class="">MOBIC QUIZ</h3>
+                        <h3>MOBIC QUIZ</h3>
                     </div>
                     <br>
 
                     <div class="row">
 
 
-                        <div class="jumbotron text-center" style="height: 600px; width: 1000px">
-                            
-                            <div class="swiper-container">
-                                
+                        <div class="jumbotron text-center">
+                            <h3>Time</h3>
+                            <div class="swiper-container jumbotron" style="height: 600px; width: 1000px">
                                 <div class="swiper-wrapper">
-                                    
                                     <div class="swiper-slide">Slide 1</div>
                                     <div class="swiper-slide">Slide 2</div>
-                                    <div class="swiper-slide">Slide 3</div>
+                                </div>                                                      
+                                <div class="text-center">                                                                  
+                                    <div class="swiper-pagination"></div>                                                                                                
                                 </div>
-                                
-                                <div class="swiper-pagination"></div>
-
-                                
-                                <div class="swiper-button-prev"></div>
-                                <div class="swiper-button-next"></div>
                             </div>
-                            
-                            <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min.js'></script><script  src="./script.js"></script>
-
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <hr>
@@ -79,5 +69,32 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
         </div>
+        
+        
+        
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min.js'></script>
+        <!--                            <script  src="./script.js"></script>-->
+
+        <script>
+
+            var menu = ['1', '2'];
+
+            var mySwiper = new Swiper('.swiper-container', {
+                // If we need pagination
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                    renderBullet: function (index, className) {
+                        return '<span class="' + className + '">' + (menu[index]) + '</span>';
+                    },
+                },
+
+                // Navigation arrows
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            })
+        </script>
     </body>
 </html>
