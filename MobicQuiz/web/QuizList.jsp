@@ -133,7 +133,7 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <div class="text-center">
-                                                    <h1 style="color: tomato">On Quiz.</h1>
+                                                    <h1 style="color: tomato">No Quiz.</h1>
                                                 </div>
                                             </c:otherwise>
                                         </c:choose>

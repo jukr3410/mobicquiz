@@ -67,7 +67,7 @@
                                     <br>
                                     <div>
                                         <c:choose>
-                                            <c:when test="${myquizs!=null}">
+                                            <c:when test="${historys!=null}">
 
 
                                                 <select class="form-control">
@@ -102,7 +102,7 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <div class="text-center">
-                                                    <h1 style="color: tomato">On Quiz.</h1>
+                                                    <h1 style="color: tomato">No History.</h1>
                                                 </div>
                                             </c:otherwise>
                                         </c:choose>
