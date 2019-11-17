@@ -69,7 +69,7 @@
                                     <br>
                                     <div>
                                         <c:choose>
-                                            <c:when test="${myquizs!=null}">
+                                            <c:when test="${historys!=null}">
 
 
                                                 <select class="form-control">
@@ -89,94 +89,77 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-sm" style="background-color: white">
-                                                        <c:if test="${sessionScope.usertype=='student'}">
-                                                            <c:forEach items="${historys}" var="h" varStatus="theCount">
-                                                                <tr>
-                                                                    <td>${theCount.count}</td>
-                                                                    <td>${h.date}</td>
-                                                                    <td>${h.subjectno.subject}</td>
-                                                                    <td>${h.title}</td>
-                                                                    <td>
-                                                                        <div>                           
-                                                                            <button type="button" class="btn btn-info btn-lg align-middle" data-toggle="modal" data-target="#myModal">View</button>
-                                                                            <!-- Modal -->
-                                                                            <div class="modal fade" id="myModal" role="dialog">
-                                                                                <div class="modal-dialog">
+                                                        <c:choose>
+                                                            <c:when test="${usertype=='student'}">
+                                                                <c:forEach items="${historys}" var="h" varStatus="theCount">
+                                                                    <tr>
+                                                                        <td>${theCount.count}</td>
+                                                                        <td>${h.date}</td>
+                                                                        <td>${h.quizno.subjectno}</td>
+                                                                        <td>${h.quizno.title}</td>
+                                                                        <td>${h.score}</td>
+                                                                    </tr>
 
-                                                                                    <!-- Modal content-->
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                </c:forEach>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:forEach items="${tquizs}" var="tq" varStatus="theCount">
+                                                                    <tr>
+                                                                        <td>${theCount.count}</td>
+                                                                        <td>${tq.subjectno.subject}</td>
+                                                                        <td>${tq.title}</td>
+                                                                        <td>
+                                                                            <div>                           
+                                                                                <button type="button" class="btn btn-info btn-lg align-middle" data-toggle="modal" data-target="#myModal">View</button>
+                                                                                <!-- Modal -->
+                                                                                <div class="modal fade" id="myModal" role="dialog">
+                                                                                    <div class="modal-dialog">
 
+                                                                                        <!-- Modal content-->
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                <table class="table table-hover text-center" style="background-color: azure">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>No</th>
+                                                                                                            <th>Date</th>
+                                                                                                            <th>Subject</th>
+                                                                                                            <th>Title</th>
+                                                                                                            <th>Score</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody class="table-sm" style="background-color: white">
+                                                                                                        <c:forEach items="${historys}" var="h" varStatus="theCount">
+                                                                                                            <tr>
+                                                                                                                <td>${theCount.count}</td>
+                                                                                                                <td>${h.date}</td>
+                                                                                                                <td>${h.quizno.subjectno}</td>
+                                                                                                                <td>${h.quizno.title}</td>
+                                                                                                                <td>${h.score}</td>
+                                                                                                            </tr>
+
+                                                                                                        </c:forEach>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                            <!--                                                                                        <div class="modal-footer">
+                                                                                                                                                                                        <a href="Exam?quizno=${q.quizno}"><button type="button" class="btn btn-success">Start</button></a>
+                                                                                                                                                                                    </div>-->
                                                                                         </div>
-                                                                                        <div class="modal-body text-center">
-                                                                                            <div>
-                                                                                                <h5>Subject</h5><br>
-                                                                                                ${q.subjectno.subject}
-                                                                                            </div> <br>                                                      
-                                                                                            <div><h5>Title</h5><br>${q.title}</div><br>
 
-                                                                                            <div><h5>Time</h5><br>${q.time}</div><br>
-
-                                                                                            <div><h5>Full Score</h5><br>${q.fullscore}</div><br>
-                                                                                        </div>
-                                                                                        <div class="modal-footer">
-                                                                                            <a href="Exam?quizno=${q.quizno}"><button type="button" class="btn btn-success">Start</button></a>
-                                                                                        </div>
                                                                                     </div>
-
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
+                                                                        </td>
+                                                                    </tr>
 
-
-                                                            </c:forEach>
-                                                        </c:if>
-                                                        <c:if test="${sessionScope.usertype=='teacher'}">
-                                                            <c:forEach items="${tquizs}" var="tq" varStatus="theCount">
-                                                                <tr>
-                                                                    <td>${theCount.count}</td>
-                                                                    <td>${tq.subjectno.subject}</td>
-                                                                    <td>${tq.title}</td>
-                                                                    <td>
-                                                                        <div>                           
-                                                                            <button type="button" class="btn btn-info btn-lg align-middle" data-toggle="modal" data-target="#myModal">View</button>
-                                                                            <!-- Modal -->
-                                                                            <div class="modal fade" id="myModal" role="dialog">
-                                                                                <div class="modal-dialog">
-
-                                                                                    <!-- Modal content-->
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                                                                                        </div>
-                                                                                        <div class="modal-body">
-                                                                                            <div>
-                                                                                                <h5>Subject</h5><br>
-                                                                                                ${tq.subjectno.subject}
-                                                                                            </div> <br>                                                      
-                                                                                            <div><h5>Title</h5><br>${tq.title}</div><br>
-
-                                                                                            <div><h5>Time</h5><br>${tq.time}</div><br>
-
-                                                                                            <div><h5>Full Score</h5><br>${tq.fullscore}</div><br>
-                                                                                        </div>
-<!--                                                                                        <div class="modal-footer">
-                                                                                            <a href="Exam?quizno=${q.quizno}"><button type="button" class="btn btn-success">Start</button></a>
-                                                                                        </div>-->
-                                                                                    </div>
-
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-
-                                                            </c:forEach>
-                                                        </c:if>
+                                                                </c:forEach>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </tbody>
                                                 </table>
                                             </c:when>
