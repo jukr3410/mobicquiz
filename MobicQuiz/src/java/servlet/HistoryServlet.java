@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.HistorysJpaController;
+import jpacontroller.QuizsJpaController;
 import model.Historys;
+import model.Quizs;
 import model.Students;
 import model.Teachers;
 
@@ -60,8 +62,11 @@ public class HistoryServlet extends HttpServlet {
         }else if(userType.equals("teacher")){
             Teachers teacher = (Teachers) session.getAttribute("user");
             if (teacher!=null) {
+                QuizsJpaController qjc = new QuizsJpaController(utx, emf);
+                List<Quizs> quizs = qjc.findHistorysByTeacherNo(teacher.getTeacherno());
                 List<Historys> historys = hjc.findHistorysByTeacherNo(teacher.getTeacherno());
                 if (historys != null) {
+                    request.setAttribute("tquizs", quizs);
                     request.setAttribute("historys", historys);
                 }
             }
