@@ -40,6 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Quizs.findByStatus", query = "SELECT q FROM Quizs q WHERE q.status = :status")})
 public class Quizs implements Serializable {
 
+    @JoinColumn(name = "TEACHERNO", referencedColumnName = "TEACHERNO")
+    @ManyToOne
+    private Teachers teacherno;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -185,6 +189,14 @@ public class Quizs implements Serializable {
     @Override
     public String toString() {
         return "model.Quizs[ quizno=" + quizno + " ]";
+    }
+
+    public Teachers getTeacherno() {
+        return teacherno;
+    }
+
+    public void setTeacherno(Teachers teacherno) {
+        this.teacherno = teacherno;
     }
     
 }

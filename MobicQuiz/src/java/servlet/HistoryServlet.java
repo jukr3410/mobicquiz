@@ -20,6 +20,7 @@ import javax.transaction.UserTransaction;
 import jpacontroller.HistorysJpaController;
 import model.Historys;
 import model.Students;
+import model.Teachers;
 
 /**
  *
@@ -44,17 +45,28 @@ public class HistoryServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
-        Students student = (Students) session.getAttribute("user");
+        String userType = (String) session.getAttribute("usertype");
         HistorysJpaController hjc = new HistorysJpaController(utx, emf);
-        if (student!=null) {
-            List<Historys> historys = hjc.findHistorysEntities();
-            if (historys!=null) {
-                request.setAttribute("historys", historys);
-            }           
-        }        
-        getServletContext().getRequestDispatcher("/HistoryForStudent.jsp").forward(request, response);
+        if (userType.equals("student")) {
+            Students student = (Students) session.getAttribute("user");           
+            if (student != null) {
+                List<Historys> historys = hjc.findHistorysByStudentNo(student.getStudentno());
+                if (historys != null) {
+                    request.setAttribute("historys", historys);
+                }
+            }
+        }else if(userType.equals("teacher")){
+            Teachers teacher = (Teachers) session.getAttribute("user");
+            if (teacher!=null) {
+                List<Historys> historys = hjc.findHistorysByTeacherNo(teacher.getTeacherno());
+                if (historys != null) {
+                    request.setAttribute("historys", historys);
+                }
+            }
+        }
+        getServletContext().getRequestDispatcher("/History.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

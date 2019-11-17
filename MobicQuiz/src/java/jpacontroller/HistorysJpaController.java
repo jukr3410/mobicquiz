@@ -208,13 +208,26 @@ public class HistorysJpaController implements Serializable {
         }
     }
     
-    public List<Quizs> findQuizsByStudentNo(String studentno) {
+    
+        public List<Historys> findHistorysByStudentNo(String studentno) {        
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Historys.findByStudentno");
         query.setParameter("studentno", studentno);
-        List<Quizs> resultList = query.getResultList();
+        List<Historys> resultList = query.getResultList();
         try {
-            return resultList.isEmpty() ? null : resultList;
+            return  resultList.isEmpty() ? null : resultList;
+        } finally {
+            em.close();
+        }
+    }
+        
+            public List<Historys> findHistorysByTeacherNo(String teacherno) {        
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Historys.findByTeacherno");
+        query.setParameter("teacherno", teacherno);
+        List<Historys> resultList = query.getResultList();
+        try {
+            return  resultList.isEmpty() ? null : resultList;
         } finally {
             em.close();
         }
