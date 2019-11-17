@@ -41,14 +41,10 @@
 
                             <div class="jumbotron" style="font-size: medium">
                                  
-                                    <div>                                       
-                                        <input id="minutes" type="text" style="width: 10px; 
-                                               border: none; font-size: 16px;  
-                                               font-weight: bold; color: black;" disabled><font size="5"> : 
+                                <div style="font-size: medium"> <h3>Time :                                       
+                                   <input id="minutes" type="text" style="width: 40px; text-align: right"disabled><font size="5"> : 
                                         </font> 
-                                        <input id="seconds" type="text" style="width: 20px; 
-                                               border: none; font-size: 16px; 
-                                               font-weight: bold; color: black;" disabled> 
+                                        <input id="seconds" type="text" style="width: 40px;" disabled> minutes</h3>
                                     </div> 
                                    
                                 <div class="swiper-container">
@@ -125,16 +121,8 @@
                 }
             });
 
-            var varTimerInMiliseconds = parseInt(${sessionScope.quiz.time}) * 1000 * 60;
-            setTimeout(function () {
-                document.getElementById("exam").submit();
-            }, varTimerInMiliseconds);
-            
-          
-        //set minutes 
-        var mins = 0.5; 
-  
-        //calculate the seconds 
+
+        var mins = parseInt(${sessionScope.quiz.time}); 
         var secs = mins * 60; 
   
         //countdown function is evoked when page is loaded 
