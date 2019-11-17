@@ -84,6 +84,7 @@ public class FinishExamServlet extends HttpServlet {
         System.out.println("Passs!!");
         System.out.println(score);
         request.setAttribute("done", done);
+        request.setAttribute("score", score);
         session.removeAttribute("quiz");
 
         getServletContext().getRequestDispatcher("/FinishExam.jsp").forward(request, response);
