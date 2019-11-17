@@ -75,8 +75,10 @@ public class FinishExamServlet extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
+            System.out.println("Passs!!");
+            session.removeAttribute("quiz");
         }
-
+        
         getServletContext().getRequestDispatcher("/FinishExam.jsp").forward(request, response);
     }
 
