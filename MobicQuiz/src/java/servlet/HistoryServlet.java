@@ -7,16 +7,31 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.annotation.Resource;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.transaction.UserTransaction;
+import jpacontroller.HistorysJpaController;
+import model.Historys;
+import model.Students;
 
 /**
  *
  * @author Jn
  */
 public class HistoryServlet extends HttpServlet {
+
+    @PersistenceUnit(unitName = "MobicQuizPU")
+    EntityManagerFactory emf;
+
+    @Resource
+    UserTransaction utx;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,6 +44,16 @@ public class HistoryServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        Students student = (Students) session.getAttribute("user");
+        HistorysJpaController hjc = new HistorysJpaController(utx, emf);
+        if (student!=null) {
+            List<Historys> historys = hjc.findHistorysEntities();
+            if (historys!=null) {
+                request.setAttribute("historys", historys);
+            }           
+        }        
         getServletContext().getRequestDispatcher("/HistoryForStudent.jsp").forward(request, response);
     }
 
