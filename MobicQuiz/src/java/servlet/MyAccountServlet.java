@@ -5,12 +5,15 @@
  */
 package servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -29,7 +32,26 @@ public class MyAccountServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/MyAccount.jsp").forward(request, response);
+        String img = request.getParameter("upload");
+        
+        String source = img;
+        String target = "C:/Users/Wine.N/Desktop/Web Pro/MOBIC/images/";
+
+        //name of source file
+        File sourceFile = new File(source);
+        String name = sourceFile.getName();
+
+        File targetFile = new File(target + name);
+        
+        System.out.println("***************************************************************");
+        System.out.println("Copying file : " + sourceFile.getName() + " from Java Program");
+
+        //copy file from one location to other
+        FileUtils.copyFile(sourceFile, targetFile);
+
+        System.out.println("***************************************************************");
+        System.out.println("copying of file from Java program is completed");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -44,7 +66,7 @@ public class MyAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("/MobicQuiz/MyAccount.jsp");
     }
 
     /**
