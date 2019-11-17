@@ -80,9 +80,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Subject</th>
+                                                            <th>date</th>
                                                             <th>Title</th>
-                                                            <th></th>
+                                                            <th>Subject</th>
+                                                            <th>Score</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-sm" style="background-color: white">

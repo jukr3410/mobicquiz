@@ -32,6 +32,10 @@
         <servlet-name>FinishExamServlet</servlet-name>
         <servlet-class>servlet.FinishExamServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HistoryServlet</servlet-name>
+        <servlet-class>servlet.HistoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>FinishExamServlet</servlet-name>
         <url-pattern>/FinishExam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryServlet</servlet-name>
+        <url-pattern>/History</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
