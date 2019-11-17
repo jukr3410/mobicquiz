@@ -95,13 +95,10 @@
                                                                     <tr>
                                                                         <td>${theCount.count}</td>
                                                                         <td>${h.date}</td>
-                                                                        <td>${h.quizno.subjectno.subject}</td>
+                                                                        <td>${h.quizno.subjectno}</td>
                                                                         <td>${h.quizno.title}</td>
-                                                                        <td>
-                                                                           ${h.score}
-                                                                        </td>
+                                                                        <td>${h.score}</td>
                                                                     </tr>
-
 
                                                                 </c:forEach>
                                                             </c:when>
@@ -125,15 +122,29 @@
 
                                                                                             </div>
                                                                                             <div class="modal-body">
-                                                                                                <div>
-                                                                                                    <h5>Subject</h5><br>
-                                                                                                    ${tq.subjectno.subject}
-                                                                                                </div> <br>                                                      
-                                                                                                <div><h5>Title</h5><br>${tq.title}</div><br>
+                                                                                                <table class="table table-hover text-center" style="background-color: azure">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>No</th>
+                                                                                                            <th>Date</th>
+                                                                                                            <th>Subject</th>
+                                                                                                            <th>Title</th>
+                                                                                                            <th>Score</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody class="table-sm" style="background-color: white">
+                                                                                                        <c:forEach items="${historys}" var="h" varStatus="theCount">
+                                                                                                            <tr>
+                                                                                                                <td>${theCount.count}</td>
+                                                                                                                <td>${h.date}</td>
+                                                                                                                <td>${h.quizno.subjectno}</td>
+                                                                                                                <td>${h.quizno.title}</td>
+                                                                                                                <td>${h.score}</td>
+                                                                                                            </tr>
 
-                                                                                                <div><h5>Time</h5><br>${tq.time}</div><br>
-
-                                                                                                <div><h5>Full Score</h5><br>${tq.fullscore}</div><br>
+                                                                                                        </c:forEach>
+                                                                                                    </tbody>
+                                                                                                </table>
                                                                                             </div>
                                                                                             <!--                                                                                        <div class="modal-footer">
                                                                                                                                                                                         <a href="Exam?quizno=${q.quizno}"><button type="button" class="btn btn-success">Start</button></a>
