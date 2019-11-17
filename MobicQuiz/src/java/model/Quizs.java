@@ -35,10 +35,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Quizs.findByQuizno", query = "SELECT q FROM Quizs q WHERE q.quizno = :quizno")
     , @NamedQuery(name = "Quizs.findByTitle", query = "SELECT q FROM Quizs q WHERE q.title = :title")
     , @NamedQuery(name = "Quizs.findByTime", query = "SELECT q FROM Quizs q WHERE q.time = :time")
+    , @NamedQuery(name = "Quizs.findByTeacherno", query = "SELECT q FROM Quizs q WHERE q.teacherno.teacherno = :teacherno")
     , @NamedQuery(name = "Quizs.findByFullscore", query = "SELECT q FROM Quizs q WHERE q.fullscore = :fullscore")
     , @NamedQuery(name = "Quizs.findByLevelno", query = "SELECT q FROM Quizs q WHERE q.levelno.levelno = :levelno and q.status like 'on'")
     , @NamedQuery(name = "Quizs.findByStatus", query = "SELECT q FROM Quizs q WHERE q.status = :status")})
 public class Quizs implements Serializable {
+
+    @JoinColumn(name = "TEACHERNO", referencedColumnName = "TEACHERNO")
+    @ManyToOne
+    private Teachers teacherno;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -186,5 +191,13 @@ public class Quizs implements Serializable {
     public String toString() {
         return "model.Quizs[ quizno=" + quizno + " ]";
     }
-    
+
+    public Teachers getTeacherno() {
+        return teacherno;
+    }
+
+    public void setTeacherno(Teachers teacherno) {
+        this.teacherno = teacherno;
+    }
+
 }

@@ -31,7 +31,7 @@
                 <div class="col-md-12">
 
                     <div>
-                        <form action="FinishExam" method="get" id="exam">
+                        <form action="FinishExam" method="post" id="exam">
                             <input type="submit" class="btn btn-danger float-right" value="Finished">      
 
                             <div class="header clearfix">

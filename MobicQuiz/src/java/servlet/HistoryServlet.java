@@ -7,16 +7,34 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.annotation.Resource;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.transaction.UserTransaction;
+import jpacontroller.HistorysJpaController;
+import jpacontroller.QuizsJpaController;
+import model.Historys;
+import model.Quizs;
+import model.Students;
+import model.Teachers;
 
 /**
  *
  * @author Jn
  */
 public class HistoryServlet extends HttpServlet {
+
+    @PersistenceUnit(unitName = "MobicQuizPU")
+    EntityManagerFactory emf;
+
+    @Resource
+    UserTransaction utx;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,7 +47,31 @@ public class HistoryServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/HistoryForStudent.jsp").forward(request, response);
+
+        HttpSession session = request.getSession();
+        String userType = (String) session.getAttribute("usertype");
+        HistorysJpaController hjc = new HistorysJpaController(utx, emf);
+        if (userType.equals("student")) {
+            Students student = (Students) session.getAttribute("user");           
+            if (student != null) {
+                List<Historys> historys = hjc.findHistorysByStudentNo(student.getStudentno());
+                if (historys != null) {
+                    request.setAttribute("historys", historys);
+                }
+            }
+        }else if(userType.equals("teacher")){
+            Teachers teacher = (Teachers) session.getAttribute("user");
+            if (teacher!=null) {
+                QuizsJpaController qjc = new QuizsJpaController(utx, emf);
+                List<Quizs> quizs = qjc.findHistorysByTeacherNo(teacher.getTeacherno());
+                List<Historys> historys = hjc.findHistorysByTeacherNo(teacher.getTeacherno());
+                if (historys != null) {
+                    request.setAttribute("tquizs", quizs);
+                    request.setAttribute("historys", historys);
+                }
+            }
+        }
+        getServletContext().getRequestDispatcher("/History.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

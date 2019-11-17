@@ -26,15 +26,15 @@
                     <div class="header clearfix">
                         <nav>
                             <ul class="nav nav-pills float-right">
-
+                                <li class="nav-item text-center">
+                                    <h5>${sessionScope.user.name}</h5>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
                                             Sign out
                                         </button></a>
                                 </li>
-                                <li class="nav-item">
-
-                                </li>
+                                
                             </ul>
                         </nav>
                         <h3 class="">MOBIC QUIZ</h3>

@@ -57,31 +57,36 @@ public class FinishExamServlet extends HttpServlet {
         QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
         List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());
         int score = 0;
+        double scorePerQ = quiz.getFullscore() / questions.size();
+        int done = 0;
         for (Questions question : questions) {
-                String myAns = request.getParameter(question.getQuestionno());
+            String myAns = request.getParameter(question.getQuestionno());
+            if (myAns == null) {
+                continue;
+            } else {
+                done++;
                 if (question.isCorrect(myAns)) {
-                    score++;
+                    score += scorePerQ;
                 }
             }
-        if (questions != null) {
-            HistorysJpaController hjc = new HistorysJpaController(utx, emf);
-            Historys history;
-            
-            
-            int hisNo = hjc.getHistorysCount() + 1;
-            history = new Historys(Integer.toString(hisNo), score, new Date(2000, 1, 1), quiz, student);
-            try {
-                hjc.create(history);
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("Passs!!");
-            request.setAttribute("done", questions.size());
-            session.removeAttribute("quiz");
         }
-        
+
+        HistorysJpaController hjc = new HistorysJpaController(utx, emf);
+        int hisNo = hjc.getHistorysCount() + 1;
+        Historys history = new Historys(Integer.toString(hisNo), score, new Date(), quiz, student);
+        try {
+            hjc.create(history);
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Passs!!");
+        System.out.println(score);
+        request.setAttribute("done", done);
+        request.setAttribute("score", score);
+        session.removeAttribute("quiz");
+
         getServletContext().getRequestDispatcher("/FinishExam.jsp").forward(request, response);
     }
 

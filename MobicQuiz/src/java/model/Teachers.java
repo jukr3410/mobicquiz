@@ -38,6 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Teachers.findByActivated", query = "SELECT t FROM Teachers t WHERE t.activated = :activated")})
 public class Teachers implements Serializable {
 
+    @OneToMany(mappedBy = "teacherno")
+    private List<Quizs> quizsList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -174,6 +177,15 @@ public class Teachers implements Serializable {
     @Override
     public String toString() {
         return "model.Teachers[ teacherno=" + teacherno + " ]";
+    }
+
+    @XmlTransient
+    public List<Quizs> getQuizsList() {
+        return quizsList;
+    }
+
+    public void setQuizsList(List<Quizs> quizsList) {
+        this.quizsList = quizsList;
     }
     
 }
