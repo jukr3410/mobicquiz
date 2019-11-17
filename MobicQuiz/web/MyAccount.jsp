@@ -146,11 +146,16 @@
 
 
                                     </div>
-
                                 </div>
-                                <hr>
-                                <footer class="footer text-center ">
-                                    <p>© Mobicquiz 2019</p>
-                                </footer>
-                                </body>
-                                </html>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <footer class="footer text-center ">
+            <p>© Mobicquiz 2019</p>
+        </footer>
+    </body>
+</html>
