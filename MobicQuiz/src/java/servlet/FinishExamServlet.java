@@ -56,18 +56,20 @@ public class FinishExamServlet extends HttpServlet {
         Students student = (Students) session.getAttribute("student");
         QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
         List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());
-        if (questions != null) {
-            HistorysJpaController hjc = new HistorysJpaController(utx, emf);
-            Historys history;
-            int score = 0;
-            for (Questions question : questions) {
+        int score = 0;
+        for (Questions question : questions) {
                 String myAns = request.getParameter(question.getQuestionno());
                 if (question.isCorrect(myAns)) {
                     score++;
                 }
             }
+        if (questions != null) {
+            HistorysJpaController hjc = new HistorysJpaController(utx, emf);
+            Historys history;
+            
+            
             int hisNo = hjc.getHistorysCount() + 1;
-            history = new Historys(Integer.toString(hisNo), score, new Date(), quiz, student);
+            history = new Historys(Integer.toString(hisNo), score, new Date(2000, 1, 1), quiz, student);
             try {
                 hjc.create(history);
             } catch (RollbackFailureException ex) {
