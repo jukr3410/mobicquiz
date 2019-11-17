@@ -56,7 +56,7 @@ public class FinishExamServlet extends HttpServlet {
         Students student = (Students) session.getAttribute("student");
         QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
         List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());
-        if (questions != null && student != null) {
+        if (questions != null) {
             HistorysJpaController hjc = new HistorysJpaController(utx, emf);
             Historys history;
             int score = 0;
@@ -76,6 +76,7 @@ public class FinishExamServlet extends HttpServlet {
                 Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             System.out.println("Passs!!");
+            request.setAttribute("done", questions.size());
             session.removeAttribute("quiz");
         }
         
