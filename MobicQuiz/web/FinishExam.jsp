@@ -34,7 +34,7 @@
                                 <a href="Homepage.jsp"><h3 class="text-muted">MOBIC QUIZ</h3></a>
                             </div>
                             <div class="jumbotron">
-                                <h1 class="text-muted text-center">Finished<br>Done ${done}</h1>                       
+                                <h1 class="text-muted text-center">Finished<br><br>Done ${done} Question</h1>                       
                             </div>
                         </div>
                         <div class="col-md-2">
