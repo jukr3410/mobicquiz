@@ -66,8 +66,8 @@ public class FinishExamServlet extends HttpServlet {
                     score++;
                 }
             }
-            String hisNo = Integer.toString(hjc.getHistorysCount() + 1);
-            history = new Historys(hisNo, score, new Date(), quiz, student);
+            int hisNo = hjc.getHistorysCount() + 1;
+            history = new Historys(Integer.toString(hisNo), score, new Date(), quiz, student);
             try {
                 hjc.create(history);
             } catch (RollbackFailureException ex) {
