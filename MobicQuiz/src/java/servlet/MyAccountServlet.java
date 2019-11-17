@@ -7,12 +7,16 @@ package servlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.ChangeImage;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -32,26 +36,20 @@ public class MyAccountServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String img = request.getParameter("upload");
-        
-        String source = img;
-        String target = "C:/Users/Wine.N/Desktop/Web Pro/MOBIC/images/";
 
-        //name of source file
-        File sourceFile = new File(source);
-        String name = sourceFile.getName();
+        String source = request.getParameter("upload");
+        String target = "C:/Users/Wine.N/Documents/NetBeansProjects/mobicquiz/MobicQuiz/web/images/";
 
-        File targetFile = new File(target + name);
-        
-        System.out.println("***************************************************************");
-        System.out.println("Copying file : " + sourceFile.getName() + " from Java Program");
+        ChangeImage img = new ChangeImage();
+        img.editImages(source, target);
 
-        //copy file from one location to other
-        FileUtils.copyFile(sourceFile, targetFile);
+        String path = "src/test/resources";
 
-        System.out.println("***************************************************************");
-        System.out.println("copying of file from Java program is completed");
+        System.out.println(System.getProperty("user.dir"));
 
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
