@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.HistorysJpaController;
 import jpacontroller.QuestionsJpaController;
+import jpacontroller.QuizsJpaController;
 import jpacontroller.exceptions.RollbackFailureException;
 import model.Historys;
 import model.Questions;
@@ -56,7 +57,8 @@ public class ExamServlet extends HttpServlet {
         Students student = (Students) session.getAttribute("user");
         String quizno = request.getParameter("quizno");
         if (quizno != null && student != null) {
-            
+            QuizsJpaController quijc = new QuizsJpaController(utx, emf);
+            Quizs quiz = quijc.findQuizs(quizno);
             QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
             List<Questions> questions = qjc.findQuestionsByQuizNo(quizno);
             int noq = questions.size();
@@ -64,7 +66,7 @@ public class ExamServlet extends HttpServlet {
                        
             request.setAttribute("numberofquestion", noq);
             request.setAttribute("questions", questions);
-            session.setAttribute("quizno", quizno);
+            session.setAttribute("quiz", quiz);
         }
         getServletContext().getRequestDispatcher("/Exam.jsp").forward(request, response);
     }

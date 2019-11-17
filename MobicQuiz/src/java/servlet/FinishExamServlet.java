@@ -52,11 +52,11 @@ public class FinishExamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String quizno = (String) session.getAttribute("quizno");
+        Quizs quiz = (Quizs) session.getAttribute("quiz");
         Students student = (Students) session.getAttribute("student");
         QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
-        List<Questions> questions = qjc.findQuestionsByQuizNo(quizno);
-        if (quizno != null && questions != null && student != null) {
+        List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());
+        if (questions != null && student != null) {
             HistorysJpaController hjc = new HistorysJpaController(utx, emf);
             Historys history;
             int score = 0;
@@ -67,7 +67,7 @@ public class FinishExamServlet extends HttpServlet {
                 }
             }
             String hisNo = Integer.toString(hjc.getHistorysCount() + 1);
-            history = new Historys(hisNo, score, new Date(), new Quizs(quizno), student);
+            history = new Historys(hisNo, score, new Date(), quiz, student);
             try {
                 hjc.create(history);
             } catch (RollbackFailureException ex) {
