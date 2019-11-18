@@ -7,6 +7,8 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
 import jpacontroller.StudentsJpaController;
 import jpacontroller.TeachersJpaController;
+import jpacontroller.exceptions.NonexistentEntityException;
+import jpacontroller.exceptions.RollbackFailureException;
 import model.Students;
 import model.Teachers;
 
@@ -44,21 +48,37 @@ public class ResetPasswordServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String idForReset = request.getParameter("idforreset");
-        if (idForReset != null) {
+        String newPass = request.getParameter("newpassword");
+
+        if (idForReset != null && newPass!=null) {
             StudentsJpaController sjc = new StudentsJpaController(utx, emf);
-            Students student = sjc.findStudents(idForReset);
-            if (student == null) {
-                student = sjc.findStudentsByEmail(idForReset);
-            }
-            if (student != null) {               
+            Students student = sjc.findStudents(idForReset);          
+            if (student != null) { 
+                student.setPassword(newPass);
+                try {
+                    sjc.edit(student);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 request.setAttribute("statusreset", "Reset successfully");
             } else {
                 TeachersJpaController tjc = new TeachersJpaController(utx, emf);
                 Teachers teacher = tjc.findTeachers(idForReset);
-                if (teacher == null) {
-                    teacher = tjc.findTeachersByEmail(idForReset);
-                }
-                if (teacher != null) {                  
+                if (teacher != null) {    
+                    teacher.setPassword(newPass);
+                    try {
+                        tjc.edit(teacher);
+                    } catch (NonexistentEntityException ex) {
+                        Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (RollbackFailureException ex) {
+                        Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     request.setAttribute("statusreset", "Reset successfully");
                 } else {
                     request.setAttribute("statusreset", "! This account does not exist.");
