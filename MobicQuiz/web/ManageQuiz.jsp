@@ -14,7 +14,7 @@
     </head>
     <body>
         <h1>Manage Quiz</h1>
-        <h2>Welcome : ${sessionScope.teachers.name}</h2>
+        <h2>Welcome : ${sessionScope.user.name}</h2>
         <button>Create Quiz</button>
         <br>
         <br>

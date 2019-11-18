@@ -65,7 +65,7 @@ public class MyAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("/MobicQuiz/MyAccount.jsp");
+        getServletContext().getRequestDispatcher("/MyAccount.jsp").forward(request, response);
     }
 
     /**

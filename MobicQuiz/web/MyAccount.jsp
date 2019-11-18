@@ -69,11 +69,19 @@
                                 <br>
                                 <div class="col-md-12"><center>
                                         <img src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png" width="170" height="170" class="rounded-circle" />
-                                    </center></div>
+                                    </center>
+                                </div>
 
                                 <div class="form-group">
+                                    <c:choose>
+                                        <c:when test="${usertype=='student'}">
+                                            ID<input type="text" name="name" class="form-control" value="${sessionScope.user.studentno}" readonly />   
+                                        </c:when>
+                                        <c:otherwise>
+                                            ID<input type="text" name="name" class="form-control" value="${sessionScope.user.teacherno}" readonly />   
+                                        </c:otherwise>
+                                    </c:choose>
 
-                                    ID<input type="text" name="name" class="form-control" value="${sessionScope.user.studentno}" readonly />   
                                     Name<input type="text" name="id" class="form-control" value="${sessionScope.user.name}" readonly />                                
                                     Email<input type="email" name="email" class="form-control" value="${sessionScope.user.email}" readonly /><br>
 
