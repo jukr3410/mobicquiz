@@ -81,6 +81,19 @@ public class Questions implements Serializable {
         this.question = question;
     }
 
+    public Questions(String questionno, String question, String ans1, String ans2, String ans3, String ans4, String correctans, Quizs quizno) {
+        this.questionno = questionno;
+        this.question = question;
+        this.ans1 = ans1;
+        this.ans2 = ans2;
+        this.ans3 = ans3;
+        this.ans4 = ans4;
+        this.correctans = correctans;
+        this.quizno = quizno;
+    }
+    
+    
+
     public String getQuestionno() {
         return questionno;
     }
