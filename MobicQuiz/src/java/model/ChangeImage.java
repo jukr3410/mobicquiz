@@ -19,7 +19,7 @@ public class ChangeImage {
         File sourceFile = new File(source);
         String name = sourceFile.getName();
         File targetFile = new File(target + name);
-
+ 
         System.out.println("***************************************************************");
         System.out.println("Copying file : " + sourceFile.getName() + " from Java Program");
         try {
