@@ -61,7 +61,7 @@
                             </button>
                         </form><br>
                         <div class="text-center">
-                            <a href="RePassword">Forgot your password?</a>
+                            <a href="ForgotPassword.jsp">Forgot your password?</a>
                         </div>
                         <hr><br>
                         <a href="Register"><button class="btn btn-success">
