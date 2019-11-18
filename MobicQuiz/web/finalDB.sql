@@ -235,10 +235,10 @@ INSERT INTO MOBIC.QUESTIONS (QUESTIONNO, QUESTION, ANS1, ANS2, ANS3, ANS4, CORRE
 	VALUES ('4', 'Sound caused by what?', 'wind', 'Vibration of the object', 'soil', 'sky', 'Vibration of the object', '2');
 
 
-
+-- UPDATE QUIZS
 
 ALTER TABLE quizs
-ALTER COLUMN teacherno varchar(45) NOT NULL;
+ADD COLUMN  teacherno   varchar(45);
 
 ALTER TABLE quizs
 ADD FOREIGN KEY (teacherno) REFERENCES teachers(teacherno);
