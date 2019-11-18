@@ -63,7 +63,8 @@ public class HistoryServlet extends HttpServlet {
             Teachers teacher = (Teachers) session.getAttribute("user");
             if (teacher!=null) {
                 QuizsJpaController qjc = new QuizsJpaController(utx, emf);
-                List<Quizs> quizs = qjc.findHistorysByTeacherNo(teacher.getTeacherno());
+                //List<Quizs> quizs = qjc.findHistorysByTeacherNo(teacher.getTeacherno());
+                List<Quizs> quizs = qjc.findQuizsEntities();
                 List<Historys> historys = hjc.findHistorysByTeacherNo(teacher.getTeacherno());
                 if (historys != null) {
                     request.setAttribute("tquizs", quizs);
@@ -72,7 +73,7 @@ public class HistoryServlet extends HttpServlet {
             }
         }
 
-        getServletContext().getRequestDispatcher("/History.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/HistoryTeacher.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
