@@ -64,7 +64,8 @@ public class ResetPasswordServlet extends HttpServlet {
                 } catch (Exception ex) {
                     Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                request.setAttribute("statusreset", "Reset successfully");
+                //request.setAttribute("statusreset", "Reset successfully");
+                response.sendRedirect("/MobicQuiz/Login");
             } else {
                 TeachersJpaController tjc = new TeachersJpaController(utx, emf);
                 Teachers teacher = tjc.findTeachers(idForReset);
@@ -79,7 +80,8 @@ public class ResetPasswordServlet extends HttpServlet {
                     } catch (Exception ex) {
                         Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    request.setAttribute("statusreset", "Reset successfully");
+                    //request.setAttribute("statusreset", "Reset successfully");
+                    response.sendRedirect("/MobicQuiz/Login");
                 } else {
                     request.setAttribute("statusreset", "! This account does not exist.");
                 }
@@ -87,7 +89,7 @@ public class ResetPasswordServlet extends HttpServlet {
 
         }
 
-        getServletContext().getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/ResetPassword.jsp").forward(request, response);
 
     }
 
