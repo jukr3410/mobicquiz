@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
 import jpacontroller.StudentsJpaController;
 import jpacontroller.TeachersJpaController;
-import model.EmailUtility;
 import model.Students;
 import model.Teachers;
 
@@ -25,32 +24,13 @@ import model.Teachers;
  *
  * @author Student
  */
-public class ForgotPasswordServlet extends HttpServlet {
+public class ResetPasswordServlet extends HttpServlet {
 
     @PersistenceUnit(unitName = "MobicQuizPU")
     EntityManagerFactory emf;
 
     @Resource
     UserTransaction utx;
-
-    private String host = "smtp.gmail.com";
-    private String port = "587";
-    private String user = "mobicquiz@gmail.com";
-    private String pass = "mobic303";
-
-    public void sentURL(String email, String name, String url) {
-        String subject = "[MobicQuiz] Password Recovery";
-        String content = "We have received a password change request for your MyELT account "
-                + name + "\nplease click the link below.\n"
-                + url + "\nThanks,\nThe Mobic Quiz";
-        if (email != null) {
-            try {
-                EmailUtility.sendEmail(host, port, user, pass, email, subject, content);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -70,28 +50,25 @@ public class ForgotPasswordServlet extends HttpServlet {
             if (student == null) {
                 student = sjc.findStudentsByEmail(idForReset);
             }
-            if (student != null) {
-                String url = "http://localhost:8080/MobicQuiz/ResetPassword.jsp?idforreset="+student.getStudentno();
-                sentURL(student.getEmail(), student.getName(), url);
-                request.setAttribute("statusforgot", "Check in you Email: " + student.getEmail());
+            if (student != null) {               
+                request.setAttribute("statusreset", "Reset successfully");
             } else {
                 TeachersJpaController tjc = new TeachersJpaController(utx, emf);
                 Teachers teacher = tjc.findTeachers(idForReset);
                 if (teacher == null) {
                     teacher = tjc.findTeachersByEmail(idForReset);
                 }
-                if (teacher != null) {
-                    String url = "http://localhost:8080/MobicQuiz/ResetPassword.jsp?idforreset="+teacher.getTeacherno();
-                    sentURL(teacher.getEmail(), teacher.getName(), url);
-                    request.setAttribute("statusforgot", "Check in you Email: " + teacher.getEmail());
+                if (teacher != null) {                  
+                    request.setAttribute("statusreset", "Reset successfully");
                 } else {
-                    request.setAttribute("errorforgot", "! This account does not exist.");
+                    request.setAttribute("statusreset", "! This account does not exist.");
                 }
             }
 
         }
 
         getServletContext().getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

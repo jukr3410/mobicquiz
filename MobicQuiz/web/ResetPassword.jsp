@@ -4,6 +4,7 @@
     Author     : Student
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,24 +33,29 @@
                         <h3 class="">MOBIC QUIZ</h3>
                     </div>
                     <div class="jumbotron">
-                        <h1 class="text-muted text-center">Forgot Password</h1>
-                        
-                        <div style="font-weight: bold; color: green">
-                            ${statusforgot}
-                        </div>
-                        <div style="font-weight: bold; color: red">
-                            ${errorforgot}
-                        </div>
-                        <br>
-                        <form role="form" action="ForgotPassword" method="post">
+                        <h1 class="text-muted text-center">Set New Password</h1>
 
-                            <div class="form-group text-center">                   
-                                
-                                <input type="text" name="idforreset" class="form-control" placeholder="Your ID or Email" style="width: " required/>
+                        <div style="font-weight: bold; color: green">
+                            ${statusreset}
+                        </div>
+                        <c:if test="${param.idforreset==null}">
+                            <div style="font-weight: bold; color: red">
+                                Please click on the link to set a new password from your email.
+                            </div>
+                        </c:if>
+                        You Account
+                        <br>
+                        <form role="form" action="ResetPassword" method="get">
+
+                            <div class="form-group text-center">   
+
+                                <input type="text" name="idforreset" id="idforreset" class="form-control" required readonly value="${param.idforreset}"/><br>
+                                <input type="text" name="newpassword" id="password" class="form-control" placeholder="New Password" style="width: " required/><br>
+                                <input type="text" name="confirmnewpassword" id="confirm_password" class="form-control" placeholder="Confirm New Password" style="width: " required/>
 
                                 <br>
                                 <button type="submit" class="btn btn-primary">
-                                    Reset Password
+                                    Confirm
                                 </button>
                             </div>
                         </form>
@@ -63,7 +69,19 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
         </div>
-                                
 
+        <script>
+            var password = document.getElementById("password")
+                    , confirm_password = document.getElementById("confirm_password");
+            function validatePassword() {
+                if (password.value !== confirm_password.value) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                } else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        </script>
     </body>
 </html>
