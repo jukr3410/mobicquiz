@@ -145,7 +145,11 @@ PRIMARY KEY (historyno),  FOREIGN KEY  (quizno) REFERENCES quizs (quizno),
  FOREIGN KEY  (studentno) REFERENCES students (studentno)
 );
 
+ALTER TABLE quizs
+ADD COLUMN  teacherno   varchar(45);
 
+ALTER TABLE quizs
+ADD FOREIGN KEY (teacherno) REFERENCES teachers(teacherno);
 
 
 INSERT INTO MOBIC.LEVELS (LEVELNO, "LEVEL") 
@@ -237,8 +241,3 @@ INSERT INTO MOBIC.QUESTIONS (QUESTIONNO, QUESTION, ANS1, ANS2, ANS3, ANS4, CORRE
 
 -- UPDATE QUIZS
 
-ALTER TABLE quizs
-ADD COLUMN  teacherno   varchar(45);
-
-ALTER TABLE quizs
-ADD FOREIGN KEY (teacherno) REFERENCES teachers(teacherno);
