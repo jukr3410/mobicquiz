@@ -36,6 +36,9 @@
 
                             <div class="header clearfix">
                                 <h3>MOBIC QUIZ</h3>
+                                
+                                    <h5>${sessionScope.user.name}</h5>
+                                
                             </div>
                             <br>
 

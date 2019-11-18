@@ -47,14 +47,14 @@
                             <a class="nav-link" href="Homepage.jsp">Home</a> 
                             <c:choose>
                                 <c:when test="${usertype=='student'}">
-                                    <a class="nav-link" href="QuizList.jsp">My Quiz</a> 
+                                    <a class="nav-link" href="QuizList">My Quiz</a> 
                                 </c:when>
                                 <c:otherwise>
                                     <a class="nav-link" href="ManageQuiz">Manage Quiz</a> 
                                 </c:otherwise>
                             </c:choose>
                             <a class="nav-link" href="History">History</a>
-                            <a class="nav-link" href="MyAccount.jsp">My Account</a>
+                            <a class="nav-link" href="MyAccount">My Account</a>
                         </div>
                         <div class="col-md-10">
 

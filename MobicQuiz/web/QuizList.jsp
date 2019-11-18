@@ -28,6 +28,9 @@
                             <ul class="nav nav-pills float-right">
 
                                 <li class="nav-item">
+                                    <li class="nav-item text-center">
+                                    <h5>${sessionScope.user.name}</h5>
+                                </li>
                                     <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
                                             Sign out
                                         </button></a>
