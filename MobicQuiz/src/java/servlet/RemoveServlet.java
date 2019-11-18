@@ -23,7 +23,7 @@ import jpacontroller.exceptions.RollbackFailureException;
 
 /**
  *
- * @author Student
+ * @author ACER
  */
 public class RemoveServlet extends HttpServlet {
     @PersistenceUnit(unitName = "MobicQuizPU")
@@ -43,10 +43,11 @@ public class RemoveServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizsJpaController qjc = new QuizsJpaController(utx, emf);
+       
        String remove = request.getParameter("remove");
+       QuizsJpaController qjc = new QuizsJpaController(utx, emf);     
         try {
-            qjc.destroy(remove);
+            qjc.destroy("2");
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RollbackFailureException ex) {
@@ -54,7 +55,7 @@ public class RemoveServlet extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.sendRedirect("/MobicQuiz/Manage");
+        response.sendRedirect("/MobicQuiz/ManageQuiz");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
