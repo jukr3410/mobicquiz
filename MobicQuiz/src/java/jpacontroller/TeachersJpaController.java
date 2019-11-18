@@ -213,8 +213,8 @@ public class TeachersJpaController implements Serializable {
             em.close();
         }
     }
-    
-        public Teachers findTeachersByEmail(String email) {
+
+    public Teachers findTeachersByEmail(String email) {
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Teachers.findByEmail");
         query.setParameter("email", email);
@@ -238,5 +238,5 @@ public class TeachersJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
