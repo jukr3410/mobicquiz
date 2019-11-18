@@ -113,14 +113,14 @@
                             <label for="name">
                                 Name
                             </label>
-                            <input type="text" class="form-control" id="name" />
+                            <input type="text" class="form-control" name="name" value="${param.name}" />
                         </div>
                         <div class="form-group">
 
                             <label for="time">
                                 Time
                             </label>
-                            <input type="number" class="form-control" id="time" min="0"/>
+                            <input type="number" class="form-control" name="time" min="0" value="${param.time}"/>
 
                         </div>
                         <div class="form-group">
@@ -128,7 +128,7 @@
                             <label for="time">
                                 Score
                             </label>
-                            <input type="number" class="form-control" id="score" min="0"/>
+                            <input type="number" class="form-control" name="score" min="0" value="${param.score}"/>
 
                         </div>
 
@@ -170,17 +170,17 @@
                                         <label for="time">
                                             Choice
                                         </label>
-                                        <input type="text" class="form-control" placeholder="Answer 1" name="que" required><br>
-                                        <input type="text" class="form-control" placeholder="Answer 2" name="que" required><br>
-                                        <input type="text" class="form-control" placeholder="Answer 3" name="que" required><br>
-                                        <input type="text" class="form-control" placeholder="Answer 4" name="que" required><br>
+                                        <input type="text" class="form-control" placeholder="Answer 1" name="que1" required><br>
+                                        <input type="text" class="form-control" placeholder="Answer 2" name="que2" required><br>
+                                        <input type="text" class="form-control" placeholder="Answer 3" name="que3" required><br>
+                                        <input type="text" class="form-control" placeholder="Answer 4" name="que4" required><br>
 
                                         <label for="email"><b>Correct Answer</b></label><br>
                                         <input type="text" class="form-control" placeholder="Answer" name="ans" required>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
+                                        <button type="submit" class="btn btn-primary">Add</button>
                                     </div>
 
 
