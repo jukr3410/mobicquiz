@@ -55,38 +55,39 @@ public class FinishExamServlet extends HttpServlet {
         Quizs quiz = (Quizs) session.getAttribute("quiz");
         Students student = (Students) session.getAttribute("student");
         QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
-        List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());
-        int score = 0;
-        double scorePerQ = quiz.getFullscore() / questions.size();
-        int done = 0;
-        for (Questions question : questions) {
-            String myAns = request.getParameter(question.getQuestionno());
-            if (myAns == null) {
-                continue;
-            } else {
-                done++;
-                if (question.isCorrect(myAns)) {
-                    score += scorePerQ;
+         if (quiz != null) {
+        List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());      
+            int score = 0;
+            double scorePerQ = quiz.getFullscore() / questions.size();
+            int done = 0;
+            for (Questions question : questions) {
+                String myAns = request.getParameter(question.getQuestionno());
+                if (myAns == null) {
+                    continue;
+                } else {
+                    done++;
+                    if (question.isCorrect(myAns)) {
+                        score += scorePerQ;
+                    }
                 }
             }
-        }
 
-        HistorysJpaController hjc = new HistorysJpaController(utx, emf);
-        int hisNo = hjc.getHistorysCount() + 1;
-        Historys history = new Historys(Integer.toString(hisNo), score, new Date(), quiz, student);
-        try {
-            hjc.create(history);
-        } catch (RollbackFailureException ex) {
-            Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
+            HistorysJpaController hjc = new HistorysJpaController(utx, emf);
+            int hisNo = hjc.getHistorysCount() + 1;
+            Historys history = new Historys(Integer.toString(hisNo), score, new Date(), quiz, student);
+            try {
+                hjc.create(history);
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ExamServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Passs!!");
+            System.out.println(score);
+            request.setAttribute("done", done);
+            request.setAttribute("score", score);
+            session.removeAttribute("quiz");
         }
-        System.out.println("Passs!!");
-        System.out.println(score);
-        request.setAttribute("done", done);
-        request.setAttribute("score", score);
-        session.removeAttribute("quiz");
-
         getServletContext().getRequestDispatcher("/FinishExam.jsp").forward(request, response);
     }
 
