@@ -45,7 +45,7 @@
                         </c:if>
                         You Account
                         <br>
-                        <form role="form" action="ResetPassword" method="get">
+                        <form role="form" action="ResetPassword" method="post">
 
                             <div class="form-group text-center">   
 
