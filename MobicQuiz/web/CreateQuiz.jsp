@@ -62,13 +62,13 @@
                                  <h2 class="text-muted text-center">Create Quiz</h2>
                                 <div>
                                     <div>
-                                        <form role="form">
+                                        <form role="form" action="CreateQuiz" method="get">
                                             <div class="form-group">
 
                                                 <label for="subject">
                                                     Subject
                                                 </label>
-                                                <select class="form-control">
+                                                <select class="form-control" name="subject">
                                                     <option value="thai">Thai</option>
                                                     <option value="science">Science</option>
                                                     <option value="social">Social</option>
@@ -77,9 +77,9 @@
                                             <div class="form-group">
 
                                                 <label for="name">
-                                                    Name
+                                                    Title
                                                 </label>
-                                                <input type="text" class="form-control" name="name" value="${param.name}" />
+                                                <input type="text" class="form-control" name="title" value="${param.title}" />
                                             </div>
                                             <div class="form-group">
 
