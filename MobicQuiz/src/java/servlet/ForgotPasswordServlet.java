@@ -40,7 +40,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 
     public void sentURL(String email, String name, String url) {
         String subject = "[MobicQuiz] Password Recovery";
-        String content = "We have received a password change request for your MyELT account "
+        String content = "We have received a password change request for your MOBIC account "
                 + name + "\nplease click the link below.\n"
                 + url + "\nThanks,\nThe Mobic Quiz";
         if (email != null) {

@@ -338,7 +338,7 @@ public class QuizsJpaController implements Serializable {
         }
     }
     
-    public List<Quizs> findHistorysByTeacherNo(String teacherno) {
+    public List<Quizs> findQuizsByTeacherNo(String teacherno) {
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Historys.findByTeacherno");
         query.setParameter("teacherno", teacherno);

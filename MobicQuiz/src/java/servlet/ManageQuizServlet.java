@@ -15,9 +15,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.QuizsJpaController;
 import model.Quizs;
+import model.Teachers;
 
 /**
  *
@@ -42,13 +44,16 @@ public class ManageQuizServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Teachers teacher = (Teachers) session.getAttribute("user");
         String Title = request.getParameter("title");
         String Time = request.getParameter("time");
         String FullScore = request.getParameter("fullscore");
         String LevelNo = request.getParameter("levelno");
         String SubjectNo = request.getParameter("seubjectno");
+        
         QuizsJpaController qjc = new QuizsJpaController(utx, emf);
-        List<Quizs> quizs = qjc.findQuizsEntities();
+        List<Quizs> quizs = qjc.findQuizsByTeacherNo(teacher.getTeacherno());
 
         request.setAttribute("quizs", quizs);
         request.getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
