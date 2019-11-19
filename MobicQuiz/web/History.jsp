@@ -32,7 +32,8 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
                                             Sign out
-                                        </button></a>
+                                        </button>
+                                    </a>
                                 </li>
                                 <li class="nav-item">
 
@@ -106,8 +107,10 @@
                                                                 <c:forEach items="${tquizs}" var="tq" varStatus="theCount">
                                                                     <tr>
                                                                         <td>${theCount.count}</td>
-                                                                        <td>${tq.subjectno.subject}</td>
                                                                         <td>${tq.title}</td>
+                                                                        <td>${tq.levelno.level}</td>
+                                                                        <td>${tq.subjectno.subject}</td>
+                                                                        
                                                                         <td>
                                                                             <div>                           
                                                                                 <button type="button" class="btn btn-info btn-lg align-middle" data-toggle="modal" data-target="#myModal">View</button>
@@ -127,8 +130,8 @@
                                                                                                         <tr>
                                                                                                             <th>No</th>
                                                                                                             <th>Date</th>
-                                                                                                            <th>Subject</th>
-                                                                                                            <th>Title</th>
+                                                                                                            <th>Student</th>
+                                                                                                            <th>Name</th>
                                                                                                             <th>Score</th>
                                                                                                         </tr>
                                                                                                     </thead>
@@ -137,8 +140,8 @@
                                                                                                             <tr>
                                                                                                                 <td>${theCount.count}</td>
                                                                                                                 <td>${h.date}</td>
-                                                                                                                <td>${h.quizno.quizno}</td>
-                                                                                                                <td>${h.quizno.title}</td>
+                                                                                                                <td>${h.studentno.studentno}</td>
+                                                                                                                <td>${h.studentno.name}</td>
                                                                                                                 <td>${h.score}</td>
                                                                                                             </tr>
 
