@@ -89,7 +89,7 @@ public class ResetPasswordServlet extends HttpServlet {
 
         }
 
-        getServletContext().getRequestDispatcher("/ResetPassword.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/ResetPassword.jsp").include(request, response);
 
     }
 
