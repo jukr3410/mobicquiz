@@ -29,12 +29,22 @@
                                 <li class="nav-item text-center">
                                     <h5>${sessionScope.user.name}</h5>
                                 </li>
+
+                                <c:choose>
+                                    <c:when test="${usertype=='student'}">
+                                        <img src="https://png.pngtree.com/svg/20170424/_students_263434.png" width="40">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="https://www.freeiconspng.com/uploads/png-format-images-of-teacher-icons-21.png" width="40">
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <li class="nav-item">
                                     <a class="nav-link" href="Logout"><button class="btn btn-danger float-right">
                                             Sign out
                                         </button></a>
                                 </li>
-                                
+
                             </ul>
                         </nav>
                         <h3 class="">MOBIC QUIZ</h3>
@@ -47,7 +57,6 @@
                             <c:choose>
                                 <c:when test="${usertype=='student'}">
                                     <a class="nav-link" href="QuizList">My Quiz</a>
-                                    <img src="https://png.pngtree.com/svg/20170424/_students_263434.png">
                                 </c:when>
                                 <c:otherwise>
                                     <a class="nav-link" href="ManageQuiz">Manage Quiz</a> 
@@ -57,10 +66,10 @@
                             <a class="nav-link" href="MyAccount">My Account</a>
                         </div>
                         <div class="col-md-10">
-                            
-<!--    !! write content in this    -->
+
+                            <!--    !! write content in this    -->
                             <div class="jumbotron text-center">
-                                
+
                                 <h1 class="display-3">Online Quiz</h1>
                                 <c:choose>
                                     <c:when test="${usertype=='student'}">
