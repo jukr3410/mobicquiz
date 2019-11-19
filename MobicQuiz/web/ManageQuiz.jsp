@@ -46,7 +46,7 @@
                         <div class="col-md-2 text-center ">
                             <a class="nav-link" href="Homepage.jsp">Home</a> 
                             <c:choose>
-                                <c:when test="${usertype=='student'}">
+                                <c:when test="${sessionScope.usertype=='student'}">
                                     <a class="nav-link" href="QuizList">My Quiz</a> 
                                 </c:when>
                                 <c:otherwise>
@@ -86,8 +86,11 @@
                                                     <td>${q.subjectno.subject}</td>
                                                     <td>${q.levelno.level}</td>
                                                     <td>${q.time}</td>
-                                                    <td><button type="button" class="btn btn-primary btn-lg align-middle ">Edit</button>
-                                                        <a href="Remove?remove=${q.quizno}">
+                                                    <td>
+                                                        <a href="ManageQuiz?removequiz=${q.quizno}">
+                                                        <button type="button" class="btn btn-primary btn-lg align-middle ">Edit</button>
+                                                        </a>
+                                                        <a href="ManageQuiz?removequiz=${q.quizno}">
                                                             <button type="button" class="btn btn-danger btn-lg align-middle ">Remove</button>
                                                         </a>
                                                     </td>
