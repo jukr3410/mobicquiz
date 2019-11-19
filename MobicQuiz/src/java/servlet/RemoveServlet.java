@@ -59,15 +59,18 @@ public class RemoveServlet extends HttpServlet {
 
                 QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
                 List<Questions> questionses = quejc.findQuestionsByQuizNo(removeQuiz);
-                for (Questions questionse : questionses) {
-                    try {
-                        quejc.destroy(questionse.getQuestionno());
-                    } catch (RollbackFailureException ex) {
-                        Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (Exception ex) {
-                        Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
+                if (questionses!=null) {
+                    for (Questions questionse : questionses) {
+                        try {
+                            quejc.destroy(questionse.getQuestionno());
+                        } catch (RollbackFailureException ex) {
+                            Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
+
                 try {
                     quijc.destroy(removeQuiz);
                 } catch (NonexistentEntityException ex) {
