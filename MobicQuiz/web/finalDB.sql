@@ -141,8 +141,7 @@ CREATE TABLE historys
  quizno    varchar(45) NOT NULL ,
  studentno varchar(45) NOT NULL ,
 
-PRIMARY KEY (historyno),  FOREIGN KEY  (quizno) REFERENCES quizs (quizno),
- FOREIGN KEY  (studentno) REFERENCES students (studentno)
+PRIMARY KEY (historyno), FOREIGN KEY  (studentno) REFERENCES students (studentno)
 );
 
 ALTER TABLE quizs
@@ -239,14 +238,16 @@ INSERT INTO MOBIC.QUESTIONS (QUESTIONNO, QUESTION, ANS1, ANS2, ANS3, ANS4, CORRE
 	VALUES ('4', 'Sound caused by what?', 'wind', 'Vibration of the object', 'soil', 'sky', 'Vibration of the object', '2');
 
 
+
+
+INSERT INTO MOBIC.QUIZS (QUIZNO, TITLE, "TIME", FULLSCORE, LEVELNO, SUBJECTNO, STATUS, TEACHERNO) 
+	VALUES ('3', 'Calculus', 10, 20, '4', '201', 'on', '1122334455');
+
 INSERT INTO MOBIC.HISTORYS (HISTORYNO, SCORE, "DATE", QUIZNO, STUDENTNO) 
 	VALUES ('1', 20, '2019-11-19', '3', '61130500011');
 INSERT INTO MOBIC.HISTORYS (HISTORYNO, SCORE, "DATE", QUIZNO, STUDENTNO) 
 	VALUES ('2', 10, '2019-11-19', '2', '61130500011');
 
-
-INSERT INTO MOBIC.QUIZS (QUIZNO, TITLE, "TIME", FULLSCORE, LEVELNO, SUBJECTNO, STATUS, TEACHERNO) 
-	VALUES ('3', 'Calculus', 10, 20, '4', '201', 'on', '1122334455');
 
 INSERT INTO MOBIC.TEACHERS (TEACHERNO, "NAME", EMAIL, PASSWORD, ACTIVATEKEY, ACTIVATED) 
 	VALUES ('1122334455', 'Sanit Nidnhoy', 'sanit@gmail.com', '1122334455', '12345', 'activeted');

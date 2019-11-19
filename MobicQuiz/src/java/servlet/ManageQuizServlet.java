@@ -8,6 +8,8 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.QuizsJpaController;
+import jpacontroller.TeachersJpaController;
+import jpacontroller.exceptions.NonexistentEntityException;
+import jpacontroller.exceptions.RollbackFailureException;
 import model.Quizs;
 import model.Teachers;
 
@@ -46,11 +51,30 @@ public class ManageQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Teachers teacher = (Teachers) session.getAttribute("user");
+        String removeQuiz = request.getParameter("removequiz");
+       
+        if (removeQuiz!=null) {
+             QuizsJpaController qjc = new QuizsJpaController(utx, emf);
+            try {
+                qjc.destroy(removeQuiz);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            response.sendRedirect("/MobicQuiz/ManageQuiz");
+            return;
+        }
         
-        QuizsJpaController qjc = new QuizsJpaController(utx, emf);
-        List<Quizs> quizs = qjc.findQuizsByTeacherNo(teacher.getTeacherno());
-
-        request.setAttribute("quizs", quizs);
+       
+        
+        if (teacher!=null) {
+            TeachersJpaController tjc = new TeachersJpaController(utx, emf);           
+            List<Quizs> quizs = teacher.getQuizsList();          
+            request.setAttribute("quizs", quizs);
+        }
         request.getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
     }
 

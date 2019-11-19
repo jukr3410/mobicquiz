@@ -27,6 +27,7 @@ import jpacontroller.exceptions.RollbackFailureException;
  * @author ACER
  */
 public class RemoveServlet extends HttpServlet {
+
     @PersistenceUnit(unitName = "MobicQuizPU")
     EntityManagerFactory emf;
 
@@ -45,19 +46,23 @@ public class RemoveServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-       String remove = request.getParameter("remove");
-       QuizsJpaController qjc = new QuizsJpaController(utx, emf); 
-       
-        try {
-            qjc.destroy(remove);
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RollbackFailureException ex) {
-            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+        String remove = request.getParameter("remove");
+        QuizsJpaController qjc = new QuizsJpaController(utx, emf);
+        if (remove != null) {
+            
+            try {
+                qjc.destroy(remove);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
         }
-        response.sendRedirect("/MobicQuiz/ManageQuiz");
+        getServletContext().getRequestDispatcher("/ManageQuiz").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

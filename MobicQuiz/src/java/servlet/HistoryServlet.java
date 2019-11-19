@@ -53,7 +53,7 @@ public class HistoryServlet extends HttpServlet {
         HistorysJpaController hjc = new HistorysJpaController(utx, emf);
         if (userType.equals("student")) {
             Students student = (Students) session.getAttribute("user");           
-            if (student != null) {
+            if (student != null) {               
                 List<Historys> historys = hjc.findHistorysByStudentNo(student.getStudentno());
                 if (historys != null) {
                     request.setAttribute("historys", historys);
