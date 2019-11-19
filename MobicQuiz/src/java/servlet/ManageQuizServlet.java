@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
+import jpacontroller.QuestionsJpaController;
 import jpacontroller.QuizsJpaController;
 import jpacontroller.TeachersJpaController;
 import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
+import model.Questions;
 import model.Quizs;
 import model.Teachers;
 
@@ -51,25 +53,7 @@ public class ManageQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Teachers teacher = (Teachers) session.getAttribute("user");
-        String removeQuiz = request.getParameter("removequiz");
-       
-        if (removeQuiz!=null) {
-             QuizsJpaController qjc = new QuizsJpaController(utx, emf);
-            try {
-                qjc.destroy(removeQuiz);
-            } catch (NonexistentEntityException ex) {
-                Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            response.sendRedirect("/MobicQuiz/ManageQuiz");
-            return;
-        }
-        
-       
-        
+          
         if (teacher!=null) {
             TeachersJpaController tjc = new TeachersJpaController(utx, emf);           
             List<Quizs> quizs = teacher.getQuizsList();          

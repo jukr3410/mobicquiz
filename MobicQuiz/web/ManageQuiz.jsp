@@ -87,10 +87,10 @@
                                                     <td>${q.levelno.level}</td>
                                                     <td>${q.time}</td>
                                                     <td>
-                                                        <a href="ManageQuiz?removequiz=${q.quizno}">
+                                                        <a href="Remove?removequiz=${q.quizno}">
                                                         <button type="button" class="btn btn-primary btn-lg align-middle ">Edit</button>
                                                         </a>
-                                                        <a href="ManageQuiz?removequiz=${q.quizno}">
+                                                        <a href="Remove?removequiz=${q.quizno}">
                                                             <button type="button" class="btn btn-danger btn-lg align-middle ">Remove</button>
                                                         </a>
                                                     </td>

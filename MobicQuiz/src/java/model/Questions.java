@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Questions.findByAns3", query = "SELECT q FROM Questions q WHERE q.ans3 = :ans3")
     , @NamedQuery(name = "Questions.findByAns4", query = "SELECT q FROM Questions q WHERE q.ans4 = :ans4")
     , @NamedQuery(name = "Questions.findByQuizno", query = "SELECT q FROM Questions q WHERE q.quizno.quizno = :quizno")
+    , @NamedQuery(name = "Questions.deleteByQuizno", query = "DELETE FROM Questions q WHERE q.quizno.quizno = :quizno")
     , @NamedQuery(name = "Questions.findByCorrectans", query = "SELECT q FROM Questions q WHERE q.correctans = :correctans")})
 public class Questions implements Serializable {
 
@@ -91,8 +92,6 @@ public class Questions implements Serializable {
         this.correctans = correctans;
         this.quizno = quizno;
     }
-    
-    
 
     public String getQuestionno() {
         return questionno;
@@ -182,9 +181,8 @@ public class Questions implements Serializable {
     public String toString() {
         return "model.Questions[ questionno=" + questionno + " ]";
     }
-    
-    
-    public boolean isCorrect(String myAns){
+
+    public boolean isCorrect(String myAns) {
         return myAns.equals(correctans);
     }
 

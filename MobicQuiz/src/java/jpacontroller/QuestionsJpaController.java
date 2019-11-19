@@ -178,8 +178,8 @@ public class QuestionsJpaController implements Serializable {
             em.close();
         }
     }
-    
-        public List<Questions> findQuestionsByQuizNo(String quizno) {
+
+    public List<Questions> findQuestionsByQuizNo(String quizno) {
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Questions.findByQuizno");
         query.setParameter("quizno", quizno);
@@ -190,8 +190,14 @@ public class QuestionsJpaController implements Serializable {
             em.close();
         }
     }
-    
-    
+
+    public void deleteQuestionsByQuizNo(String quizno) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Questions.deleteByQuizno");
+        query.setParameter("quizno", quizno);
+        query.executeUpdate();
+        em.close();
+    }
 
     public int getQuestionsCount() {
         EntityManager em = getEntityManager();
@@ -205,5 +211,5 @@ public class QuestionsJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
