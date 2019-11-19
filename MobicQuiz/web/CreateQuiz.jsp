@@ -59,7 +59,7 @@
                         <div class="col-md-10">
 
                             <div class="jumbotron">
-                                 <h2 class="text-muted text-center">Create Quiz</h2>
+                                <h2 class="text-muted text-center">Create Quiz</h2>
                                 <div>
                                     <div>
                                         <form role="form" action="CreateQuiz" method="get">
@@ -71,39 +71,39 @@
                                                 <select class="form-control" name="subject">
                                                     <option value="thai">Thai</option>
                                                     <option value="science">Science</option>
-                                                    <option value="social">Social</option>
+                                                    <option value="socia l">Social</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
 
-                                                <label for="name">
+                                                <label for="title">
                                                     Title
                                                 </label>
-                                                <input type="text" class="form-control" name="title" value="${param.title}" />
+                                                <input type="text" class="form-control" name="title" value="${param.title}" placeholder="Title"/>
                                             </div>
                                             <div class="form-group">
 
                                                 <label for="time">
                                                     Time
                                                 </label>
-                                                <input type="number" class="form-control" name="time" min="0" value="${param.time}"/>
+                                                <input type="number" class="form-control" name="time" min="0" value="${param.time}" placeholder="Time of Exam"/>
 
                                             </div>
                                             <div class="form-group">
 
-                                                <label for="time">
-                                                    Score
+                                                <label for="fullscore">
+                                                    Full Score
                                                 </label>
-                                                <input type="number" class="form-control" name="score" min="0" value="${param.score}"/>
+                                                <input type="number" class="form-control" name="score" min="0" value="${param.score}" placeholder="Full Score"/>
 
                                             </div>
 
 
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                                Create Question
+                                                Add Question
                                             </button>
                                             <br><br>
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-success">
                                                 Submit
                                             </button>
 
@@ -126,9 +126,9 @@
                                                         <div class="form-group">
 
                                                             <label for="subject">
-                                                                Question Name
+                                                                Question
                                                             </label>
-                                                            <input type="text" class="form-control" id="subject" />
+                                                            <input type="text" class="form-control" id="question" name="question" placeholder="Question ?" required/>
                                                         </div>
 
                                                         <div class="form-group">
@@ -136,13 +136,13 @@
                                                             <label for="time">
                                                                 Choice
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Answer 1" name="que1" required><br>
-                                                            <input type="text" class="form-control" placeholder="Answer 2" name="que2" required><br>
-                                                            <input type="text" class="form-control" placeholder="Answer 3" name="que3" required><br>
-                                                            <input type="text" class="form-control" placeholder="Answer 4" name="que4" required><br>
+                                                            <input type="text" class="form-control" placeholder="Answer 1" name="ans1" required><br>
+                                                            <input type="text" class="form-control" placeholder="Answer 2" name="ans2" required><br>
+                                                            <input type="text" class="form-control" placeholder="Answer 3" name="ans3" required><br>
+                                                            <input type="text" class="form-control" placeholder="Answer 4" name="ans4" required><br>
 
-                                                            <label for="email"><b>Correct Answer</b></label><br>
-                                                            <input type="text" class="form-control" placeholder="Answer" name="ans" required>
+                                                            <label for="correctans"><b>Correct Answer</b></label><br>
+                                                            <input type="text" class="form-control" placeholder="Insert Same Answer." name="correctans" required>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -157,17 +157,19 @@
 
                                 </div>
 
-                                
+
                             </div>
 
                         </div>
                     </div>
+                    <hr>
+
                 </div>
+
             </div>
+            <footer class="footer text-center ">
+                <p>© Mobicquiz 2019</p>
+            </footer>
         </div>
-        <hr>
-        <footer class="footer text-center ">
-            <p>© Mobicquiz 2019</p>
-        </footer>
     </body>
 </html>
