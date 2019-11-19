@@ -46,11 +46,6 @@ public class ManageQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Teachers teacher = (Teachers) session.getAttribute("user");
-        String Title = request.getParameter("title");
-        String Time = request.getParameter("time");
-        String FullScore = request.getParameter("fullscore");
-        String LevelNo = request.getParameter("levelno");
-        String SubjectNo = request.getParameter("seubjectno");
         
         QuizsJpaController qjc = new QuizsJpaController(utx, emf);
         List<Quizs> quizs = qjc.findQuizsByTeacherNo(teacher.getTeacherno());
