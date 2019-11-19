@@ -46,7 +46,7 @@
                         <div class="col-md-2 text-center ">
                             <a class="nav-link" href="Homepage.jsp">Home</a> 
                             <c:choose>
-                                <c:when test="${usertype=='student'}">
+                                <c:when test="${sessionScope.usertype=='student'}">
                                     <a class="nav-link" href="QuizList">My Quiz</a> 
                                 </c:when>
                                 <c:otherwise>
@@ -94,7 +94,7 @@
                                                 <label for="fullscore">
                                                     Full Score
                                                 </label>
-                                                <input type="number" class="form-control" name="score" min="0" value="${param.score}" placeholder="Full Score"/>
+                                                <input type="number" class="form-control" name="fullscore" min="0" value="${param.score}" placeholder="Full Score"/>
 
                                             </div>
 

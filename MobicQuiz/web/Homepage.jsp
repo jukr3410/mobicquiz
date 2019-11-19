@@ -31,7 +31,7 @@
                                 </li>
 
                                 <c:choose>
-                                    <c:when test="${usertype=='student'}">
+                                    <c:when test="${sessionScope.usertype=='student'}">
                                         <img src="https://png.pngtree.com/svg/20170424/_students_263434.png" width="40">
                                     </c:when>
                                     <c:otherwise>
