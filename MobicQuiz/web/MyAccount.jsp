@@ -68,7 +68,21 @@
 
                                 <br>
                                 <div class="col-md-12"><center>
-                                        <img src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png" width="170" height="170" class="rounded-circle" />
+                                        <c:choose>
+                                            <c:when test="${usertype == 'student'}">
+                                                <img src="images/S${sessionScope.user.studentno}.jpg" 
+                                                     onerror="this.src='https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png'" 
+                                                     width="170" height="170" class="rounded-circle"/>
+                                            </c:when>
+                                            <c:when test="${usertype == 'teacher'}">
+                                                <img src="images/T${sessionScope.user.teacherno}.jpg" 
+                                                     onerror="this.src='https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png'" 
+                                                     width="170" height="170" class="rounded-circle"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="https://maxcdn.icons8.com/Share/icon/Users//user_male_circle_filled1600.png" width="170" height="170" class="rounded-circle" />
+                                            </c:otherwise>
+                                        </c:choose>
                                     </center>
                                 </div>
 
@@ -150,13 +164,42 @@
                                                     <div class="form-group">
 
                                                         Current Password<input type="password" class="form-control" name="password" required /><br>
-                                                        New Password<input type="password" class="form-control" name="newpassword" required /><br>
-                                                        Confirm New Password<input type="password" class="form-control" name="confirmnewpassword" required /><br>
+                                                        New Password<input type="password" class="form-control" name="newpassword" 
+                                                                           id="newpassword" onkeyup="check();" required /><br>
+                                                        Confirm New Password<input type="password" class="form-control" name="confirmnewpassword" 
+                                                                                   id="confirm_newpassword" onkeyup="check();" required /><span id='message' /><br>
                                                     </div>                                              
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                         <button type="submit" class="btn btn-primary">Edit</button>
-                                                    </div> 
+                                                    </div>
+
+                                                    <script>
+                                                        var check = function () {
+                                                            if (document.getElementById('newpassword').value ==
+                                                                    document.getElementById('confirm_newpassword').value &&
+                                                                    document.getElementById('newpassword').value != "" &&
+                                                                    document.getElementById('newpassword').value != "") {
+                                                                document.getElementById('message').style.color = 'green';
+                                                                document.getElementById('message').innerHTML = 'Matching';
+                                                            } else {
+                                                                document.getElementById('message').style.color = 'red';
+                                                                document.getElementById('message').innerHTML = 'NOT Matching';
+                                                            }
+                                                        }
+                                                        var newpassword = document.getElementById("newpassword")
+                                                                , confirm_newpassword = document.getElementById("confirm_newpassword");
+                                                        function validatePassword() {
+                                                            if (newpassword.value !== confirm_newpassword.value) {
+                                                                confirm_newpassword.setCustomValidity("Passwords Don't Match");
+                                                            } else {
+                                                                confirm_newpassword.setCustomValidity('');
+                                                            }
+                                                        }
+                                                        newpassword.onchange = validatePassword;
+                                                        confirm_newpassword.onkeyup = validatePassword;
+                                                    </script>
+
                                                 </form>
                                             </div>
                                         </div>
