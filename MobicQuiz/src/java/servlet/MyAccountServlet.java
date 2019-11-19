@@ -38,19 +38,11 @@ public class MyAccountServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String source = request.getParameter("upload");
-        String target = "C:/Users/Wine.N/Documents/NetBeansProjects/mobicquiz/MobicQuiz/web/images/";
+        String target = System.getProperty("user.home") + "/Documents/NetBeansProjects/mobicquiz/MobicQuiz/web/images/";
 
         ChangeImage img = new ChangeImage();
         img.editImages(source, target);
-
-        String path = "src/test/resources";
-
-        System.out.println(System.getProperty("user.dir"));
-
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
-        System.out.println("Current relative path is: " + s);
-        
+                
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
