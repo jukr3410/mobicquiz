@@ -163,11 +163,12 @@
                                                 <form role="form" action="MyAccount.jsp" method="post">
                                                     <div class="form-group">
 
-                                                        Current Password<input type="password" class="form-control" name="password" required /><br>
+                                                        Current Password<input type="password" class="form-control" name="password" 
+                                                                               id="password" required /><br>
                                                         New Password<input type="password" class="form-control" name="newpassword" 
-                                                                           id="newpassword" onkeyup="check();" required /><br>
+                                                                           id="newpassword" required /><br>
                                                         Confirm New Password<input type="password" class="form-control" name="confirmnewpassword" 
-                                                                                   id="confirm_newpassword" onkeyup="check();" required /><span id='message' /><br>
+                                                                                   id="confirm_newpassword" required /><span id='message' /><br>
                                                     </div>                                              
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -175,25 +176,23 @@
                                                     </div>
 
                                                     <script>
-                                                        var check = function () {
-                                                            if (document.getElementById('newpassword').value ==
-                                                                    document.getElementById('confirm_newpassword').value &&
-                                                                    document.getElementById('newpassword').value != "" &&
-                                                                    document.getElementById('newpassword').value != "") {
-                                                                document.getElementById('message').style.color = 'green';
-                                                                document.getElementById('message').innerHTML = 'Matching';
-                                                            } else {
-                                                                document.getElementById('message').style.color = 'red';
-                                                                document.getElementById('message').innerHTML = 'NOT Matching';
-                                                            }
-                                                        }
                                                         var newpassword = document.getElementById("newpassword")
-                                                                , confirm_newpassword = document.getElementById("confirm_newpassword");
+                                                                , confirm_newpassword = document.getElementById("confirm_newpassword")
+                                                                , password = document.getElementById("password");
                                                         function validatePassword() {
                                                             if (newpassword.value !== confirm_newpassword.value) {
+                                                                document.getElementById('message').style.color = 'red';
+                                                                document.getElementById('message').innerHTML = 'NOT Matching';
                                                                 confirm_newpassword.setCustomValidity("Passwords Don't Match");
                                                             } else {
+                                                                document.getElementById('message').style.color = 'green';
+                                                                document.getElementById('message').innerHTML = 'Matching';
                                                                 confirm_newpassword.setCustomValidity('');
+                                                            }
+                                                            if (password.value == newpassword.value) {
+                                                                newpassword.setCustomValidity('Change New Password');
+                                                            } else {
+                                                                newpassword.setCustomValidity('');
                                                             }
                                                         }
                                                         newpassword.onchange = validatePassword;
