@@ -54,8 +54,7 @@ public class ManageQuizServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Teachers teacher = (Teachers) session.getAttribute("user");
           
-        if (teacher!=null) {
-            TeachersJpaController tjc = new TeachersJpaController(utx, emf);  
+        if (teacher!=null) {            
             QuizsJpaController qjc = new QuizsJpaController(utx, emf);
             List<Quizs> quizs = qjc.findQuizsByTeacherNo(teacher.getTeacherno());
             request.setAttribute("quizs", quizs);
