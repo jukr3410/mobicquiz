@@ -77,8 +77,7 @@ public class Quizs implements Serializable {
     @JoinColumn(name = "SUBJECTNO", referencedColumnName = "SUBJECTNO")
     @ManyToOne(optional = false)
     private Subjects subjectno;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quizno")
-    private List<Historys> historysList;
+
 
     public Quizs() {
     }
@@ -171,14 +170,6 @@ public class Quizs implements Serializable {
         this.subjectno = subjectno;
     }
 
-    @XmlTransient
-    public List<Historys> getHistorysList() {
-        return historysList;
-    }
-
-    public void setHistorysList(List<Historys> historysList) {
-        this.historysList = historysList;
-    }
 
     @Override
     public int hashCode() {

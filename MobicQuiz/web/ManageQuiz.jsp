@@ -87,11 +87,11 @@
                                                     <td>${q.levelno.level}</td>
                                                     <td>${q.time}</td>
                                                     <td>
-                                                        <a href="Remove?removequiz=${q.quizno}">
-                                                        <button type="button" class="btn btn-primary btn-lg align-middle ">Edit</button>
+                                                        <a href="Edit?editquiz=${q.quizno}" class="btn btn-primary btn-lg align-middle ">
+                                                            Edit
                                                         </a>
-                                                        <a href="Remove?removequiz=${q.quizno}">
-                                                            <button type="button" class="btn btn-danger btn-lg align-middle ">Remove</button>
+                                                        <a href="Remove?removequiz=${q.quizno}" class="btn btn-danger btn-lg align-middle ">
+                                                            Remove
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -110,5 +110,8 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
         </div>
+
+
+
     </body>
 </html>
