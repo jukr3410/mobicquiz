@@ -16,7 +16,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import jpacontroller.HistorysJpaController;
+import jpacontroller.QuizsJpaController;
 import model.ChangeImage;
+import model.Historys;
+import model.Quizs;
+import model.Students;
+import model.Teachers;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -36,13 +43,35 @@ public class MyAccountServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
+        String userType = (String) session.getAttribute("usertype");
         String source = request.getParameter("upload");
         String target = System.getProperty("user.home") + "/Documents/NetBeansProjects/mobicquiz/MobicQuiz/web/images/";
+        String name = null;
 
-        ChangeImage img = new ChangeImage();
-        img.editImages(source, target);
-                
+        if (userType != null) {
+            if (userType.equals("student")) {
+                Students student = (Students) session.getAttribute("user");
+                if (student != null) {
+                    name = "S" + student.getStudentno();
+                }
+            } else if (userType.equals("teacher")) {
+                Teachers teacher = (Teachers) session.getAttribute("user");
+                if (teacher != null) {
+                    name = "T" + teacher.getTeacherno();
+                }
+            }
+            ChangeImage img = new ChangeImage();
+            img.editImages(source, target, name);
+            try {
+                Thread.sleep(1700);
+                response.sendRedirect("/MobicQuiz/MyAccount");
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
