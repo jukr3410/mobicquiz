@@ -64,8 +64,8 @@
                                 <h1 class="text-muted text-center">Manage Quiz</h1>
                                 <div>
 
-                                    <a href="CreateQuiz.jsp">
-                                        <button type="button" class="btn btn-success btn-lg align-middle">Create Quiz</button>
+                                    <a href="CreateQuiz.jsp" class="btn btn-success btn-lg align-middle">
+                                        Create Quiz
                                     </a><br><br>
                                     <table class="table table-hover text-center" style="background-color: azure">
                                         <thead>
