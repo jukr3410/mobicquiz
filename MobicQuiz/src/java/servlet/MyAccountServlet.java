@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
+import jpacontroller.HistorysJpaController;
+import jpacontroller.QuizsJpaController;
 import jpacontroller.StudentsJpaController;
 import jpacontroller.TeachersJpaController;
 import jpacontroller.exceptions.NonexistentEntityException;
