@@ -25,6 +25,7 @@ import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
 import model.Questions;
 import model.Quizs;
+import model.Teachers;
 
 /**
  *
@@ -50,7 +51,14 @@ public class RemoveServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String removeQuiz = request.getParameter("removequiz");
+        String removeQuiz = request.getParameter("removequiz").trim();
+        Teachers teacher = (Teachers) session.getAttribute("user");
+          
+        if (teacher!=null) {            
+            QuizsJpaController qjc = new QuizsJpaController(utx, emf);
+            List<Quizs> quizs = qjc.findQuizsByTeacherNo(teacher.getTeacherno());
+            request.setAttribute("quizs", quizs);
+        }
         if (removeQuiz != null) {
             QuizsJpaController quijc = new QuizsJpaController(utx, emf);
             Quizs quiz = quijc.findQuizs(removeQuiz);
@@ -69,6 +77,7 @@ public class RemoveServlet extends HttpServlet {
                             Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
+                    System.out.println("Passs Que !!!!!!!!!!!");
                 }
 
                 try {
@@ -80,11 +89,15 @@ public class RemoveServlet extends HttpServlet {
                 } catch (Exception ex) {
                     Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println("Passs !!!!!!!!!!!");
-
+                
+                System.out.println("Passs Qui !!!!!!!!!!!");
+                getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
+                return;
             }
+            request.setAttribute("errorremove", "Can not remove");
         }
-        response.sendRedirect("/MobicQuiz/ManageQuiz");
+        
+        getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
