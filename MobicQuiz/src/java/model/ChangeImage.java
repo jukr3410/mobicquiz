@@ -15,10 +15,9 @@ import org.apache.commons.io.FileUtils;
  */
 public class ChangeImage {
     
-    public void editImages(String source, String target){
+    public void editImages(String source, String target, String name){
         File sourceFile = new File(source);
-        String name = sourceFile.getName();
-        File targetFile = new File(target + name);
+        File targetFile = new File(target + name + ".jpg");
  
         System.out.println("***************************************************************");
         System.out.println("Copying file : " + sourceFile.getName() + " from Java Program");
