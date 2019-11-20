@@ -5,26 +5,16 @@
  */
 package servlet;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import java.net.URLDecoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import jpacontroller.HistorysJpaController;
-import jpacontroller.QuizsJpaController;
 import model.ChangeImage;
-import model.Historys;
-import model.Quizs;
 import model.Students;
 import model.Teachers;
-import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -46,9 +36,13 @@ public class MyAccountServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String userType = (String) session.getAttribute("usertype");
         String source = request.getParameter("upload");
-        String target = System.getProperty("user.home") + "/Documents/NetBeansProjects/mobicquiz/MobicQuiz/web/images/";
+        String target = (getServletContext().getRealPath("/images")).replace("build\\","") + "\\";
         String name = null;
-
+        String file_name = null;
+        
+        System.out.println("///////////////////////////////////////////////////////////////////////");
+        System.out.println(target);
+        
         if (userType != null) {
             if (userType.equals("student")) {
                 Students student = (Students) session.getAttribute("user");

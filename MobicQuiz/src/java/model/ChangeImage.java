@@ -18,9 +18,12 @@ public class ChangeImage {
     public void editImages(String source, String target, String name){
         File sourceFile = new File(source);
         File targetFile = new File(target + name + ".jpg");
- 
+
+        
         System.out.println("***************************************************************");
-        System.out.println("Copying file : " + sourceFile.getName() + " from Java Program");
+        System.out.println("Source file : " + sourceFile.getAbsolutePath() + " from Java Program");
+        System.out.println("***************************************************************");
+        System.out.println("Copying file : " + targetFile.getName() + " from Java Program");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             System.out.println("***************************************************************");
