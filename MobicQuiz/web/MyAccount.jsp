@@ -158,9 +158,10 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
+                                            
                                             <div class="modal-body">
 
-                                                <form role="form" action="MyAccount.jsp" method="post">
+                                                <form role="form" action="MyAccount" method="post">
                                                     <div class="form-group">
 
                                                         Current Password<input type="password" class="form-control" name="password" 
