@@ -53,7 +53,7 @@ public class RemoveServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String removeQuiz = request.getParameter("removequiz").trim();
         Teachers teacher = (Teachers) session.getAttribute("user");
-          
+        
         if (teacher!=null) {            
             QuizsJpaController qjc = new QuizsJpaController(utx, emf);
             List<Quizs> quizs = qjc.findQuizsByTeacherNo(teacher.getTeacherno());
@@ -89,9 +89,7 @@ public class RemoveServlet extends HttpServlet {
                 } catch (Exception ex) {
                     Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                System.out.println("Passs Qui !!!!!!!!!!!");
-                getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
+                response.sendRedirect("/MobicQuiz/ManageQuiz");
                 return;
             }
             request.setAttribute("errorremove", "Can not remove");
