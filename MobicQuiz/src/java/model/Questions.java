@@ -6,6 +6,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,6 +72,8 @@ public class Questions implements Serializable {
     @ManyToOne(optional = false)
     private Quizs quizno;
 
+    private List<Questions> questionses = new ArrayList(100);
+    
     public Questions() {
     }
 
@@ -185,5 +189,15 @@ public class Questions implements Serializable {
     public boolean isCorrect(String myAns) {
         return myAns.equals(correctans);
     }
-
+    
+    
+    public List<Questions> addQuestion(Questions question){
+        questionses.add(question);
+        return questionses;
+    }
+    
+    public void deleteQuestion(Questions question){
+        questionses.remove(question);
+    }
+    
 }

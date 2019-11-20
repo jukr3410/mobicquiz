@@ -43,21 +43,12 @@ public class HistorysJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Quizs quizno = historys.getQuizno();
-            if (quizno != null) {
-                quizno = em.getReference(quizno.getClass(), quizno.getQuizno());
-                historys.setQuizno(quizno);
-            }
             Students studentno = historys.getStudentno();
             if (studentno != null) {
                 studentno = em.getReference(studentno.getClass(), studentno.getStudentno());
                 historys.setStudentno(studentno);
             }
             em.persist(historys);
-            if (quizno != null) {
-                quizno.getHistorysList().add(historys);
-                quizno = em.merge(quizno);
-            }
             if (studentno != null) {
                 studentno.getHistorysList().add(historys);
                 studentno = em.merge(studentno);
@@ -86,27 +77,13 @@ public class HistorysJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Historys persistentHistorys = em.find(Historys.class, historys.getHistoryno());
-            Quizs quiznoOld = persistentHistorys.getQuizno();
-            Quizs quiznoNew = historys.getQuizno();
             Students studentnoOld = persistentHistorys.getStudentno();
             Students studentnoNew = historys.getStudentno();
-            if (quiznoNew != null) {
-                quiznoNew = em.getReference(quiznoNew.getClass(), quiznoNew.getQuizno());
-                historys.setQuizno(quiznoNew);
-            }
             if (studentnoNew != null) {
                 studentnoNew = em.getReference(studentnoNew.getClass(), studentnoNew.getStudentno());
                 historys.setStudentno(studentnoNew);
             }
             historys = em.merge(historys);
-            if (quiznoOld != null && !quiznoOld.equals(quiznoNew)) {
-                quiznoOld.getHistorysList().remove(historys);
-                quiznoOld = em.merge(quiznoOld);
-            }
-            if (quiznoNew != null && !quiznoNew.equals(quiznoOld)) {
-                quiznoNew.getHistorysList().add(historys);
-                quiznoNew = em.merge(quiznoNew);
-            }
             if (studentnoOld != null && !studentnoOld.equals(studentnoNew)) {
                 studentnoOld.getHistorysList().remove(historys);
                 studentnoOld = em.merge(studentnoOld);
@@ -148,11 +125,6 @@ public class HistorysJpaController implements Serializable {
                 historys.getHistoryno();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The historys with id " + id + " no longer exists.", enfe);
-            }
-            Quizs quizno = historys.getQuizno();
-            if (quizno != null) {
-                quizno.getHistorysList().remove(historys);
-                quizno = em.merge(quizno);
             }
             Students studentno = historys.getStudentno();
             if (studentno != null) {

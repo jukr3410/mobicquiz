@@ -64,8 +64,8 @@
                                 <h1 class="text-muted text-center">Manage Quiz</h1>
                                 <div>
 
-                                    <a href="CreateQuiz.jsp">
-                                        <button type="button" class="btn btn-success btn-lg align-middle">Create Quiz</button>
+                                    <a href="CreateQuiz.jsp" class="btn btn-success btn-lg align-middle">
+                                        Create Quiz
                                     </a><br><br>
                                     <table class="table table-hover text-center" style="background-color: azure">
                                         <thead>
@@ -87,11 +87,11 @@
                                                     <td>${q.levelno.level}</td>
                                                     <td>${q.time}</td>
                                                     <td>
-                                                        <a href="Remove?removequiz=${q.quizno}">
-                                                        <button type="button" class="btn btn-primary btn-lg align-middle ">Edit</button>
+                                                        <a href="Edit?editquiz=${q.quizno}" class="btn btn-primary btn-lg align-middle ">
+                                                            Edit
                                                         </a>
-                                                        <a href="Remove?removequiz=${q.quizno}">
-                                                            <button type="button" class="btn btn-danger btn-lg align-middle ">Remove</button>
+                                                        <a href="Remove?removequiz=${q.quizno}" class="btn btn-danger btn-lg align-middle ">
+                                                            Remove
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -110,5 +110,8 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
         </div>
+
+
+
     </body>
 </html>
