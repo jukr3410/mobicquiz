@@ -10,7 +10,7 @@
     <body>
         <center>
             <h1>Upload File Form</h1>
-            <form action="FileUploadHandler" enctype="multipart/form-data" method="post">
+            <form action="FileUploadHandler" method="post" enctype='multipart/form-data'>
                 Enter File Name <input type="text" name="file_name"><br>
                 Select<input type="file" name="file2" /><br>
                 <input type="submit" value="upload" />

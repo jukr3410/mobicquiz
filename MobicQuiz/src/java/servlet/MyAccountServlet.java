@@ -52,13 +52,8 @@ public class MyAccountServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String userType = (String) session.getAttribute("usertype");
-        String source = request.getParameter("upload");
-        String target = (getServletContext().getRealPath("/images")).replace("build\\","") + "\\";
+        String target = (getServletContext().getRealPath("/images")).replace("build\\", "") + "\\";
         String name = null;
-        String file_name = null;
-        
-        System.out.println("///////////////////////////////////////////////////////////////////////");
-        System.out.println(target);
 
         String password = request.getParameter("password");
         String newpassword = request.getParameter("newpassword");
@@ -115,7 +110,7 @@ public class MyAccountServlet extends HttpServlet {
                 }
             }
         }
-        
+
         if (userType != null) {
             if (userType.equals("student")) {
                 Students student = (Students) session.getAttribute("user");
@@ -129,30 +124,27 @@ public class MyAccountServlet extends HttpServlet {
                 }
             }
             ChangeImage img = new ChangeImage();
-            img.editImages(source, target, name);
+            img.editImages(request, target, name);
             try {
                 Thread.sleep(1700);
                 response.sendRedirect("/MobicQuiz/MyAccount");
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-
         }
-
-    
-}
+    }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/MyAccount.jsp").forward(request, response);
     }
@@ -166,7 +158,7 @@ public class MyAccountServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -177,7 +169,7 @@ public class MyAccountServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
