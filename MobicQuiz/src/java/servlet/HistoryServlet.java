@@ -76,7 +76,7 @@ public class HistoryServlet extends HttpServlet {
                         List<Historys> historysByQuiz = hjc.findHistorysByQuizNo(viewStudent);
                         //List<Historys> historysByQuiz1 = hjc.findHistorysEntities();
                         Quizs quizsNo = qjc.findQuizs(viewStudent);
-                        request.setAttribute("quiztitle", quizsNo.getTitle());
+                        request.setAttribute("quiz", quizsNo);
                         request.setAttribute("historysstudent", historysByQuiz);
                         getServletContext().getRequestDispatcher("/HistoryStudent.jsp").forward(request, response);
                         return;

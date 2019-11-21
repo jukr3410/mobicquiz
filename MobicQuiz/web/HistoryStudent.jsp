@@ -62,12 +62,14 @@
 
 
                             <div class="jumbotron ">
-                                <h1 class="text-muted text-center">History of ${quiztitle}</h1>
-
                                 <!--    !! write content in this    -->
-
-                                <br>
-                                <br>
+                                <h1 class="text-muted text-center">Student Exam History</h1><br>
+                                <div style="font-size: larger; background-color: white; padding: 10px">
+                                    Title: ${quiz.title}<br>
+                                    Subject: ${quiz.subjectno.subject}<br>
+                                    Level: ${quiz.levelno.level}
+                                </div>
+                                
                                 <div>
                                     <c:choose>
                                         <c:when test="${historysstudent!=null}">                                     
