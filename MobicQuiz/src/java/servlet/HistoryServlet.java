@@ -74,10 +74,10 @@ public class HistoryServlet extends HttpServlet {
                     if (viewStudent != null) {
                         //List<Historys> historys = hjc.findHistorysByTeacherNo(teacher.getTeacherno());
                         List<Historys> historysByQuiz = hjc.findHistorysByQuizNo(viewStudent);
-                        List<Historys> historysByQuiz1 = hjc.findHistorysEntities();
+                        //List<Historys> historysByQuiz1 = hjc.findHistorysEntities();
                         Quizs quizsNo = qjc.findQuizs(viewStudent);
                         request.setAttribute("quiztitle", quizsNo.getTitle());
-                        request.setAttribute("historysstudent", historysByQuiz1);
+                        request.setAttribute("historysstudent", historysByQuiz);
                         getServletContext().getRequestDispatcher("/HistoryStudent.jsp").forward(request, response);
                         return;
                     }
