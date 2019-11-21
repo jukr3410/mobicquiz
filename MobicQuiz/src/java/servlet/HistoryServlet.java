@@ -73,7 +73,7 @@ public class HistoryServlet extends HttpServlet {
             }
         }
 
-        getServletContext().getRequestDispatcher("/HistoryTeacher.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/History.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
