@@ -158,18 +158,19 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            
+
                                             <div class="modal-body">
 
                                                 <form role="form" action="MyAccount" method="post">
                                                     <div class="form-group">
 
                                                         Current Password<input type="password" class="form-control" name="password" 
-                                                                               id="password" required /><br>
+                                                                               id="password" minlength="4" required /><br>
                                                         New Password<input type="password" class="form-control" name="newpassword" 
-                                                                           id="newpassword" required /><br>
+                                                                           id="newpassword" minlength="4" required /><br>
                                                         Confirm New Password<input type="password" class="form-control" name="confirmnewpassword" 
-                                                                                   id="confirm_newpassword" required /><span id='message' /><br>
+                                                                                   id="confirm_newpassword" minlength="4" required />
+                                                        <span id='message' /><br />
                                                     </div>                                              
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -177,6 +178,8 @@
                                                     </div>
 
                                                     <script>
+                                                        var session_pw = ${sessionScope.user.password};
+                                                        
                                                         var newpassword = document.getElementById("newpassword")
                                                                 , confirm_newpassword = document.getElementById("confirm_newpassword")
                                                                 , password = document.getElementById("password");
@@ -190,13 +193,22 @@
                                                                 document.getElementById('message').innerHTML = 'Matching';
                                                                 confirm_newpassword.setCustomValidity('');
                                                             }
-                                                            if (password.value == newpassword.value) {
+                                                            if (password.value === newpassword.value) {
                                                                 newpassword.setCustomValidity('Change New Password');
                                                             } else {
                                                                 newpassword.setCustomValidity('');
                                                             }
                                                         }
-                                                        newpassword.onchange = validatePassword;
+                                                        function checkPassword(){
+                                                            var n = password.value.toString().localeCompare(session_pw.toString());
+                                                            if(n === 0){
+                                                                password.setCustomValidity('');
+                                                            }else {
+                                                                password.setCustomValidity("Current Password Incorrect.");
+                                                            }
+                                                        }
+                                                        password.onkeyup = checkPassword;
+                                                        newpassword.onkeyup = validatePassword;
                                                         confirm_newpassword.onkeyup = validatePassword;
                                                     </script>
 

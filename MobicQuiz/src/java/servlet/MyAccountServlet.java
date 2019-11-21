@@ -6,8 +6,7 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -17,12 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
-import jpacontroller.HistorysJpaController;
-import jpacontroller.QuizsJpaController;
 import jpacontroller.StudentsJpaController;
 import jpacontroller.TeachersJpaController;
-import jpacontroller.exceptions.NonexistentEntityException;
-import jpacontroller.exceptions.RollbackFailureException;
 import model.ChangeImage;
 import model.Students;
 import model.Teachers;
@@ -50,11 +45,14 @@ public class MyAccountServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         String userType = (String) session.getAttribute("usertype");
+        
         String target = (getServletContext().getRealPath("/images")).replace("build\\", "") + "\\";
         String name = null;
 
+        PrintWriter out = response.getWriter();
         String password = request.getParameter("password");
         String newpassword = request.getParameter("newpassword");
         String confirmnewpassword = request.getParameter("confirmnewpassword");
@@ -70,20 +68,16 @@ public class MyAccountServlet extends HttpServlet {
                         student.setPassword(newpassword);
                         try {
                             sjc.edit(student);
-                        } catch (NonexistentEntityException ex) {
-                            Logger.getLogger(MyAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (RollbackFailureException ex) {
-                            Logger.getLogger(MyAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (Exception ex) {
-                            Logger.getLogger(MyAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch(Exception e){
+                            e.printStackTrace();
                         }
-                        response.sendRedirect("/MobicQuiz/MyAccount");
+                        session.invalidate();
+                        response.sendRedirect("/MobicQuiz/Login");
                         return;
                     } else {
-                        request.setAttribute("error", "Can not reset password");
-                        request.getServletContext().getRequestDispatcher("/MyAccount.jsp").forward(request, response);
+                        response.sendRedirect("/MobicQuiz/Login");
+                        return;
                     }
-
                 }
 
             } else if (userType.equals("teacher")) {
@@ -93,18 +87,15 @@ public class MyAccountServlet extends HttpServlet {
                         teacher.setPassword(newpassword);
                         try {
                             tjc.edit(teacher);
-                        } catch (NonexistentEntityException ex) {
-                            Logger.getLogger(MyAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (RollbackFailureException ex) {
-                            Logger.getLogger(MyAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (Exception ex) {
-                            Logger.getLogger(MyAccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch(Exception e){
+                            e.printStackTrace();
                         }
-                        response.sendRedirect("/MobicQuiz/MyAccount");
+                        session.invalidate();
+                        response.sendRedirect("/MobicQuiz/Login");
                         return;
                     } else {
-                        request.setAttribute("error", "Can not reset password");
-                        request.getServletContext().getRequestDispatcher("/MyAccount.jsp").forward(request, response);
+                        response.sendRedirect("/MobicQuiz/Login");
+                        return;
                     }
 
                 }
