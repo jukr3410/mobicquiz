@@ -65,129 +65,89 @@
                                 <h1 class="text-muted text-center">My History</h1>
 
                                 <!--    !! write content in this    -->
+
+                                <br>
+                                <br>
                                 <div>
-                                    <br>
-                                    <br>
-                                    <div>
-                                        <c:choose>
-                                            <c:when test="${historys!=null}">
+                                    <c:choose>
+                                        <c:when test="${historys!=null}">
 
 
-                                                <select class="form-control">
-                                                    <option value="thsi">Thai</option>
-                                                    <option value="science">Science</option>
-                                                    <option value="social">Social</option>
-                                                </select><br>
-                                                <c:choose>
-                                                    <c:when test="${usertype=='student'}">
-                                                        <table class="table table-hover text-center" style="background-color: azure">
-                                                            <thead>
+                                            <select class="form-control">
+                                                <option value="thsi">Thai</option>
+                                                <option value="science">Science</option>
+                                                <option value="social">Social</option>
+                                            </select><br>
+                                            <c:choose>
+                                                <c:when test="${usertype=='student'}">
+                                                    <table class="table table-hover text-center" style="background-color: azure">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Date</th>
+                                                                <th>Subject</th>
+                                                                <th>Title</th>
+                                                                <th>Score</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody class="table-sm" style="background-color: white">
+
+                                                            <c:forEach items="${historys}" var="h" varStatus="theCount">
                                                                 <tr>
-                                                                    <th>No</th>
-                                                                    <th>Date</th>
-                                                                    <th>Subject</th>
-                                                                    <th>Title</th>
-                                                                    <th>Score</th>
+                                                                    <td>${theCount.count}</td>
+                                                                    <td>${h.date}</td>
+                                                                    <td>${h.quizno.subjectno.subject}</td>
+                                                                    <td>${h.quizno.title}</td>
+                                                                    <td>${h.score}</td>
                                                                 </tr>
-                                                            </thead>
 
-                                                            <tbody class="table-sm" style="background-color: white">
-
-                                                                <c:forEach items="${historys}" var="h" varStatus="theCount">
-                                                                    <tr>
-                                                                        <td>${theCount.count}</td>
-                                                                        <td>${h.date}</td>
-                                                                        <td>${h.quizno.subjectno.subject}</td>
-                                                                        <td>${h.quizno.title}</td>
-                                                                        <td>${h.score}</td>
-                                                                    </tr>
-
-                                                                </c:forEach>
-                                                            </tbody>
-                                                        </table>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <table class="table table-hover text-center" style="background-color: azure">
-                                                            <thead>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <table class="table table-hover text-center" style="background-color: azure">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Title</th>
+                                                                <th>Level</th>
+                                                                <th>Subject</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="table-sm" style="background-color: white">
+                                                            <c:forEach items="${historys}" var="h" varStatus="theCount">
                                                                 <tr>
-                                                                    <th>No</th>
-                                                                    <th>Title</th>
-                                                                    <th>Level</th>
-                                                                    <th>Subject</th>
-                                                                    <th></th>
+                                                                    <td>${theCount.count}</td>
+                                                                    <td>${h.title}</td>
+                                                                    <td>${h.levelno.level}</td>
+                                                                    <td>${h.subjectno.subject}</td>
+
+                                                                    <td>
+                                                                        <div>                           
+                                                                            <a href="History?viewstudent=${h.quizno}" class="btn btn-info btn-lg align-middle">View</a>
+                                                                            
+                                                                        </div>
+                                                                    </td>
                                                                 </tr>
-                                                            </thead>
-                                                            <tbody class="table-sm" style="background-color: white">
-                                                                <c:forEach items="${tquizs}" var="tq" varStatus="theCount">
-                                                                    <tr>
-                                                                        <td>${theCount.count}</td>
-                                                                        <td>${tq.title}</td>
-                                                                        <td>${tq.levelno.level}</td>
-                                                                        <td>${tq.subjectno.subject}</td>
 
-                                                                        <td>
-                                                                            <div>                           
-                                                                                <a href=""  data-toggle="modal" data-target="#myModal"><button type="button" class="btn btn-info btn-lg align-middle">View</button></a>
-                                                                                <!-- Modal -->
-                                                                                <div class="modal fade" id="myModal" role="dialog">
-                                                                                    <div class="modal-dialog">
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                                                                        <!-- Modal content-->
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <table class="table table-hover text-center" style="background-color: azure">
-                                                                                                    <thead>
-                                                                                                        <tr>
-                                                                                                            <th>No</th>
-                                                                                                            <th>Date</th>
-                                                                                                            <th>Student</th>
-                                                                                                            <th>Name</th>
-                                                                                                            <th>Score</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tbody class="table-sm" style="background-color: white">
-                                                                                                        <c:forEach items="${historys}" var="h" varStatus="theCount">
-                                                                                                            <tr>
-                                                                                                                <td>${theCount.count}</td>
-                                                                                                                <td>${h.date}</td>
-                                                                                                                <td>${h.studentno.studentno}</td>
-                                                                                                                <td>${h.studentno.name}</td>
-                                                                                                                <td>${h.score}</td>
-                                                                                                            </tr>
-
-                                                                                                        </c:forEach>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                            <!--                                                                                        <div class="modal-footer">
-                                                                                                                                                                                        <a href="Exam?quizno=${q.quizno}"><button type="button" class="btn btn-success">Start</button></a>
-                                                                                                                                                                                    </div>-->
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                </c:forEach>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </tbody>
-                                                </table>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <div class="text-center">
-                                                    <h1 style="color: tomato">No History.</h1>
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="text-center">
+                                                <h1 style="color: tomato">No History.</h1>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
+
                             </div>
                         </div>
                     </div>
