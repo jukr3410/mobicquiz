@@ -6,8 +6,11 @@
 package model;
 
 import java.io.File;
-import java.io.IOException;
-import org.apache.commons.io.FileUtils;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -15,20 +18,19 @@ import org.apache.commons.io.FileUtils;
  */
 public class ChangeImage {
     
-    public void editImages(String source, String target, String name){
-        File sourceFile = new File(source);
+    public void editImages(HttpServletRequest request, String target, String name){
         File targetFile = new File(target + name + ".jpg");
-
-        
-        System.out.println("***************************************************************");
-        System.out.println("Source file : " + sourceFile.getAbsolutePath() + " from Java Program");
-        System.out.println("***************************************************************");
-        System.out.println("Copying file : " + targetFile.getName() + " from Java Program");
         try {
-            FileUtils.copyFile(sourceFile, targetFile);
-            System.out.println("***************************************************************");
-            System.out.println("copying of file from Java program is completed");
-        } catch (Exception e) {
+            ServletFileUpload sf = new ServletFileUpload(new DiskFileItemFactory());
+            List<FileItem> file = sf.parseRequest(request);
+                        
+            for (FileItem item : file) {
+                item.write(targetFile);
+            }
+            System.out.println("*****************************************************");
+            System.out.println("Upload image successfully.");
+
+        } catch (Exception e){
             e.printStackTrace();
         }
         

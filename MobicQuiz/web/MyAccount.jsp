@@ -117,7 +117,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form role="form" action="MyAccount" method="post">
+                                                <form role="form" action="MyAccount" method="post" enctype='multipart/form-data'>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
@@ -125,9 +125,9 @@
                                                         <div class="custom-file">
                                                             <input type="file" class="input-group-text" id="inputGroupFile01" 
                                                                    accept="image/*" aria-describedby="inputGroupFileAddon01"
-                                                                   name="upload" onchange="validateFileType()">
+                                                                   name="upload" onchange="validateFileType()" />
                                                         </div>
-                                                    </div>
+                                                    </div><br>
                                                     <script type="text/javascript">
                                                         function validateFileType() {
                                                             var fileName = document.getElementById("inputGroupFile01").value;
