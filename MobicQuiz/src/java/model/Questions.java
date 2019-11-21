@@ -200,4 +200,8 @@ public class Questions implements Serializable {
         questionses.remove(question);
     }
     
+    public void  deleteAllQue(){
+        questionses = null;
+    }
+    
 }
