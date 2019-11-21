@@ -78,20 +78,21 @@
                                                     <option value="science">Science</option>
                                                     <option value="social">Social</option>
                                                 </select><br>
+                                                <c:choose>
+                                                    <c:when test="${usertype=='student'}">
+                                                        <table class="table table-hover text-center" style="background-color: azure">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Date</th>
+                                                                    <th>Subject</th>
+                                                                    <th>Title</th>
+                                                                    <th>Score</th>
+                                                                </tr>
+                                                            </thead>
 
-                                                <table class="table table-hover text-center" style="background-color: azure">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Date</th>
-                                                            <th>Subject</th>
-                                                            <th>Title</th>
-                                                            <th>Score</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="table-sm" style="background-color: white">
-                                                        <c:choose>
-                                                            <c:when test="${usertype=='student'}">
+                                                            <tbody class="table-sm" style="background-color: white">
+
                                                                 <c:forEach items="${historys}" var="h" varStatus="theCount">
                                                                     <tr>
                                                                         <td>${theCount.count}</td>
@@ -102,18 +103,31 @@
                                                                     </tr>
 
                                                                 </c:forEach>
-                                                            </c:when>
-                                                            <c:otherwise>
+                                                            </tbody>
+                                                        </table>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <table class="table table-hover text-center" style="background-color: azure">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Title</th>
+                                                                    <th>Level</th>
+                                                                    <th>Subject</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="table-sm" style="background-color: white">
                                                                 <c:forEach items="${tquizs}" var="tq" varStatus="theCount">
                                                                     <tr>
                                                                         <td>${theCount.count}</td>
                                                                         <td>${tq.title}</td>
                                                                         <td>${tq.levelno.level}</td>
                                                                         <td>${tq.subjectno.subject}</td>
-                                                                        
+
                                                                         <td>
                                                                             <div>                           
-                                                                                <button type="button" class="btn btn-info btn-lg align-middle" data-toggle="modal" data-target="#myModal">View</button>
+                                                                                <a href=""  data-toggle="modal" data-target="#myModal"><button type="button" class="btn btn-info btn-lg align-middle">View</button></a>
                                                                                 <!-- Modal -->
                                                                                 <div class="modal fade" id="myModal" role="dialog">
                                                                                     <div class="modal-dialog">
