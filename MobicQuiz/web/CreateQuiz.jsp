@@ -61,8 +61,9 @@
                             <div class="jumbotron">
                                 <h2 class="text-muted text-center">Create Quiz</h2>
                                 <div>
-                                    <div>
-                                        <form role="form" action="CreateQuiz" method="get">
+                                    <form role="form" action="CreateQuiz" method="get">
+                                        <div>
+
                                             <div class="form-group">
 
                                                 <label for="subject">
@@ -79,14 +80,14 @@
                                                 <label for="title">
                                                     Title
                                                 </label>
-                                                <input type="text" class="form-control" name="title" value="${param.title}" placeholder="Title"/>
+                                                <input type="text" class="form-control" name="title" value="${sessionScope.newquiz.title}" placeholder="Title"/>
                                             </div>
                                             <div class="form-group">
 
                                                 <label for="time">
                                                     Time
                                                 </label>
-                                                <input type="number" class="form-control" name="time" min="0" value="${param.time}" placeholder="Time of Exam"/>
+                                                <input type="number" class="form-control" name="time" min="0" value="${sessionScope.newquiz.time}" placeholder="Time of Exam"/>
 
                                             </div>
                                             <div class="form-group">
@@ -94,7 +95,7 @@
                                                 <label for="fullscore">
                                                     Full Score
                                                 </label>
-                                                <input type="number" class="form-control" name="fullscore" min="0" value="${param.score}" placeholder="Full Score"/>
+                                                <input type="number" class="form-control" name="fullscore" min="0" value="${sessionScope.newquiz.fullscore}" placeholder="Full Score"/>
 
                                             </div>
 
@@ -107,22 +108,22 @@
                                                 Submit
                                             </button>
 
-                                        </form>
-                                    </div>
 
-                                    <!-- Button trigger modal -->
+                                        </div>
+
+                                        <!-- Button trigger modal -->
 
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">Create</h5>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Create</h5>
 
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form role="form">
+                                                    </div>
+                                                    <div class="modal-body">
+
                                                         <div class="form-group">
 
                                                             <label for="subject">
@@ -148,15 +149,19 @@
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                             <button type="submit" class="btn btn-primary">Add</button>
                                                         </div>
-                                                    </form>
-                                                </div>
 
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
+                                    </form>
                                 </div>
-
+                                <div>
+                                    <c:forEach items="${newquestions}" var="nq" varStatus="count">
+                                        ${count.count}. ${nq.question}<br>
+                                    </c:forEach>
+                                </div>
 
                             </div>
 

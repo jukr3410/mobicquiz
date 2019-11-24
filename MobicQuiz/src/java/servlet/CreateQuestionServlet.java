@@ -7,8 +7,6 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -19,26 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.QuestionsJpaController;
-import jpacontroller.QuizsJpaController;
-import model.Levels;
-import model.Questions;
-import model.Quizs;
-import model.Subjects;
-import model.Teachers;
 
 /**
  *
- * @author ACER
+ * @author Student
  */
-public class CreateQuizServlet extends HttpServlet {
+public class CreateQuestionServlet extends HttpServlet {
 
     @PersistenceUnit(unitName = "MobicQuizPU")
     EntityManagerFactory emf;
 
     @Resource
     UserTransaction utx;
-
-    List<Questions> newQuestions = new ArrayList(100);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,32 +42,9 @@ public class CreateQuizServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Teachers teacher = (Teachers) session.getAttribute("user");
-        String subject = request.getParameter("subject");
-        String level = request.getParameter("level");
-        String title = request.getParameter("title");
-        String time = request.getParameter("time");
-        String fullScore = request.getParameter("fullscore");
-        String newQuestion = request.getParameter("question");
-        String ans1 = request.getParameter("ans1");
-        String ans2 = request.getParameter("ans2");
-        String ans3 = request.getParameter("ans3");
-        String ans4 = request.getParameter("ans4");
-        String correctAns = request.getParameter("correctans");
 
-        QuizsJpaController quijc = new QuizsJpaController(utx, emf);
-        QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
-        if (teacher != null && subject != null && title != null && time != null && fullScore != null) {
-            Quizs quiz = new Quizs(title, Integer.valueOf(time), Integer.valueOf(fullScore), new Levels(level), new Subjects(subject), teacher);
-            session.setAttribute("newquiz", quiz);
 
-            Questions question = new Questions(newQuestion, ans1, ans2, ans3, ans4, correctAns, quiz);
-            newQuestions.add(question);
-            session.setAttribute("newquestions", newQuestions);
-            System.out.println("PASS!!");
-        }
-
-        getServletContext().getRequestDispatcher("/CreateQuiz.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

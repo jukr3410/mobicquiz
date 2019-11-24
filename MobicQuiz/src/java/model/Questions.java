@@ -73,7 +73,7 @@ public class Questions implements Serializable {
     private Quizs quizno;
 
     private List<Questions> questionses = new ArrayList(100);
-    
+
     public Questions() {
     }
 
@@ -84,6 +84,16 @@ public class Questions implements Serializable {
     public Questions(String questionno, String question) {
         this.questionno = questionno;
         this.question = question;
+    }
+
+    public Questions(String question, String ans1, String ans2, String ans3, String ans4, String correctans, Quizs quizno) {
+        this.question = question;
+        this.ans1 = ans1;
+        this.ans2 = ans2;
+        this.ans3 = ans3;
+        this.ans4 = ans4;
+        this.correctans = correctans;
+        this.quizno = quizno;
     }
 
     public Questions(String questionno, String question, String ans1, String ans2, String ans3, String ans4, String correctans, Quizs quizno) {
@@ -189,19 +199,18 @@ public class Questions implements Serializable {
     public boolean isCorrect(String myAns) {
         return myAns.equals(correctans);
     }
-    
-    
-    public List<Questions> addQuestion(Questions question){
+
+    public List<Questions> addQuestion(Questions question) {
         questionses.add(question);
         return questionses;
     }
-    
-    public void deleteQuestion(Questions question){
+
+    public void deleteQuestion(Questions question) {
         questionses.remove(question);
     }
-    
-    public void  deleteAllQue(){
+
+    public void deleteAllQue() {
         questionses = null;
     }
-    
+
 }
