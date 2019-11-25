@@ -97,7 +97,7 @@
                                                                     <tr>
                                                                         <td>${theCount.count}</td>
                                                                         <td>${h.date}</td>
-                                                                        <td>${h.quizno.subjectno.subject}</td>
+                                                                        <td>${h.quizno}</td>
                                                                         <td>${h.quizno.title}</td>
                                                                         <td>${h.score}</td>
                                                                     </tr>

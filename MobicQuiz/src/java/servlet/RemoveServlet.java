@@ -92,6 +92,7 @@ public class RemoveServlet extends HttpServlet {
                         } catch (Exception ex) {
                             Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        System.out.println("Passs Qui !!!!!!!!!!!");
                         response.sendRedirect("/MobicQuiz/ManageQuiz");
                         return;
                     }

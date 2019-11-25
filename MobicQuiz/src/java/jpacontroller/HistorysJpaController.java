@@ -194,7 +194,7 @@ public class HistorysJpaController implements Serializable {
 
     public List<Historys> findHistorysByTeacherNo(String teacherno) {
         EntityManager em = getEntityManager();
-        Query query = em.createNativeQuery("SELECT h.HISTORYNO,h.SCORE,h.\"DATE\",h.QUIZNO,h.STUDENTNO FROM HISTORYS h join QUIZS q using (quizno) join TEACHERS t using (TEACHERNO) where t.TEACHERNO = ?1",Historys.class);
+        Query query = em.createNativeQuery("SELECT h.HISTORYNO,h.SCORE,h.\"DATE\",h.QUIZNO,h.STUDENTNO FROM HISTORYS h join QUIZS q using (quizno) join TEACHERS t using (TEACHERNO) where t.TEACHERNO = ?1", Historys.class);
         query.setParameter(1, teacherno);
         List<Historys> resultList = query.getResultList();
         try {
