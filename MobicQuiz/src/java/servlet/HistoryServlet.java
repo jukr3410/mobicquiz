@@ -50,25 +50,37 @@ public class HistoryServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String userType = (String) session.getAttribute("usertype");
+        String viewStudent = request.getParameter("viewstudent");
         HistorysJpaController hjc = new HistorysJpaController(utx, emf);
         if (userType.equals("student")) {
-            Students student = (Students) session.getAttribute("user");           
-            if (student != null) {               
+            Students student = (Students) session.getAttribute("user");
+            if (student != null) {
                 List<Historys> historys = hjc.findHistorysByStudentNo(student.getStudentno());
                 if (historys != null) {
                     request.setAttribute("historys", historys);
                 }
             }
-        }else if(userType.equals("teacher")){
+        } else if (userType.equals("teacher")) {
             Teachers teacher = (Teachers) session.getAttribute("user");
-            if (teacher!=null) {
+            if (teacher != null) {
                 QuizsJpaController qjc = new QuizsJpaController(utx, emf);
                 List<Quizs> quizs = qjc.findQuizsByTeacherNo(teacher.getTeacherno());
                 //List<Quizs> quizs = qjc.findQuizsEntities();
-                List<Historys> historys = hjc.findHistorysByTeacherNo(teacher.getTeacherno());
-                if (historys != null) {
-                    request.setAttribute("tquizs", quizs);
-                    request.setAttribute("historys", historys);
+
+                if (quizs != null) {
+                    request.setAttribute("historys", quizs);
+                    //request.setAttribute("tquizs", quizs);
+                    
+                    if (viewStudent != null) {
+                        //List<Historys> historys = hjc.findHistorysByTeacherNo(teacher.getTeacherno());
+                        List<Historys> historysByQuiz = hjc.findHistorysByQuizNo(viewStudent);
+                        //List<Historys> historysByQuiz1 = hjc.findHistorysEntities();
+                        Quizs quizsNo = qjc.findQuizs(viewStudent);
+                        request.setAttribute("quiz", quizsNo);
+                        request.setAttribute("historysstudent", historysByQuiz);
+                        getServletContext().getRequestDispatcher("/HistoryStudent.jsp").forward(request, response);
+                        return;
+                    }
                 }
             }
         }

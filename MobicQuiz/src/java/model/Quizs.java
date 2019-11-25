@@ -92,7 +92,6 @@ public class Quizs implements Serializable {
         this.time = time;
         this.fullscore = fullscore;
     }
-<<<<<<< HEAD
     
         public Quizs(String title, int time, int fullscore, Levels levelno, Subjects subjectno,Teachers teacherno) {
         this.teacherno = teacherno;
@@ -102,8 +101,6 @@ public class Quizs implements Serializable {
         this.levelno = levelno;
         this.subjectno = subjectno;
     }
-=======
->>>>>>> parent of c490318... Merge origin/java_dev into java_dev
 
     public Quizs(String quizno, String title, int time, int fullscore, Levels levelno, Subjects subjectno,Teachers teacherno) {
         this.teacherno = teacherno;
