@@ -7,6 +7,8 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,8 +57,8 @@ public class FinishExamServlet extends HttpServlet {
         Quizs quiz = (Quizs) session.getAttribute("quiz");
         Students student = (Students) session.getAttribute("student");
         QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
-         if (quiz != null) {
-        List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());      
+        if (quiz != null) {
+            List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());
             int score = 0;
             double scorePerQ = quiz.getFullscore() / questions.size();
             int done = 0;
@@ -74,6 +76,7 @@ public class FinishExamServlet extends HttpServlet {
 
             HistorysJpaController hjc = new HistorysJpaController(utx, emf);
             int hisNo = hjc.getHistorysCount() + 1;
+            
             Historys history = new Historys(Integer.toString(hisNo), score, new Date(), quiz.getQuizno(), student);
             try {
                 hjc.create(history);
