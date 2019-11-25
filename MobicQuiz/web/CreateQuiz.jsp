@@ -159,7 +159,7 @@
                                 </div>
                                 <div>
                                     <c:forEach items="${newquestions}" var="nq" varStatus="count">
-                                        ${count.count}. ${nq.question}<br>
+                                        <input type="text" value="${count.count}. ${nq.question}" readonly/> <br>
                                     </c:forEach>
                                 </div>
 
