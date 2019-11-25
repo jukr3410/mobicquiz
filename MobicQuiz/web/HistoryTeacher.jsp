@@ -54,9 +54,9 @@
                     <tr>
                         <td>${h.historyno}</td>
                         <td>${h.date}</td>
-                        <td>${h.studentno.studentno}</td>
+                        <td>${h.subject}</td>
                         <th>${h.score}</th>
-                        <th>${h.quizno.teacherno.name}</th>
+                        <th>${h.title}</th>
                     </tr>
                      </c:forEach>
                 </tbody>

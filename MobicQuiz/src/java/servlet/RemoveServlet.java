@@ -77,13 +77,13 @@ public class RemoveServlet extends HttpServlet {
                                 Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-<<<<<<< HEAD
-                        System.out.println("Passs Qui !!!!!!!!!!!");
+                         System.out.println("Passs Que !!!!!!!!!!!");
+                        
                         response.sendRedirect("/MobicQuiz/ManageQuiz");
                         return;
-=======
-                        System.out.println("Passs Que !!!!!!!!!!!");
->>>>>>> parent of 9542565... Update RemoveServlet.java
+
+                       
+
                     }
 
                     try {
@@ -95,6 +95,7 @@ public class RemoveServlet extends HttpServlet {
                     } catch (Exception ex) {
                         Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    System.out.println("Passs Qui !!!!!!!!!!!"); 
                     response.sendRedirect("/MobicQuiz/ManageQuiz");
                     return;
                 }

@@ -62,7 +62,10 @@ public class Historys implements Serializable {
     @JoinColumn(name = "STUDENTNO", referencedColumnName = "STUDENTNO")
     @ManyToOne(optional = false)
     private Students studentno;
-
+    
+    private String subject;
+    private String title;
+    
     public Historys() {
     }
 
@@ -83,6 +86,16 @@ public class Historys implements Serializable {
         this.date = date;
         this.quizno = quizno;
         this.studentno = studentno;
+    }
+
+    public Historys(String historyno, int score, Date date, String quizno, Students studentno, String subject, String title) {
+        this.historyno = historyno;
+        this.score = score;
+        this.date = date;
+        this.quizno = quizno;
+        this.studentno = studentno;
+        this.subject = subject;
+        this.title = title;
     }
     
     
@@ -126,6 +139,24 @@ public class Historys implements Serializable {
     public void setStudentno(Students studentno) {
         this.studentno = studentno;
     }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
+    
 
     @Override
     public int hashCode() {
