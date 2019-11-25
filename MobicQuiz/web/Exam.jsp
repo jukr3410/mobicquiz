@@ -22,7 +22,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
-        <title>Exam</title>
+        <title>Exam | MOBIC Quiz</title>
     </head>
     <body onload="countdown();">
         <br>
