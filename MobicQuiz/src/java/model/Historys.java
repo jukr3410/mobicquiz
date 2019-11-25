@@ -49,12 +49,16 @@ public class Historys implements Serializable {
     @NotNull
     @Column(name = "SCORE")
     private int score;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
     private Date date;
-    @JoinColumn(name = "QUIZNO", referencedColumnName = "QUIZNO")
-    @ManyToOne(optional = false)
-    private Quizs quizno;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "QUIZNO")
+    private String quizno;
     @JoinColumn(name = "STUDENTNO", referencedColumnName = "STUDENTNO")
     @ManyToOne(optional = false)
     private Students studentno;
@@ -66,18 +70,22 @@ public class Historys implements Serializable {
         this.historyno = historyno;
     }
 
-    public Historys(String historyno, int score) {
+    public Historys(String historyno, int score, Date date, String quizno) {
         this.historyno = historyno;
         this.score = score;
+        this.date = date;
+        this.quizno = quizno;
     }
 
-    public Historys(String historyno, int score, Date date, Quizs quizno, Students studentno) {
+    public Historys(String historyno, int score, Date date, String quizno, Students studentno) {
         this.historyno = historyno;
         this.score = score;
         this.date = date;
         this.quizno = quizno;
         this.studentno = studentno;
     }
+    
+    
 
     public String getHistoryno() {
         return historyno;
@@ -103,11 +111,11 @@ public class Historys implements Serializable {
         this.date = date;
     }
 
-    public Quizs getQuizno() {
+    public String getQuizno() {
         return quizno;
     }
 
-    public void setQuizno(Quizs quizno) {
+    public void setQuizno(String quizno) {
         this.quizno = quizno;
     }
 
