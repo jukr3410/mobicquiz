@@ -74,7 +74,7 @@ public class FinishExamServlet extends HttpServlet {
 
             HistorysJpaController hjc = new HistorysJpaController(utx, emf);
             int hisNo = hjc.getHistorysCount() + 1;
-            Historys history = new Historys(Integer.toString(hisNo), score, new Date(), quiz.getQuizno(), student);
+            Historys history = new Historys(Integer.toString(hisNo), score, new Date(), quiz, student);
             try {
                 hjc.create(history);
             } catch (RollbackFailureException ex) {
