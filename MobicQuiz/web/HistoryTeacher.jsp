@@ -61,6 +61,32 @@
                      </c:forEach>
                 </tbody>
             </table>
+        
+        
+        <table border="1">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Date</th>
+                        <th>StudentNo</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        
+                        <th>Scor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${historys}" var="h">
+                    <tr>
+                        <td>${h.historyno}</td>
+                        <td>${h.date}</td>
+                        <td>${h.studentno}</td>
+                        <th>${h.studentno.name}</th>
+                        <th>${h.score}</th>
+                    </tr>
+                     </c:forEach>
+                </tbody>
+            </table>
 
        
     </body>

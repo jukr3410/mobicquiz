@@ -193,7 +193,7 @@ public class QuestionsJpaController implements Serializable {
 
     public void deleteQuestionsByQuizNo(String quizno) {
         EntityManager em = getEntityManager();
-        Query query = em.createNamedQuery("Questions.deleteByQuizno");
+        Query query = em.createNativeQuery("Questions.deleteByQuizno");
         query.setParameter("quizno", quizno);
         query.executeUpdate();
         em.close();

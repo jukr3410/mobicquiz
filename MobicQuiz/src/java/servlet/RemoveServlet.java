@@ -68,22 +68,16 @@ public class RemoveServlet extends HttpServlet {
                     QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
                     List<Questions> questionses = quejc.findQuestionsByQuizNo(removeQuiz);
                     if (questionses != null) {
-                        for (Questions questionse : questionses) {
+                        for (Questions question : questionses) {
                             try {
-                                quejc.destroy(questionse.getQuestionno());
+                                quejc.destroy(question.getQuestionno());
                             } catch (RollbackFailureException ex) {
                                 Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
                             } catch (Exception ex) {
                                 Logger.getLogger(ManageQuizServlet.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                         System.out.println("Passs Que !!!!!!!!!!!");
-                        
-                        response.sendRedirect("/MobicQuiz/ManageQuiz");
-                        return;
-
-                       
-
+                         System.out.println("Passs Que !!!!!!!!!!!");                                                     
                     }
 
                     try {
