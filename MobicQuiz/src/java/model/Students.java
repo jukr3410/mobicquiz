@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 @Entity
 @Table(name = "STUDENTS")
@@ -99,8 +99,6 @@ public class Students implements Serializable {
         this.activatekey = activatekey;
         this.levelno = levelno;
     }
-    
-    
 
     public String getStudentno() {
         return studentno;
@@ -200,5 +198,5 @@ public class Students implements Serializable {
     public String toString() {
         return "model.Students[ studentno=" + studentno + " ]";
     }
-    
+
 }

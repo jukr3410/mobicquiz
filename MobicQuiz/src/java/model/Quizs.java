@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 @Entity
 @Table(name = "QUIZS")
@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Quizs.findByTeacherno", query = "SELECT q FROM Quizs q WHERE q.teacherno.teacherno = :teacherno")})
 public class Quizs implements Serializable {
 
- private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -92,8 +92,8 @@ public class Quizs implements Serializable {
         this.time = time;
         this.fullscore = fullscore;
     }
-
-    public Quizs(String title, int time, int fullscore, Levels levelno, Subjects subjectno, Teachers teacherno) {
+    
+        public Quizs(String title, int time, int fullscore, Levels levelno, Subjects subjectno, Teachers teacherno) {
         this.title = title;
         this.time = time;
         this.fullscore = fullscore;
@@ -101,7 +101,6 @@ public class Quizs implements Serializable {
         this.subjectno = subjectno;
         this.teacherno = teacherno;
     }
-    
     
 
     public String getQuizno() {
@@ -210,5 +209,5 @@ public class Quizs implements Serializable {
     public String toString() {
         return "model.Quizs[ quizno=" + quizno + " ]";
     }
-
+    
 }

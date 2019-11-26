@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.Levels;
 import model.Subjects;
+import model.Teachers;
 import model.Questions;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +25,10 @@ import jpacontroller.exceptions.PreexistingEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
 import model.Historys;
 import model.Quizs;
-import model.Teachers;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 public class QuizsJpaController implements Serializable {
 
@@ -355,6 +355,19 @@ public class QuizsJpaController implements Serializable {
         }
     }
 
+    public int getQuizsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Quizs> rt = cq.from(Quizs.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<Quizs> findQuizsByLevelNo(String levelno) {
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Quizs.findByLevelno");
@@ -374,19 +387,6 @@ public class QuizsJpaController implements Serializable {
         List<Quizs> resultList = query.getResultList();
         try {
             return resultList.isEmpty() ? null : resultList;
-        } finally {
-            em.close();
-        }
-    }
-
-    public int getQuizsCount() {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Quizs> rt = cq.from(Quizs.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
         }

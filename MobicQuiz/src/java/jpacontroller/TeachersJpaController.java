@@ -20,11 +20,12 @@ import jpacontroller.exceptions.IllegalOrphanException;
 import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.PreexistingEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
+import model.Quizs;
 import model.Teachers;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 public class TeachersJpaController implements Serializable {
 
@@ -43,6 +44,9 @@ public class TeachersJpaController implements Serializable {
         if (teachers.getTeachersubjectsList() == null) {
             teachers.setTeachersubjectsList(new ArrayList<Teachersubjects>());
         }
+        if (teachers.getQuizsList() == null) {
+            teachers.setQuizsList(new ArrayList<Quizs>());
+        }
         EntityManager em = null;
         try {
             utx.begin();
@@ -53,6 +57,12 @@ public class TeachersJpaController implements Serializable {
                 attachedTeachersubjectsList.add(teachersubjectsListTeachersubjectsToAttach);
             }
             teachers.setTeachersubjectsList(attachedTeachersubjectsList);
+            List<Quizs> attachedQuizsList = new ArrayList<Quizs>();
+            for (Quizs quizsListQuizsToAttach : teachers.getQuizsList()) {
+                quizsListQuizsToAttach = em.getReference(quizsListQuizsToAttach.getClass(), quizsListQuizsToAttach.getQuizno());
+                attachedQuizsList.add(quizsListQuizsToAttach);
+            }
+            teachers.setQuizsList(attachedQuizsList);
             em.persist(teachers);
             for (Teachersubjects teachersubjectsListTeachersubjects : teachers.getTeachersubjectsList()) {
                 Teachers oldTeachernoOfTeachersubjectsListTeachersubjects = teachersubjectsListTeachersubjects.getTeacherno();
@@ -61,6 +71,15 @@ public class TeachersJpaController implements Serializable {
                 if (oldTeachernoOfTeachersubjectsListTeachersubjects != null) {
                     oldTeachernoOfTeachersubjectsListTeachersubjects.getTeachersubjectsList().remove(teachersubjectsListTeachersubjects);
                     oldTeachernoOfTeachersubjectsListTeachersubjects = em.merge(oldTeachernoOfTeachersubjectsListTeachersubjects);
+                }
+            }
+            for (Quizs quizsListQuizs : teachers.getQuizsList()) {
+                Teachers oldTeachernoOfQuizsListQuizs = quizsListQuizs.getTeacherno();
+                quizsListQuizs.setTeacherno(teachers);
+                quizsListQuizs = em.merge(quizsListQuizs);
+                if (oldTeachernoOfQuizsListQuizs != null) {
+                    oldTeachernoOfQuizsListQuizs.getQuizsList().remove(quizsListQuizs);
+                    oldTeachernoOfQuizsListQuizs = em.merge(oldTeachernoOfQuizsListQuizs);
                 }
             }
             utx.commit();
@@ -89,6 +108,8 @@ public class TeachersJpaController implements Serializable {
             Teachers persistentTeachers = em.find(Teachers.class, teachers.getTeacherno());
             List<Teachersubjects> teachersubjectsListOld = persistentTeachers.getTeachersubjectsList();
             List<Teachersubjects> teachersubjectsListNew = teachers.getTeachersubjectsList();
+            List<Quizs> quizsListOld = persistentTeachers.getQuizsList();
+            List<Quizs> quizsListNew = teachers.getQuizsList();
             List<String> illegalOrphanMessages = null;
             for (Teachersubjects teachersubjectsListOldTeachersubjects : teachersubjectsListOld) {
                 if (!teachersubjectsListNew.contains(teachersubjectsListOldTeachersubjects)) {
@@ -108,6 +129,13 @@ public class TeachersJpaController implements Serializable {
             }
             teachersubjectsListNew = attachedTeachersubjectsListNew;
             teachers.setTeachersubjectsList(teachersubjectsListNew);
+            List<Quizs> attachedQuizsListNew = new ArrayList<Quizs>();
+            for (Quizs quizsListNewQuizsToAttach : quizsListNew) {
+                quizsListNewQuizsToAttach = em.getReference(quizsListNewQuizsToAttach.getClass(), quizsListNewQuizsToAttach.getQuizno());
+                attachedQuizsListNew.add(quizsListNewQuizsToAttach);
+            }
+            quizsListNew = attachedQuizsListNew;
+            teachers.setQuizsList(quizsListNew);
             teachers = em.merge(teachers);
             for (Teachersubjects teachersubjectsListNewTeachersubjects : teachersubjectsListNew) {
                 if (!teachersubjectsListOld.contains(teachersubjectsListNewTeachersubjects)) {
@@ -117,6 +145,23 @@ public class TeachersJpaController implements Serializable {
                     if (oldTeachernoOfTeachersubjectsListNewTeachersubjects != null && !oldTeachernoOfTeachersubjectsListNewTeachersubjects.equals(teachers)) {
                         oldTeachernoOfTeachersubjectsListNewTeachersubjects.getTeachersubjectsList().remove(teachersubjectsListNewTeachersubjects);
                         oldTeachernoOfTeachersubjectsListNewTeachersubjects = em.merge(oldTeachernoOfTeachersubjectsListNewTeachersubjects);
+                    }
+                }
+            }
+            for (Quizs quizsListOldQuizs : quizsListOld) {
+                if (!quizsListNew.contains(quizsListOldQuizs)) {
+                    quizsListOldQuizs.setTeacherno(null);
+                    quizsListOldQuizs = em.merge(quizsListOldQuizs);
+                }
+            }
+            for (Quizs quizsListNewQuizs : quizsListNew) {
+                if (!quizsListOld.contains(quizsListNewQuizs)) {
+                    Teachers oldTeachernoOfQuizsListNewQuizs = quizsListNewQuizs.getTeacherno();
+                    quizsListNewQuizs.setTeacherno(teachers);
+                    quizsListNewQuizs = em.merge(quizsListNewQuizs);
+                    if (oldTeachernoOfQuizsListNewQuizs != null && !oldTeachernoOfQuizsListNewQuizs.equals(teachers)) {
+                        oldTeachernoOfQuizsListNewQuizs.getQuizsList().remove(quizsListNewQuizs);
+                        oldTeachernoOfQuizsListNewQuizs = em.merge(oldTeachernoOfQuizsListNewQuizs);
                     }
                 }
             }
@@ -164,6 +209,11 @@ public class TeachersJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Quizs> quizsList = teachers.getQuizsList();
+            for (Quizs quizsListQuizs : quizsList) {
+                quizsListQuizs.setTeacherno(null);
+                quizsListQuizs = em.merge(quizsListQuizs);
             }
             em.remove(teachers);
             utx.commit();
@@ -214,18 +264,6 @@ public class TeachersJpaController implements Serializable {
         }
     }
 
-    public Teachers findTeachersByEmail(String email) {
-        EntityManager em = getEntityManager();
-        Query query = em.createNamedQuery("Teachers.findByEmail");
-        query.setParameter("email", email);
-        List resultList = query.getResultList();
-        try {
-            return resultList.isEmpty() ? null : (Teachers) resultList.get(0);
-        } finally {
-            em.close();
-        }
-    }
-
     public int getTeachersCount() {
         EntityManager em = getEntityManager();
         try {
@@ -239,4 +277,15 @@ public class TeachersJpaController implements Serializable {
         }
     }
 
+    public Teachers findTeachersByEmail(String email) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Teachers.findByEmail");
+        query.setParameter("email", email);
+        List resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : (Teachers) resultList.get(0);
+        } finally {
+            em.close();
+        }
+    }
 }

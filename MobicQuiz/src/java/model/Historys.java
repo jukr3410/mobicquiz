@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 @Entity
 @Table(name = "HISTORYS")
@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Historys.findByHistoryno", query = "SELECT h FROM Historys h WHERE h.historyno = :historyno")
     , @NamedQuery(name = "Historys.findByScore", query = "SELECT h FROM Historys h WHERE h.score = :score")
     , @NamedQuery(name = "Historys.findByQuizno", query = "SELECT h FROM Historys h WHERE h.quizno.quizno = :quizno")
-    , @NamedQuery(name = "Historys.findByStudentno", query = "SELECT h FROM Historys h WHERE h.studentno.studentno = :studentno") 
+    , @NamedQuery(name = "Historys.findByStudentno", query = "SELECT h FROM Historys h WHERE h.studentno.studentno = :studentno")
     , @NamedQuery(name = "Historys.findByDate", query = "SELECT h FROM Historys h WHERE h.date = :date")})
 public class Historys implements Serializable {
 
@@ -81,8 +81,6 @@ public class Historys implements Serializable {
         this.quizno = quizno;
         this.studentno = studentno;
     }
-    
-    
 
     public String getHistoryno() {
         return historyno;
@@ -148,5 +146,5 @@ public class Historys implements Serializable {
     public String toString() {
         return "model.Historys[ historyno=" + historyno + " ]";
     }
-    
+
 }

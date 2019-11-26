@@ -26,7 +26,7 @@ import model.Students;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 public class StudentsJpaController implements Serializable {
 
@@ -296,18 +296,6 @@ public class StudentsJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public Students findStudentsByEmail(String email) {        
-        EntityManager em = getEntityManager();
-        Query query = em.createNamedQuery("Students.findByEmail");
-        query.setParameter("email", email);
-        List resultList = query.getResultList();
-        try {
-            return  resultList.isEmpty() ? null : (Students) resultList.get(0);
-        } finally {
-            em.close();
-        }
-    }
 
     public int getStudentsCount() {
         EntityManager em = getEntityManager();
@@ -321,5 +309,17 @@ public class StudentsJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public Students findStudentsByEmail(String email) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Students.findByEmail");
+        query.setParameter("email", email);
+        List resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : (Students) resultList.get(0);
+        } finally {
+            em.close();
+        }
+    }
+
 }

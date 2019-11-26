@@ -22,7 +22,7 @@ import model.Quizs;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 public class QuestionsJpaController implements Serializable {
 
@@ -179,6 +179,21 @@ public class QuestionsJpaController implements Serializable {
         }
     }
 
+    public int getQuestionsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Questions> rt = cq.from(Questions.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+    
+    
     public List<Questions> findQuestionsByQuizNo(String quizno) {
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Questions.findByQuizno");
@@ -199,17 +214,5 @@ public class QuestionsJpaController implements Serializable {
         em.close();
     }
 
-    public int getQuestionsCount() {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Questions> rt = cq.from(Questions.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
-    }
-
+    
 }

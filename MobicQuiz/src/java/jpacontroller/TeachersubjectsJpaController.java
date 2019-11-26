@@ -23,7 +23,7 @@ import model.Teachersubjects;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 public class TeachersubjectsJpaController implements Serializable {
 

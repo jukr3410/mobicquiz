@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 @Entity
 @Table(name = "TEACHERS")
@@ -37,9 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Teachers.findByActivatekey", query = "SELECT t FROM Teachers t WHERE t.activatekey = :activatekey")
     , @NamedQuery(name = "Teachers.findByActivated", query = "SELECT t FROM Teachers t WHERE t.activated = :activated")})
 public class Teachers implements Serializable {
-
-    @OneToMany(mappedBy = "teacherno")
-    private List<Quizs> quizsList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,6 +69,8 @@ public class Teachers implements Serializable {
     private String activated;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherno")
     private List<Teachersubjects> teachersubjectsList;
+    @OneToMany(mappedBy = "teacherno")
+    private List<Quizs> quizsList;
 
     public Teachers() {
     }
@@ -94,8 +93,6 @@ public class Teachers implements Serializable {
         this.password = password;
         this.activatekey = activatekey;
     }
-    
-    
 
     public String getTeacherno() {
         return teacherno;
@@ -154,6 +151,15 @@ public class Teachers implements Serializable {
         this.teachersubjectsList = teachersubjectsList;
     }
 
+    @XmlTransient
+    public List<Quizs> getQuizsList() {
+        return quizsList;
+    }
+
+    public void setQuizsList(List<Quizs> quizsList) {
+        this.quizsList = quizsList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -179,13 +185,4 @@ public class Teachers implements Serializable {
         return "model.Teachers[ teacherno=" + teacherno + " ]";
     }
 
-    @XmlTransient
-    public List<Quizs> getQuizsList() {
-        return quizsList;
-    }
-
-    public void setQuizsList(List<Quizs> quizsList) {
-        this.quizsList = quizsList;
-    }
-    
 }

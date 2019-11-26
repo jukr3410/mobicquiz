@@ -23,7 +23,7 @@ import model.Students;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 public class HistorysJpaController implements Serializable {
 
@@ -208,13 +208,14 @@ public class HistorysJpaController implements Serializable {
         }
     }
 
-    public List<Historys> findHistorysByQuizNo(String quizno) {
+    public int getHistorysCount() {
         EntityManager em = getEntityManager();
-        Query query = em.createNamedQuery("Historys.findByQuizno");
-        query.setParameter("quizno", quizno);
-        List<Historys> resultList = query.getResultList();
         try {
-            return resultList.isEmpty() ? null : resultList;
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Historys> rt = cq.from(Historys.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
         }
@@ -232,14 +233,13 @@ public class HistorysJpaController implements Serializable {
         }
     }
 
-    public int getHistorysCount() {
+    public List<Historys> findHistorysByQuizNo(String quizno) {
         EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Historys.findByQuizno");
+        query.setParameter("quizno", quizno);
+        List<Historys> resultList = query.getResultList();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Historys> rt = cq.from(Historys.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
+            return resultList.isEmpty() ? null : resultList;
         } finally {
             em.close();
         }

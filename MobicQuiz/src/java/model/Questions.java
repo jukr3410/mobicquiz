@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Student
+ * @author Jn
  */
 @Entity
 @Table(name = "QUESTIONS")
@@ -36,9 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Questions.findByAns2", query = "SELECT q FROM Questions q WHERE q.ans2 = :ans2")
     , @NamedQuery(name = "Questions.findByAns3", query = "SELECT q FROM Questions q WHERE q.ans3 = :ans3")
     , @NamedQuery(name = "Questions.findByAns4", query = "SELECT q FROM Questions q WHERE q.ans4 = :ans4")
+    , @NamedQuery(name = "Questions.findByCorrectans", query = "SELECT q FROM Questions q WHERE q.correctans = :correctans")
     , @NamedQuery(name = "Questions.findByQuizno", query = "SELECT q FROM Questions q WHERE q.quizno.quizno = :quizno")
-    , @NamedQuery(name = "Questions.deleteByQuizno", query = "DELETE FROM Questions q WHERE q.quizno.quizno = :quizno")
-    , @NamedQuery(name = "Questions.findByCorrectans", query = "SELECT q FROM Questions q WHERE q.correctans = :correctans")})
+    , @NamedQuery(name = "Questions.deleteByQuizno", query = "DELETE FROM Questions q WHERE q.quizno.quizno = :quizno")})
 public class Questions implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,9 +71,9 @@ public class Questions implements Serializable {
     @JoinColumn(name = "QUIZNO", referencedColumnName = "QUIZNO")
     @ManyToOne(optional = false)
     private Quizs quizno;
-
+    
     private List<Questions> questionses = new ArrayList(100);
-
+    
     public Questions() {
     }
 
@@ -85,8 +85,8 @@ public class Questions implements Serializable {
         this.questionno = questionno;
         this.question = question;
     }
-
-    public Questions(String question, String ans1, String ans2, String ans3, String ans4, String correctans, Quizs quizno) {
+    
+       public Questions(String question, String ans1, String ans2, String ans3, String ans4, String correctans, Quizs quizno) {
         this.question = question;
         this.ans1 = ans1;
         this.ans2 = ans2;
@@ -195,7 +195,8 @@ public class Questions implements Serializable {
     public String toString() {
         return "model.Questions[ questionno=" + questionno + " ]";
     }
-
+    
+    
     public boolean isCorrect(String myAns) {
         return myAns.equals(correctans);
     }
@@ -212,5 +213,4 @@ public class Questions implements Serializable {
     public void deleteAllQue() {
         questionses = null;
     }
-
 }
