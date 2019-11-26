@@ -66,7 +66,12 @@
 
                                     <a href="CreateQuiz.jsp" class="btn btn-success btn-lg align-middle">
                                         Create Quiz
-                                    </a><br><br>
+                                    </a><br>
+                                    
+                                    <br>
+                                    <p style="color: red">
+                                        ${errorremove}
+                                    </p>
                                     <table class="table table-hover text-center" style="background-color: azure">
                                         <thead>
                                             <tr>
@@ -80,15 +85,15 @@
                                             </tr>
                                         </thead>
                                         <tbody class="table-sm" style="background-color: #ffffff">
-                                            <c:forEach items="${quizs}" var="q"><tr>
-                                                    <td>${q.quizno}</td>
+                                            <c:forEach items="${quizs}" var="q" varStatus="count"><tr>
+                                                    <td>${count.count}</td>
                                                     <td>${q.title}</td>
                                                     <td>${q.subjectno.subject}</td>
                                                     <td>${q.levelno.level}</td>
                                                     <td>${q.time}</td>
                                                     <td>
-                                                        <a href="Edit?editquiz=${q.quizno}" class="btn btn-primary btn-lg align-middle ">
-                                                            Edit
+                                                        <a href="OpenQuiz?quizno=${q.quizno}" class="btn btn-success btn-lg align-middle ">
+                                                            Enable
                                                         </a>
                                                         <a href="Remove?removequiz=${q.quizno}" class="btn btn-danger btn-lg align-middle ">
                                                             Remove

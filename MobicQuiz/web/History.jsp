@@ -73,11 +73,6 @@
                                             <c:when test="${historys!=null}">
 
 
-                                                <select class="form-control">
-                                                    <option value="thsi">Thai</option>
-                                                    <option value="science">Science</option>
-                                                    <option value="social">Social</option>
-                                                </select><br>
                                                 <c:choose>
                                                     <c:when test="${usertype=='student'}">
                                                         <table class="table table-hover text-center" style="background-color: azure">
@@ -97,8 +92,8 @@
                                                                     <tr>
                                                                         <td>${theCount.count}</td>
                                                                         <td>${h.date}</td>
-                                                                        <td>${h.subject}</td>
-                                                                        <td>${h.title}</td>
+                                                                        <td>${h.quizno.subjectno.subject}</td>
+                                                                        <td>${h.quizno.title}</td>
                                                                         <td>${h.score}</td>
                                                                     </tr>
 

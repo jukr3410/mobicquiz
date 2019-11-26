@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Historys.findAll", query = "SELECT h FROM Historys h")
     , @NamedQuery(name = "Historys.findByHistoryno", query = "SELECT h FROM Historys h WHERE h.historyno = :historyno")
     , @NamedQuery(name = "Historys.findByScore", query = "SELECT h FROM Historys h WHERE h.score = :score")
-    , @NamedQuery(name = "Historys.findByQuizno", query = "SELECT h FROM Historys h WHERE h.quizno = :quizno")
+    , @NamedQuery(name = "Historys.findByQuizno", query = "SELECT h FROM Historys h WHERE h.quizno.quizno = :quizno")
     , @NamedQuery(name = "Historys.findByStudentno", query = "SELECT h FROM Historys h WHERE h.studentno.studentno = :studentno") 
     , @NamedQuery(name = "Historys.findByDate", query = "SELECT h FROM Historys h WHERE h.date = :date")})
 public class Historys implements Serializable {
@@ -54,18 +54,13 @@ public class Historys implements Serializable {
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
     private Date date;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "QUIZNO")
-    private String quizno;
+    @JoinColumn(name = "QUIZNO", referencedColumnName = "QUIZNO")
+    @ManyToOne(optional = false)
+    private Quizs quizno;
     @JoinColumn(name = "STUDENTNO", referencedColumnName = "STUDENTNO")
     @ManyToOne(optional = false)
     private Students studentno;
-    
-    private String subject;
-    private String title;
-    
+
     public Historys() {
     }
 
@@ -73,29 +68,18 @@ public class Historys implements Serializable {
         this.historyno = historyno;
     }
 
-    public Historys(String historyno, int score, Date date, String quizno) {
+    public Historys(String historyno, int score, Date date) {
         this.historyno = historyno;
         this.score = score;
         this.date = date;
-        this.quizno = quizno;
     }
 
-    public Historys(String historyno, int score, Date date, String quizno, Students studentno) {
+    public Historys(String historyno, int score, Date date, Quizs quizno, Students studentno) {
         this.historyno = historyno;
         this.score = score;
         this.date = date;
         this.quizno = quizno;
         this.studentno = studentno;
-    }
-
-    public Historys(String historyno, int score, Date date, String quizno, Students studentno, String subject, String title) {
-        this.historyno = historyno;
-        this.score = score;
-        this.date = date;
-        this.quizno = quizno;
-        this.studentno = studentno;
-        this.subject = subject;
-        this.title = title;
     }
     
     
@@ -124,11 +108,11 @@ public class Historys implements Serializable {
         this.date = date;
     }
 
-    public String getQuizno() {
+    public Quizs getQuizno() {
         return quizno;
     }
 
-    public void setQuizno(String quizno) {
+    public void setQuizno(Quizs quizno) {
         this.quizno = quizno;
     }
 
@@ -139,24 +123,6 @@ public class Historys implements Serializable {
     public void setStudentno(Students studentno) {
         this.studentno = studentno;
     }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-    
 
     @Override
     public int hashCode() {
@@ -182,5 +148,5 @@ public class Historys implements Serializable {
     public String toString() {
         return "model.Historys[ historyno=" + historyno + " ]";
     }
-
+    
 }

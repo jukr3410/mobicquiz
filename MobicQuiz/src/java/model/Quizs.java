@@ -42,11 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Quizs.findByTeacherno", query = "SELECT q FROM Quizs q WHERE q.teacherno.teacherno = :teacherno")})
 public class Quizs implements Serializable {
 
-    @JoinColumn(name = "TEACHERNO", referencedColumnName = "TEACHERNO")
-    @ManyToOne
-    private Teachers teacherno;
-
-    private static final long serialVersionUID = 1L;
+ private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -77,7 +73,11 @@ public class Quizs implements Serializable {
     @JoinColumn(name = "SUBJECTNO", referencedColumnName = "SUBJECTNO")
     @ManyToOne(optional = false)
     private Subjects subjectno;
-
+    @JoinColumn(name = "TEACHERNO", referencedColumnName = "TEACHERNO")
+    @ManyToOne
+    private Teachers teacherno;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quizno")
+    private List<Historys> historysList;
 
     public Quizs() {
     }
@@ -93,25 +93,13 @@ public class Quizs implements Serializable {
         this.fullscore = fullscore;
     }
 
-    
-        public Quizs(String title, int time, int fullscore, Levels levelno, Subjects subjectno,Teachers teacherno) {
-        this.teacherno = teacherno;
+    public Quizs(String title, int time, int fullscore, Levels levelno, Subjects subjectno, Teachers teacherno) {
         this.title = title;
         this.time = time;
-        this.fullscore = fullscore;       
+        this.fullscore = fullscore;
         this.levelno = levelno;
         this.subjectno = subjectno;
-    }
-
-
-    public Quizs(String quizno, String title, int time, int fullscore, Levels levelno, Subjects subjectno,Teachers teacherno) {
         this.teacherno = teacherno;
-        this.quizno = quizno;
-        this.title = title;
-        this.time = time;
-        this.fullscore = fullscore;       
-        this.levelno = levelno;
-        this.subjectno = subjectno;
     }
     
     
@@ -181,6 +169,22 @@ public class Quizs implements Serializable {
         this.subjectno = subjectno;
     }
 
+    public Teachers getTeacherno() {
+        return teacherno;
+    }
+
+    public void setTeacherno(Teachers teacherno) {
+        this.teacherno = teacherno;
+    }
+
+    @XmlTransient
+    public List<Historys> getHistorysList() {
+        return historysList;
+    }
+
+    public void setHistorysList(List<Historys> historysList) {
+        this.historysList = historysList;
+    }
 
     @Override
     public int hashCode() {
@@ -205,14 +209,6 @@ public class Quizs implements Serializable {
     @Override
     public String toString() {
         return "model.Quizs[ quizno=" + quizno + " ]";
-    }
-
-    public Teachers getTeacherno() {
-        return teacherno;
-    }
-
-    public void setTeacherno(Teachers teacherno) {
-        this.teacherno = teacherno;
     }
 
 }

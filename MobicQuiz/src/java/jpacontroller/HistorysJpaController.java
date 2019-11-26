@@ -43,12 +43,21 @@ public class HistorysJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
+            Quizs quizno = historys.getQuizno();
+            if (quizno != null) {
+                quizno = em.getReference(quizno.getClass(), quizno.getQuizno());
+                historys.setQuizno(quizno);
+            }
             Students studentno = historys.getStudentno();
             if (studentno != null) {
                 studentno = em.getReference(studentno.getClass(), studentno.getStudentno());
                 historys.setStudentno(studentno);
             }
             em.persist(historys);
+            if (quizno != null) {
+                quizno.getHistorysList().add(historys);
+                quizno = em.merge(quizno);
+            }
             if (studentno != null) {
                 studentno.getHistorysList().add(historys);
                 studentno = em.merge(studentno);
@@ -77,13 +86,27 @@ public class HistorysJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Historys persistentHistorys = em.find(Historys.class, historys.getHistoryno());
+            Quizs quiznoOld = persistentHistorys.getQuizno();
+            Quizs quiznoNew = historys.getQuizno();
             Students studentnoOld = persistentHistorys.getStudentno();
             Students studentnoNew = historys.getStudentno();
+            if (quiznoNew != null) {
+                quiznoNew = em.getReference(quiznoNew.getClass(), quiznoNew.getQuizno());
+                historys.setQuizno(quiznoNew);
+            }
             if (studentnoNew != null) {
                 studentnoNew = em.getReference(studentnoNew.getClass(), studentnoNew.getStudentno());
                 historys.setStudentno(studentnoNew);
             }
             historys = em.merge(historys);
+            if (quiznoOld != null && !quiznoOld.equals(quiznoNew)) {
+                quiznoOld.getHistorysList().remove(historys);
+                quiznoOld = em.merge(quiznoOld);
+            }
+            if (quiznoNew != null && !quiznoNew.equals(quiznoOld)) {
+                quiznoNew.getHistorysList().add(historys);
+                quiznoNew = em.merge(quiznoNew);
+            }
             if (studentnoOld != null && !studentnoOld.equals(studentnoNew)) {
                 studentnoOld.getHistorysList().remove(historys);
                 studentnoOld = em.merge(studentnoOld);
@@ -125,6 +148,11 @@ public class HistorysJpaController implements Serializable {
                 historys.getHistoryno();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The historys with id " + id + " no longer exists.", enfe);
+            }
+            Quizs quizno = historys.getQuizno();
+            if (quizno != null) {
+                quizno.getHistorysList().remove(historys);
+                quizno = em.merge(quizno);
             }
             Students studentno = historys.getStudentno();
             if (studentno != null) {
@@ -180,36 +208,22 @@ public class HistorysJpaController implements Serializable {
         }
     }
 
-    public List<Historys> findHistorysByStudentNo(String studentno) {
-        EntityManager em = getEntityManager();
-        Query query = em.createNativeQuery("SELECT h.HISTORYNO,h.SCORE,h.\"DATE\",q.title,s.SUBJECT,h.STUDENTNO FROM HISTORYS h join QUIZS q using (quizno) join SUBJECTS s using (subjectno) where h.studentno = ?1", Historys.class);
-        query.setParameter(1, studentno);
-//        Query query = em.createNamedQuery("Historys.findByStudentno");
-//        query.setParameter("studentno", studentno);
-        List<Historys> resultList = query.getResultList();
-        try {
-            return resultList.isEmpty() ? null : resultList;
-        } finally {
-            em.close();
-        }
-    }
-
-    public List<Historys> findHistorysByTeacherNo(String teacherno) {
-        EntityManager em = getEntityManager();
-        Query query = em.createNativeQuery("SELECT h.HISTORYNO,h.SCORE,h.\"DATE\",h.QUIZNO,h.STUDENTNO FROM HISTORYS h join QUIZS q using (quizno) join TEACHERS t using (TEACHERNO) where t.TEACHERNO = ?1", Historys.class);
-        query.setParameter(1, teacherno);
-        List<Historys> resultList = query.getResultList();
-        try {
-            return resultList.isEmpty() ? null : resultList;
-        } finally {
-            em.close();
-        }
-    }
-
     public List<Historys> findHistorysByQuizNo(String quizno) {
         EntityManager em = getEntityManager();
-        Query query = em.createNativeQuery("SELECT * FROM Historys h WHERE h.quizno = ?1", Historys.class);
-        query.setParameter(1, quizno);
+        Query query = em.createNamedQuery("Historys.findByQuizno");
+        query.setParameter("quizno", quizno);
+        List<Historys> resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : resultList;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Historys> findHistorysByStudentNo(String studentno) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Historys.findByStudentno");
+        query.setParameter("studentno", studentno);
         List<Historys> resultList = query.getResultList();
         try {
             return resultList.isEmpty() ? null : resultList;

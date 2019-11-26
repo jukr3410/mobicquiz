@@ -67,6 +67,10 @@
         <servlet-name>FileUploadHandler</servlet-name>
         <servlet-class>FileUploadHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TestRemoveServlet</servlet-name>
+        <servlet-class>TestRemoveServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -130,6 +134,10 @@
     <servlet-mapping>
         <servlet-name>FileUploadHandler</servlet-name>
         <url-pattern>/FileUploadHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestRemoveServlet</servlet-name>
+        <url-pattern>/TestRemoveServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

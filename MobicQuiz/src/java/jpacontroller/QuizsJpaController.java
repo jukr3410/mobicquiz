@@ -47,6 +47,9 @@ public class QuizsJpaController implements Serializable {
         if (quizs.getQuestionsList() == null) {
             quizs.setQuestionsList(new ArrayList<Questions>());
         }
+        if (quizs.getHistorysList() == null) {
+            quizs.setHistorysList(new ArrayList<Historys>());
+        }
         EntityManager em = null;
         try {
             utx.begin();
@@ -72,6 +75,12 @@ public class QuizsJpaController implements Serializable {
                 attachedQuestionsList.add(questionsListQuestionsToAttach);
             }
             quizs.setQuestionsList(attachedQuestionsList);
+            List<Historys> attachedHistorysList = new ArrayList<Historys>();
+            for (Historys historysListHistorysToAttach : quizs.getHistorysList()) {
+                historysListHistorysToAttach = em.getReference(historysListHistorysToAttach.getClass(), historysListHistorysToAttach.getHistoryno());
+                attachedHistorysList.add(historysListHistorysToAttach);
+            }
+            quizs.setHistorysList(attachedHistorysList);
             em.persist(quizs);
             if (levelno != null) {
                 levelno.getQuizsList().add(quizs);
@@ -92,6 +101,15 @@ public class QuizsJpaController implements Serializable {
                 if (oldQuiznoOfQuestionsListQuestions != null) {
                     oldQuiznoOfQuestionsListQuestions.getQuestionsList().remove(questionsListQuestions);
                     oldQuiznoOfQuestionsListQuestions = em.merge(oldQuiznoOfQuestionsListQuestions);
+                }
+            }
+            for (Historys historysListHistorys : quizs.getHistorysList()) {
+                Quizs oldQuiznoOfHistorysListHistorys = historysListHistorys.getQuizno();
+                historysListHistorys.setQuizno(quizs);
+                historysListHistorys = em.merge(historysListHistorys);
+                if (oldQuiznoOfHistorysListHistorys != null) {
+                    oldQuiznoOfHistorysListHistorys.getHistorysList().remove(historysListHistorys);
+                    oldQuiznoOfHistorysListHistorys = em.merge(oldQuiznoOfHistorysListHistorys);
                 }
             }
             utx.commit();
@@ -126,6 +144,8 @@ public class QuizsJpaController implements Serializable {
             Teachers teachernoNew = quizs.getTeacherno();
             List<Questions> questionsListOld = persistentQuizs.getQuestionsList();
             List<Questions> questionsListNew = quizs.getQuestionsList();
+            List<Historys> historysListOld = persistentQuizs.getHistorysList();
+            List<Historys> historysListNew = quizs.getHistorysList();
             List<String> illegalOrphanMessages = null;
             for (Questions questionsListOldQuestions : questionsListOld) {
                 if (!questionsListNew.contains(questionsListOldQuestions)) {
@@ -133,6 +153,14 @@ public class QuizsJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Questions " + questionsListOldQuestions + " since its quizno field is not nullable.");
+                }
+            }
+            for (Historys historysListOldHistorys : historysListOld) {
+                if (!historysListNew.contains(historysListOldHistorys)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Historys " + historysListOldHistorys + " since its quizno field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -157,6 +185,13 @@ public class QuizsJpaController implements Serializable {
             }
             questionsListNew = attachedQuestionsListNew;
             quizs.setQuestionsList(questionsListNew);
+            List<Historys> attachedHistorysListNew = new ArrayList<Historys>();
+            for (Historys historysListNewHistorysToAttach : historysListNew) {
+                historysListNewHistorysToAttach = em.getReference(historysListNewHistorysToAttach.getClass(), historysListNewHistorysToAttach.getHistoryno());
+                attachedHistorysListNew.add(historysListNewHistorysToAttach);
+            }
+            historysListNew = attachedHistorysListNew;
+            quizs.setHistorysList(historysListNew);
             quizs = em.merge(quizs);
             if (levelnoOld != null && !levelnoOld.equals(levelnoNew)) {
                 levelnoOld.getQuizsList().remove(quizs);
@@ -190,6 +225,17 @@ public class QuizsJpaController implements Serializable {
                     if (oldQuiznoOfQuestionsListNewQuestions != null && !oldQuiznoOfQuestionsListNewQuestions.equals(quizs)) {
                         oldQuiznoOfQuestionsListNewQuestions.getQuestionsList().remove(questionsListNewQuestions);
                         oldQuiznoOfQuestionsListNewQuestions = em.merge(oldQuiznoOfQuestionsListNewQuestions);
+                    }
+                }
+            }
+            for (Historys historysListNewHistorys : historysListNew) {
+                if (!historysListOld.contains(historysListNewHistorys)) {
+                    Quizs oldQuiznoOfHistorysListNewHistorys = historysListNewHistorys.getQuizno();
+                    historysListNewHistorys.setQuizno(quizs);
+                    historysListNewHistorys = em.merge(historysListNewHistorys);
+                    if (oldQuiznoOfHistorysListNewHistorys != null && !oldQuiznoOfHistorysListNewHistorys.equals(quizs)) {
+                        oldQuiznoOfHistorysListNewHistorys.getHistorysList().remove(historysListNewHistorys);
+                        oldQuiznoOfHistorysListNewHistorys = em.merge(oldQuiznoOfHistorysListNewHistorys);
                     }
                 }
             }
@@ -234,6 +280,13 @@ public class QuizsJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Quizs (" + quizs + ") cannot be destroyed since the Questions " + questionsListOrphanCheckQuestions + " in its questionsList field has a non-nullable quizno field.");
+            }
+            List<Historys> historysListOrphanCheck = quizs.getHistorysList();
+            for (Historys historysListOrphanCheckHistorys : historysListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Quizs (" + quizs + ") cannot be destroyed since the Historys " + historysListOrphanCheckHistorys + " in its historysList field has a non-nullable quizno field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -313,9 +366,8 @@ public class QuizsJpaController implements Serializable {
             em.close();
         }
     }
-    
-    
-        public List<Quizs> findQuizsByTeacherNo(String teacherno) {
+
+    public List<Quizs> findQuizsByTeacherNo(String teacherno) {
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Quizs.findByTeacherno");
         query.setParameter("teacherno", teacherno);
