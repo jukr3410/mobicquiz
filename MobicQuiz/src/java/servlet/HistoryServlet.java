@@ -69,8 +69,8 @@ public class HistoryServlet extends HttpServlet {
                     request.setAttribute("historys", quizs);
                     
                     if (viewStudent!=null) {                      
-                        //List<Historys> historysByQuiz = hjc.findHistorysByQuizNo(viewStudent);
-                        List<Historys> historysByQuiz = hjc.findHistorysEntities();
+                        List<Historys> historysByQuiz = hjc.findHistorysByQuizNo(viewStudent);
+                        
                         Quizs quizsNo = qjc.findQuizs(viewStudent);
                         request.setAttribute("quiz", quizsNo);
                         request.setAttribute("historysstudent", historysByQuiz);                     

@@ -1,4 +1,4 @@
-@@ -0,0 +1,117 @@
+
 <%-- 
     Document   : Homepage
     Created on : Nov 14, 2019, 1:13:43 AM
@@ -62,13 +62,17 @@
                         <div class="col-md-10">
 
 
-                            <div class="jumbotron ">
-                                <h1 class="text-muted text-center">History of ${quiztitle}</h1>
-
+                            <div class="jumbotron ">         
+                                <a href="History" class="btn btn-primary float-right">Back</a>
+                                <h1 class="text-muted text-center">History of Student</h1><br>
+                                
+                                <div style="font-size: larger; background-color: white;padding: 20px">
+                                Title : ${quiz.title}<br>
+                                Subject : ${quiz.subjectno.subject}<br>
+                                Level : ${quiz.levelno.level}
+                                </div>
                                 <!--    !! write content in this    -->
 
-                                <br>
-                                <br>
                                 <div>
                                     <c:choose>
                                         <c:when test="${historysstudent!=null}">                                     
