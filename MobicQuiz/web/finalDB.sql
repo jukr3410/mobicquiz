@@ -142,6 +142,7 @@ CREATE TABLE historys
  studentno varchar(45) NOT NULL ,
 
 PRIMARY KEY (historyno), FOREIGN KEY  (studentno) REFERENCES students (studentno)
+, FOREIGN KEY  (quizno) REFERENCES quizs (quizno)
 );
 
 ALTER TABLE quizs
