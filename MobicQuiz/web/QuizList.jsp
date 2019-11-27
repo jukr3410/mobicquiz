@@ -72,11 +72,7 @@
                                             <c:when test="${myquizs!=null}">
 
 
-                                                <select class="form-control">
-                                                    <option value="thsi">Thai</option>
-                                                    <option value="science">Science</option>
-                                                    <option value="social">Social</option>
-                                                </select><br>
+
 
                                                 <table class="table table-hover text-center" style="background-color: azure">
                                                     <thead>
