@@ -54,7 +54,7 @@ public class StatusQuizServlet extends HttpServlet {
         QuizsJpaController qjc = new QuizsJpaController(utx, emf);
         if (enableQuiz!=null) {
             Quizs quiz = qjc.findQuizs(enableQuiz);
-            if (quiz!=null) {
+            if (quiz!=null && teacher.getTeacherno().equals(quiz.getTeacherno().getTeacherno())) {
                 quiz.setStatus("on");
                 try {
                     qjc.edit(quiz);
@@ -70,7 +70,7 @@ public class StatusQuizServlet extends HttpServlet {
             }
         } else if (disableQuiz!=null) {
             Quizs quiz = qjc.findQuizs(disableQuiz);
-            if (quiz!=null) {
+            if (quiz!=null && teacher.getTeacherno().equals(quiz.getTeacherno().getTeacherno())) {
                 String status = null;
                 quiz.setStatus(status);
                 try {
