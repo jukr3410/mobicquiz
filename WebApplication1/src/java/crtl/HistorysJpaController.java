@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ctrl;
+package crtl;
 
-import ctrl.exceptions.NonexistentEntityException;
-import ctrl.exceptions.PreexistingEntityException;
-import ctrl.exceptions.RollbackFailureException;
+import crtl.exceptions.NonexistentEntityException;
+import crtl.exceptions.PreexistingEntityException;
+import crtl.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -17,16 +17,17 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
-import model.Questions;
-import model.Quizs;
+import servlet.Historys;
+import servlet.Quizs;
+import servlet.Students;
 
 /**
  *
  * @author Jn
  */
-public class QuestionsJpaController implements Serializable {
+public class HistorysJpaController implements Serializable {
 
-    public QuestionsJpaController(UserTransaction utx, EntityManagerFactory emf) {
+    public HistorysJpaController(UserTransaction utx, EntityManagerFactory emf) {
         this.utx = utx;
         this.emf = emf;
     }
@@ -37,20 +38,29 @@ public class QuestionsJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Questions questions) throws PreexistingEntityException, RollbackFailureException, Exception {
+    public void create(Historys historys) throws PreexistingEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Quizs quizno = questions.getQuizno();
+            Quizs quizno = historys.getQuizno();
             if (quizno != null) {
                 quizno = em.getReference(quizno.getClass(), quizno.getQuizno());
-                questions.setQuizno(quizno);
+                historys.setQuizno(quizno);
             }
-            em.persist(questions);
+            Students studentno = historys.getStudentno();
+            if (studentno != null) {
+                studentno = em.getReference(studentno.getClass(), studentno.getStudentno());
+                historys.setStudentno(studentno);
+            }
+            em.persist(historys);
             if (quizno != null) {
-                quizno.getQuestionsList().add(questions);
+                quizno.getHistorysList().add(historys);
                 quizno = em.merge(quizno);
+            }
+            if (studentno != null) {
+                studentno.getHistorysList().add(historys);
+                studentno = em.merge(studentno);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -59,8 +69,8 @@ public class QuestionsJpaController implements Serializable {
             } catch (Exception re) {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
-            if (findQuestions(questions.getQuestionno()) != null) {
-                throw new PreexistingEntityException("Questions " + questions + " already exists.", ex);
+            if (findHistorys(historys.getHistoryno()) != null) {
+                throw new PreexistingEntityException("Historys " + historys + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -70,26 +80,40 @@ public class QuestionsJpaController implements Serializable {
         }
     }
 
-    public void edit(Questions questions) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Historys historys) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Questions persistentQuestions = em.find(Questions.class, questions.getQuestionno());
-            Quizs quiznoOld = persistentQuestions.getQuizno();
-            Quizs quiznoNew = questions.getQuizno();
+            Historys persistentHistorys = em.find(Historys.class, historys.getHistoryno());
+            Quizs quiznoOld = persistentHistorys.getQuizno();
+            Quizs quiznoNew = historys.getQuizno();
+            Students studentnoOld = persistentHistorys.getStudentno();
+            Students studentnoNew = historys.getStudentno();
             if (quiznoNew != null) {
                 quiznoNew = em.getReference(quiznoNew.getClass(), quiznoNew.getQuizno());
-                questions.setQuizno(quiznoNew);
+                historys.setQuizno(quiznoNew);
             }
-            questions = em.merge(questions);
+            if (studentnoNew != null) {
+                studentnoNew = em.getReference(studentnoNew.getClass(), studentnoNew.getStudentno());
+                historys.setStudentno(studentnoNew);
+            }
+            historys = em.merge(historys);
             if (quiznoOld != null && !quiznoOld.equals(quiznoNew)) {
-                quiznoOld.getQuestionsList().remove(questions);
+                quiznoOld.getHistorysList().remove(historys);
                 quiznoOld = em.merge(quiznoOld);
             }
             if (quiznoNew != null && !quiznoNew.equals(quiznoOld)) {
-                quiznoNew.getQuestionsList().add(questions);
+                quiznoNew.getHistorysList().add(historys);
                 quiznoNew = em.merge(quiznoNew);
+            }
+            if (studentnoOld != null && !studentnoOld.equals(studentnoNew)) {
+                studentnoOld.getHistorysList().remove(historys);
+                studentnoOld = em.merge(studentnoOld);
+            }
+            if (studentnoNew != null && !studentnoNew.equals(studentnoOld)) {
+                studentnoNew.getHistorysList().add(historys);
+                studentnoNew = em.merge(studentnoNew);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -100,9 +124,9 @@ public class QuestionsJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = questions.getQuestionno();
-                if (findQuestions(id) == null) {
-                    throw new NonexistentEntityException("The questions with id " + id + " no longer exists.");
+                String id = historys.getHistoryno();
+                if (findHistorys(id) == null) {
+                    throw new NonexistentEntityException("The historys with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -118,19 +142,24 @@ public class QuestionsJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Questions questions;
+            Historys historys;
             try {
-                questions = em.getReference(Questions.class, id);
-                questions.getQuestionno();
+                historys = em.getReference(Historys.class, id);
+                historys.getHistoryno();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The questions with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The historys with id " + id + " no longer exists.", enfe);
             }
-            Quizs quizno = questions.getQuizno();
+            Quizs quizno = historys.getQuizno();
             if (quizno != null) {
-                quizno.getQuestionsList().remove(questions);
+                quizno.getHistorysList().remove(historys);
                 quizno = em.merge(quizno);
             }
-            em.remove(questions);
+            Students studentno = historys.getStudentno();
+            if (studentno != null) {
+                studentno.getHistorysList().remove(historys);
+                studentno = em.merge(studentno);
+            }
+            em.remove(historys);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -146,19 +175,19 @@ public class QuestionsJpaController implements Serializable {
         }
     }
 
-    public List<Questions> findQuestionsEntities() {
-        return findQuestionsEntities(true, -1, -1);
+    public List<Historys> findHistorysEntities() {
+        return findHistorysEntities(true, -1, -1);
     }
 
-    public List<Questions> findQuestionsEntities(int maxResults, int firstResult) {
-        return findQuestionsEntities(false, maxResults, firstResult);
+    public List<Historys> findHistorysEntities(int maxResults, int firstResult) {
+        return findHistorysEntities(false, maxResults, firstResult);
     }
 
-    private List<Questions> findQuestionsEntities(boolean all, int maxResults, int firstResult) {
+    private List<Historys> findHistorysEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Questions.class));
+            cq.select(cq.from(Historys.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -170,20 +199,20 @@ public class QuestionsJpaController implements Serializable {
         }
     }
 
-    public Questions findQuestions(String id) {
+    public Historys findHistorys(String id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Questions.class, id);
+            return em.find(Historys.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getQuestionsCount() {
+    public int getHistorysCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Questions> rt = cq.from(Questions.class);
+            Root<Historys> rt = cq.from(Historys.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

@@ -10,8 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Levels;
-import model.Subjects;
 import model.Teachers;
 import model.Questions;
 import java.util.ArrayList;
@@ -54,16 +52,6 @@ public class QuizsJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Levels levelno = quizs.getLevelno();
-            if (levelno != null) {
-                levelno = em.getReference(levelno.getClass(), levelno.getLevelno());
-                quizs.setLevelno(levelno);
-            }
-            Subjects subjectno = quizs.getSubjectno();
-            if (subjectno != null) {
-                subjectno = em.getReference(subjectno.getClass(), subjectno.getSubjectno());
-                quizs.setSubjectno(subjectno);
-            }
             Teachers teacherno = quizs.getTeacherno();
             if (teacherno != null) {
                 teacherno = em.getReference(teacherno.getClass(), teacherno.getTeacherno());
@@ -82,14 +70,6 @@ public class QuizsJpaController implements Serializable {
             }
             quizs.setHistorysList(attachedHistorysList);
             em.persist(quizs);
-            if (levelno != null) {
-                levelno.getQuizsList().add(quizs);
-                levelno = em.merge(levelno);
-            }
-            if (subjectno != null) {
-                subjectno.getQuizsList().add(quizs);
-                subjectno = em.merge(subjectno);
-            }
             if (teacherno != null) {
                 teacherno.getQuizsList().add(quizs);
                 teacherno = em.merge(teacherno);
@@ -136,10 +116,6 @@ public class QuizsJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Quizs persistentQuizs = em.find(Quizs.class, quizs.getQuizno());
-            Levels levelnoOld = persistentQuizs.getLevelno();
-            Levels levelnoNew = quizs.getLevelno();
-            Subjects subjectnoOld = persistentQuizs.getSubjectno();
-            Subjects subjectnoNew = quizs.getSubjectno();
             Teachers teachernoOld = persistentQuizs.getTeacherno();
             Teachers teachernoNew = quizs.getTeacherno();
             List<Questions> questionsListOld = persistentQuizs.getQuestionsList();
@@ -166,14 +142,6 @@ public class QuizsJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (levelnoNew != null) {
-                levelnoNew = em.getReference(levelnoNew.getClass(), levelnoNew.getLevelno());
-                quizs.setLevelno(levelnoNew);
-            }
-            if (subjectnoNew != null) {
-                subjectnoNew = em.getReference(subjectnoNew.getClass(), subjectnoNew.getSubjectno());
-                quizs.setSubjectno(subjectnoNew);
-            }
             if (teachernoNew != null) {
                 teachernoNew = em.getReference(teachernoNew.getClass(), teachernoNew.getTeacherno());
                 quizs.setTeacherno(teachernoNew);
@@ -193,22 +161,6 @@ public class QuizsJpaController implements Serializable {
             historysListNew = attachedHistorysListNew;
             quizs.setHistorysList(historysListNew);
             quizs = em.merge(quizs);
-            if (levelnoOld != null && !levelnoOld.equals(levelnoNew)) {
-                levelnoOld.getQuizsList().remove(quizs);
-                levelnoOld = em.merge(levelnoOld);
-            }
-            if (levelnoNew != null && !levelnoNew.equals(levelnoOld)) {
-                levelnoNew.getQuizsList().add(quizs);
-                levelnoNew = em.merge(levelnoNew);
-            }
-            if (subjectnoOld != null && !subjectnoOld.equals(subjectnoNew)) {
-                subjectnoOld.getQuizsList().remove(quizs);
-                subjectnoOld = em.merge(subjectnoOld);
-            }
-            if (subjectnoNew != null && !subjectnoNew.equals(subjectnoOld)) {
-                subjectnoNew.getQuizsList().add(quizs);
-                subjectnoNew = em.merge(subjectnoNew);
-            }
             if (teachernoOld != null && !teachernoOld.equals(teachernoNew)) {
                 teachernoOld.getQuizsList().remove(quizs);
                 teachernoOld = em.merge(teachernoOld);
@@ -290,16 +242,6 @@ public class QuizsJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Levels levelno = quizs.getLevelno();
-            if (levelno != null) {
-                levelno.getQuizsList().remove(quizs);
-                levelno = em.merge(levelno);
-            }
-            Subjects subjectno = quizs.getSubjectno();
-            if (subjectno != null) {
-                subjectno.getQuizsList().remove(quizs);
-                subjectno = em.merge(subjectno);
             }
             Teachers teacherno = quizs.getTeacherno();
             if (teacherno != null) {

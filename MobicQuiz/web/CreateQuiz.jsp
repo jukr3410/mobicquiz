@@ -61,33 +61,41 @@
                             <div class="jumbotron">
                                 <h2 class="text-muted text-center">Create Quiz</h2>
                                 <div>
-                                    <form role="form" action="CreateQuiz" method="get">
+                                    <form role="form" action="CreateQuiz" method="post">
                                         <div>
 
                                             <div class="form-group">
 
                                                 <label for="subject">
                                                     Subject
-                                                </label>
-                                                <select class="form-control" name="subject">
-                                                    <option value="thai">Thai</option>
-                                                    <option value="science">Science</option>
-                                                    <option value="socia l">Social</option>
-                                                </select>
+                                                </label><br>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.newquiz.title!=null}">
+                                                        <input type="text" value="${sessionScope.newquiz.subjectno.subject}" class="form-control" id="inputquiz"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control" name="subject" id="inputquiz">
+                                                            <c:forEach items="${subjects}" var="s">
+                                                                <option value="${s.subjectno}">${s.subject}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
+
                                             </div>
                                             <div class="form-group">
 
                                                 <label for="title">
                                                     Title
                                                 </label>
-                                                <input type="text" class="form-control" name="title" value="${sessionScope.newquiz.title}" placeholder="Title"/>
+                                                <input type="text" id="inputquiz" class="form-control" name="title" value="${sessionScope.newquiz.title}" placeholder="Title" required/>
                                             </div>
                                             <div class="form-group">
 
                                                 <label for="time">
                                                     Time
                                                 </label>
-                                                <input type="number" class="form-control" name="time" min="0" value="${sessionScope.newquiz.time}" placeholder="Time of Exam"/>
+                                                <input type="number" id="inputquiz" class="form-control" name="time" min="0" value="${sessionScope.newquiz.time}" placeholder="Time of Exam" />
 
                                             </div>
                                             <div class="form-group">
@@ -95,35 +103,44 @@
                                                 <label for="fullscore">
                                                     Full Score
                                                 </label>
-                                                <input type="number" class="form-control" name="fullscore" min="0" value="${sessionScope.newquiz.fullscore}" placeholder="Full Score"/>
+                                                <input type="number" id="inputquiz" class="form-control" name="fullscore" min="0" value="${sessionScope.newquiz.fullscore}" placeholder="Full Score"  />
 
                                             </div>
 
 
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                                Add Question
-                                            </button>
                                             <br><br>
-                                            <button type="submit" class="btn btn-success">
-                                                Submit
-                                            </button>
+                                            <c:if test="${sessionScope.newquiz.title!=null}">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                                    Add Question
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${sessionScope.newquiz.title==null}">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Create Question
+                                                </button>
+                                            </c:if>
 
-
-                                        </div>
+                                            <a href="FinishCreateQuiz" class="btn btn-success float-right">
+                                                Finish 
+                                            </a><br><br>
+                                            <a href="FinishCreateQuiz?cancel=1" class="btn btn-danger float-right">
+                                                Cancel 
+                                            </a>
+                                        </div><br><br>
 
                                         <!-- Button trigger modal -->
 
+                                    </form>    
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Create</h5>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Create</h5>
-
-                                                    </div>
-                                                    <div class="modal-body">
-
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form role="form" action="CreateQuiz" method="post">
                                                         <div class="form-group">
 
                                                             <label for="subject">
@@ -148,18 +165,20 @@
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                             <button type="submit" class="btn btn-primary">Add</button>
+
                                                         </div>
-
-                                                    </div>
-
+                                                    </form>
                                                 </div>
+
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+
                                 </div>
+                                <br>
                                 <div>
                                     <c:forEach items="${newquestions}" var="nq" varStatus="count">
-                                        <input type="text" value="${count.count}. ${nq.question}" readonly/> <br>
+                                        <input type="text" value="${count.count}. ${nq.question} : ANS (${nq.correctans})" readonly class="form-control" style="background-color: buttonface"/> <br>
                                     </c:forEach>
                                 </div>
 
@@ -176,5 +195,8 @@
                 <p>© Mobicquiz 2019</p>
             </footer>
         </div>
+
+
+
     </body>
 </html>

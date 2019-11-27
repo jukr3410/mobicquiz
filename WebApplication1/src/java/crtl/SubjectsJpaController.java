@@ -3,26 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ctrl;
+package crtl;
 
-import ctrl.exceptions.IllegalOrphanException;
-import ctrl.exceptions.NonexistentEntityException;
-import ctrl.exceptions.PreexistingEntityException;
-import ctrl.exceptions.RollbackFailureException;
+import crtl.exceptions.IllegalOrphanException;
+import crtl.exceptions.NonexistentEntityException;
+import crtl.exceptions.PreexistingEntityException;
+import crtl.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Teachersubjects;
+import servlet.Levels;
+import servlet.Teachersubjects;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
-import model.Quizs;
-import model.Studentsubjects;
-import model.Subjects;
+import servlet.Quizs;
+import servlet.Studentsubjects;
+import servlet.Subjects;
 
 /**
  *
@@ -55,6 +56,11 @@ public class SubjectsJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
+            Levels levelno = subjects.getLevelno();
+            if (levelno != null) {
+                levelno = em.getReference(levelno.getClass(), levelno.getLevelno());
+                subjects.setLevelno(levelno);
+            }
             List<Teachersubjects> attachedTeachersubjectsList = new ArrayList<Teachersubjects>();
             for (Teachersubjects teachersubjectsListTeachersubjectsToAttach : subjects.getTeachersubjectsList()) {
                 teachersubjectsListTeachersubjectsToAttach = em.getReference(teachersubjectsListTeachersubjectsToAttach.getClass(), teachersubjectsListTeachersubjectsToAttach.getTeachersubjectno());
@@ -74,6 +80,10 @@ public class SubjectsJpaController implements Serializable {
             }
             subjects.setStudentsubjectsList(attachedStudentsubjectsList);
             em.persist(subjects);
+            if (levelno != null) {
+                levelno.getSubjectsList().add(subjects);
+                levelno = em.merge(levelno);
+            }
             for (Teachersubjects teachersubjectsListTeachersubjects : subjects.getTeachersubjectsList()) {
                 Subjects oldSubjectnoOfTeachersubjectsListTeachersubjects = teachersubjectsListTeachersubjects.getSubjectno();
                 teachersubjectsListTeachersubjects.setSubjectno(subjects);
@@ -125,6 +135,8 @@ public class SubjectsJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Subjects persistentSubjects = em.find(Subjects.class, subjects.getSubjectno());
+            Levels levelnoOld = persistentSubjects.getLevelno();
+            Levels levelnoNew = subjects.getLevelno();
             List<Teachersubjects> teachersubjectsListOld = persistentSubjects.getTeachersubjectsList();
             List<Teachersubjects> teachersubjectsListNew = subjects.getTeachersubjectsList();
             List<Quizs> quizsListOld = persistentSubjects.getQuizsList();
@@ -159,6 +171,10 @@ public class SubjectsJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (levelnoNew != null) {
+                levelnoNew = em.getReference(levelnoNew.getClass(), levelnoNew.getLevelno());
+                subjects.setLevelno(levelnoNew);
+            }
             List<Teachersubjects> attachedTeachersubjectsListNew = new ArrayList<Teachersubjects>();
             for (Teachersubjects teachersubjectsListNewTeachersubjectsToAttach : teachersubjectsListNew) {
                 teachersubjectsListNewTeachersubjectsToAttach = em.getReference(teachersubjectsListNewTeachersubjectsToAttach.getClass(), teachersubjectsListNewTeachersubjectsToAttach.getTeachersubjectno());
@@ -181,6 +197,14 @@ public class SubjectsJpaController implements Serializable {
             studentsubjectsListNew = attachedStudentsubjectsListNew;
             subjects.setStudentsubjectsList(studentsubjectsListNew);
             subjects = em.merge(subjects);
+            if (levelnoOld != null && !levelnoOld.equals(levelnoNew)) {
+                levelnoOld.getSubjectsList().remove(subjects);
+                levelnoOld = em.merge(levelnoOld);
+            }
+            if (levelnoNew != null && !levelnoNew.equals(levelnoOld)) {
+                levelnoNew.getSubjectsList().add(subjects);
+                levelnoNew = em.merge(levelnoNew);
+            }
             for (Teachersubjects teachersubjectsListNewTeachersubjects : teachersubjectsListNew) {
                 if (!teachersubjectsListOld.contains(teachersubjectsListNewTeachersubjects)) {
                     Subjects oldSubjectnoOfTeachersubjectsListNewTeachersubjects = teachersubjectsListNewTeachersubjects.getSubjectno();
@@ -272,6 +296,11 @@ public class SubjectsJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Levels levelno = subjects.getLevelno();
+            if (levelno != null) {
+                levelno.getSubjectsList().remove(subjects);
+                levelno = em.merge(levelno);
             }
             em.remove(subjects);
             utx.commit();

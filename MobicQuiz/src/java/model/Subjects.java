@@ -6,20 +6,18 @@
 package model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -46,12 +44,9 @@ public class Subjects implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "SUBJECT")
     private String subject;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectno")
-    private List<Teachersubjects> teachersubjectsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectno")
-    private List<Quizs> quizsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectno")
-    private List<Studentsubjects> studentsubjectsList;
+    @JoinColumn(name = "LEVELNO", referencedColumnName = "LEVELNO")
+    @ManyToOne
+    private Levels levelno;
 
     public Subjects() {
     }
@@ -81,31 +76,12 @@ public class Subjects implements Serializable {
         this.subject = subject;
     }
 
-    @XmlTransient
-    public List<Teachersubjects> getTeachersubjectsList() {
-        return teachersubjectsList;
+    public Levels getLevelno() {
+        return levelno;
     }
 
-    public void setTeachersubjectsList(List<Teachersubjects> teachersubjectsList) {
-        this.teachersubjectsList = teachersubjectsList;
-    }
-
-    @XmlTransient
-    public List<Quizs> getQuizsList() {
-        return quizsList;
-    }
-
-    public void setQuizsList(List<Quizs> quizsList) {
-        this.quizsList = quizsList;
-    }
-
-    @XmlTransient
-    public List<Studentsubjects> getStudentsubjectsList() {
-        return studentsubjectsList;
-    }
-
-    public void setStudentsubjectsList(List<Studentsubjects> studentsubjectsList) {
-        this.studentsubjectsList = studentsubjectsList;
+    public void setLevelno(Levels levelno) {
+        this.levelno = levelno;
     }
 
     @Override

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package servlet;
 
 import java.io.Serializable;
 import java.util.List;
@@ -194,7 +194,7 @@ public class Quizs implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Quizs[ quizno=" + quizno + " ]";
+        return "servlet.Quizs[ quizno=" + quizno + " ]";
     }
     
 }

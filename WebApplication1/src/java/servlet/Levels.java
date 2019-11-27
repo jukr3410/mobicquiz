@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package servlet;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,6 +46,8 @@ public class Levels implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "LEVEL")
     private String level;
+    @OneToMany(mappedBy = "levelno")
+    private List<Subjects> subjectsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "levelno")
     private List<Quizs> quizsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "levelno")
@@ -77,6 +79,15 @@ public class Levels implements Serializable {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    @XmlTransient
+    public List<Subjects> getSubjectsList() {
+        return subjectsList;
+    }
+
+    public void setSubjectsList(List<Subjects> subjectsList) {
+        this.subjectsList = subjectsList;
     }
 
     @XmlTransient
@@ -119,7 +130,7 @@ public class Levels implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Levels[ levelno=" + levelno + " ]";
+        return "servlet.Levels[ levelno=" + levelno + " ]";
     }
     
 }

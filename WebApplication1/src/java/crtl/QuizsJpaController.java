@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ctrl;
+package crtl;
 
-import ctrl.exceptions.IllegalOrphanException;
-import ctrl.exceptions.NonexistentEntityException;
-import ctrl.exceptions.PreexistingEntityException;
-import ctrl.exceptions.RollbackFailureException;
+import crtl.exceptions.IllegalOrphanException;
+import crtl.exceptions.NonexistentEntityException;
+import crtl.exceptions.PreexistingEntityException;
+import crtl.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Levels;
-import model.Subjects;
-import model.Teachers;
-import model.Questions;
+import servlet.Levels;
+import servlet.Subjects;
+import servlet.Teachers;
+import servlet.Questions;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
-import model.Historys;
-import model.Quizs;
+import servlet.Historys;
+import servlet.Quizs;
 
 /**
  *

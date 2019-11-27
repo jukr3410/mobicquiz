@@ -55,27 +55,16 @@ public class RemoveServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String removeQuiz = request.getParameter("removequiz");
         Teachers teacher = (Teachers) session.getAttribute("user");
-
+        System.out.println(removeQuiz);
         if (removeQuiz != null) {
 
             QuizsJpaController quijc = new QuizsJpaController(utx, emf);
             QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
-            HistorysJpaController hjc = new HistorysJpaController(utx, emf);
-           
+            HistorysJpaController hjc = new HistorysJpaController(utx, emf);          
             Quizs quiz = quijc.findQuizs(removeQuiz);          
             List<Historys> historysByQuiz = quiz.getHistorysList();
-            List<Questions> questionses = quiz.getQuestionsList();
-            if (questionses!=null) {
-                for (Questions question : questionses) {
-                    try {
-                        quejc.destroy(question.getQuestionno());
-                    } catch (RollbackFailureException ex) {
-                        Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (Exception ex) {
-                        Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
+
+            
 
             if (historysByQuiz != null) {
                 for (Historys history : historysByQuiz) {

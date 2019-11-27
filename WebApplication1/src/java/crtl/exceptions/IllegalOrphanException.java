@@ -1,4 +1,4 @@
-package ctrl.exceptions;
+package crtl.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

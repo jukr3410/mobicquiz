@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package servlet;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,8 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,25 +26,25 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Jn
  */
 @Entity
-@Table(name = "STUDENTS")
+@Table(name = "TEACHERS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Students.findAll", query = "SELECT s FROM Students s")
-    , @NamedQuery(name = "Students.findByStudentno", query = "SELECT s FROM Students s WHERE s.studentno = :studentno")
-    , @NamedQuery(name = "Students.findByName", query = "SELECT s FROM Students s WHERE s.name = :name")
-    , @NamedQuery(name = "Students.findByEmail", query = "SELECT s FROM Students s WHERE s.email = :email")
-    , @NamedQuery(name = "Students.findByPassword", query = "SELECT s FROM Students s WHERE s.password = :password")
-    , @NamedQuery(name = "Students.findByActivatekey", query = "SELECT s FROM Students s WHERE s.activatekey = :activatekey")
-    , @NamedQuery(name = "Students.findByActivated", query = "SELECT s FROM Students s WHERE s.activated = :activated")})
-public class Students implements Serializable {
+    @NamedQuery(name = "Teachers.findAll", query = "SELECT t FROM Teachers t")
+    , @NamedQuery(name = "Teachers.findByTeacherno", query = "SELECT t FROM Teachers t WHERE t.teacherno = :teacherno")
+    , @NamedQuery(name = "Teachers.findByName", query = "SELECT t FROM Teachers t WHERE t.name = :name")
+    , @NamedQuery(name = "Teachers.findByEmail", query = "SELECT t FROM Teachers t WHERE t.email = :email")
+    , @NamedQuery(name = "Teachers.findByPassword", query = "SELECT t FROM Teachers t WHERE t.password = :password")
+    , @NamedQuery(name = "Teachers.findByActivatekey", query = "SELECT t FROM Teachers t WHERE t.activatekey = :activatekey")
+    , @NamedQuery(name = "Teachers.findByActivated", query = "SELECT t FROM Teachers t WHERE t.activated = :activated")})
+public class Teachers implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "STUDENTNO")
-    private String studentno;
+    @Column(name = "TEACHERNO")
+    private String teacherno;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -69,34 +67,31 @@ public class Students implements Serializable {
     @Size(max = 45)
     @Column(name = "ACTIVATED")
     private String activated;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentno")
-    private List<Studentsubjects> studentsubjectsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentno")
-    private List<Historys> historysList;
-    @JoinColumn(name = "LEVELNO", referencedColumnName = "LEVELNO")
-    @ManyToOne(optional = false)
-    private Levels levelno;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherno")
+    private List<Teachersubjects> teachersubjectsList;
+    @OneToMany(mappedBy = "teacherno")
+    private List<Quizs> quizsList;
 
-    public Students() {
+    public Teachers() {
     }
 
-    public Students(String studentno) {
-        this.studentno = studentno;
+    public Teachers(String teacherno) {
+        this.teacherno = teacherno;
     }
 
-    public Students(String studentno, String name, String email, String password) {
-        this.studentno = studentno;
+    public Teachers(String teacherno, String name, String email, String password) {
+        this.teacherno = teacherno;
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    public String getStudentno() {
-        return studentno;
+    public String getTeacherno() {
+        return teacherno;
     }
 
-    public void setStudentno(String studentno) {
-        this.studentno = studentno;
+    public void setTeacherno(String teacherno) {
+        this.teacherno = teacherno;
     }
 
     public String getName() {
@@ -140,46 +135,38 @@ public class Students implements Serializable {
     }
 
     @XmlTransient
-    public List<Studentsubjects> getStudentsubjectsList() {
-        return studentsubjectsList;
+    public List<Teachersubjects> getTeachersubjectsList() {
+        return teachersubjectsList;
     }
 
-    public void setStudentsubjectsList(List<Studentsubjects> studentsubjectsList) {
-        this.studentsubjectsList = studentsubjectsList;
+    public void setTeachersubjectsList(List<Teachersubjects> teachersubjectsList) {
+        this.teachersubjectsList = teachersubjectsList;
     }
 
     @XmlTransient
-    public List<Historys> getHistorysList() {
-        return historysList;
+    public List<Quizs> getQuizsList() {
+        return quizsList;
     }
 
-    public void setHistorysList(List<Historys> historysList) {
-        this.historysList = historysList;
-    }
-
-    public Levels getLevelno() {
-        return levelno;
-    }
-
-    public void setLevelno(Levels levelno) {
-        this.levelno = levelno;
+    public void setQuizsList(List<Quizs> quizsList) {
+        this.quizsList = quizsList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (studentno != null ? studentno.hashCode() : 0);
+        hash += (teacherno != null ? teacherno.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Students)) {
+        if (!(object instanceof Teachers)) {
             return false;
         }
-        Students other = (Students) object;
-        if ((this.studentno == null && other.studentno != null) || (this.studentno != null && !this.studentno.equals(other.studentno))) {
+        Teachers other = (Teachers) object;
+        if ((this.teacherno == null && other.teacherno != null) || (this.teacherno != null && !this.teacherno.equals(other.teacherno))) {
             return false;
         }
         return true;
@@ -187,7 +174,7 @@ public class Students implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Students[ studentno=" + studentno + " ]";
+        return "servlet.Teachers[ teacherno=" + teacherno + " ]";
     }
     
 }

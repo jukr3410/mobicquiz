@@ -3,25 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ctrl;
+package crtl;
 
-import ctrl.exceptions.IllegalOrphanException;
-import ctrl.exceptions.NonexistentEntityException;
-import ctrl.exceptions.PreexistingEntityException;
-import ctrl.exceptions.RollbackFailureException;
+import crtl.exceptions.IllegalOrphanException;
+import crtl.exceptions.NonexistentEntityException;
+import crtl.exceptions.PreexistingEntityException;
+import crtl.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Quizs;
+import servlet.Subjects;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
-import model.Levels;
-import model.Students;
+import servlet.Levels;
+import servlet.Quizs;
+import servlet.Students;
 
 /**
  *
@@ -41,6 +42,9 @@ public class LevelsJpaController implements Serializable {
     }
 
     public void create(Levels levels) throws PreexistingEntityException, RollbackFailureException, Exception {
+        if (levels.getSubjectsList() == null) {
+            levels.setSubjectsList(new ArrayList<Subjects>());
+        }
         if (levels.getQuizsList() == null) {
             levels.setQuizsList(new ArrayList<Quizs>());
         }
@@ -51,6 +55,12 @@ public class LevelsJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
+            List<Subjects> attachedSubjectsList = new ArrayList<Subjects>();
+            for (Subjects subjectsListSubjectsToAttach : levels.getSubjectsList()) {
+                subjectsListSubjectsToAttach = em.getReference(subjectsListSubjectsToAttach.getClass(), subjectsListSubjectsToAttach.getSubjectno());
+                attachedSubjectsList.add(subjectsListSubjectsToAttach);
+            }
+            levels.setSubjectsList(attachedSubjectsList);
             List<Quizs> attachedQuizsList = new ArrayList<Quizs>();
             for (Quizs quizsListQuizsToAttach : levels.getQuizsList()) {
                 quizsListQuizsToAttach = em.getReference(quizsListQuizsToAttach.getClass(), quizsListQuizsToAttach.getQuizno());
@@ -64,6 +74,15 @@ public class LevelsJpaController implements Serializable {
             }
             levels.setStudentsList(attachedStudentsList);
             em.persist(levels);
+            for (Subjects subjectsListSubjects : levels.getSubjectsList()) {
+                Levels oldLevelnoOfSubjectsListSubjects = subjectsListSubjects.getLevelno();
+                subjectsListSubjects.setLevelno(levels);
+                subjectsListSubjects = em.merge(subjectsListSubjects);
+                if (oldLevelnoOfSubjectsListSubjects != null) {
+                    oldLevelnoOfSubjectsListSubjects.getSubjectsList().remove(subjectsListSubjects);
+                    oldLevelnoOfSubjectsListSubjects = em.merge(oldLevelnoOfSubjectsListSubjects);
+                }
+            }
             for (Quizs quizsListQuizs : levels.getQuizsList()) {
                 Levels oldLevelnoOfQuizsListQuizs = quizsListQuizs.getLevelno();
                 quizsListQuizs.setLevelno(levels);
@@ -106,6 +125,8 @@ public class LevelsJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Levels persistentLevels = em.find(Levels.class, levels.getLevelno());
+            List<Subjects> subjectsListOld = persistentLevels.getSubjectsList();
+            List<Subjects> subjectsListNew = levels.getSubjectsList();
             List<Quizs> quizsListOld = persistentLevels.getQuizsList();
             List<Quizs> quizsListNew = levels.getQuizsList();
             List<Students> studentsListOld = persistentLevels.getStudentsList();
@@ -130,6 +151,13 @@ public class LevelsJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            List<Subjects> attachedSubjectsListNew = new ArrayList<Subjects>();
+            for (Subjects subjectsListNewSubjectsToAttach : subjectsListNew) {
+                subjectsListNewSubjectsToAttach = em.getReference(subjectsListNewSubjectsToAttach.getClass(), subjectsListNewSubjectsToAttach.getSubjectno());
+                attachedSubjectsListNew.add(subjectsListNewSubjectsToAttach);
+            }
+            subjectsListNew = attachedSubjectsListNew;
+            levels.setSubjectsList(subjectsListNew);
             List<Quizs> attachedQuizsListNew = new ArrayList<Quizs>();
             for (Quizs quizsListNewQuizsToAttach : quizsListNew) {
                 quizsListNewQuizsToAttach = em.getReference(quizsListNewQuizsToAttach.getClass(), quizsListNewQuizsToAttach.getQuizno());
@@ -145,6 +173,23 @@ public class LevelsJpaController implements Serializable {
             studentsListNew = attachedStudentsListNew;
             levels.setStudentsList(studentsListNew);
             levels = em.merge(levels);
+            for (Subjects subjectsListOldSubjects : subjectsListOld) {
+                if (!subjectsListNew.contains(subjectsListOldSubjects)) {
+                    subjectsListOldSubjects.setLevelno(null);
+                    subjectsListOldSubjects = em.merge(subjectsListOldSubjects);
+                }
+            }
+            for (Subjects subjectsListNewSubjects : subjectsListNew) {
+                if (!subjectsListOld.contains(subjectsListNewSubjects)) {
+                    Levels oldLevelnoOfSubjectsListNewSubjects = subjectsListNewSubjects.getLevelno();
+                    subjectsListNewSubjects.setLevelno(levels);
+                    subjectsListNewSubjects = em.merge(subjectsListNewSubjects);
+                    if (oldLevelnoOfSubjectsListNewSubjects != null && !oldLevelnoOfSubjectsListNewSubjects.equals(levels)) {
+                        oldLevelnoOfSubjectsListNewSubjects.getSubjectsList().remove(subjectsListNewSubjects);
+                        oldLevelnoOfSubjectsListNewSubjects = em.merge(oldLevelnoOfSubjectsListNewSubjects);
+                    }
+                }
+            }
             for (Quizs quizsListNewQuizs : quizsListNew) {
                 if (!quizsListOld.contains(quizsListNewQuizs)) {
                     Levels oldLevelnoOfQuizsListNewQuizs = quizsListNewQuizs.getLevelno();
@@ -218,6 +263,11 @@ public class LevelsJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Subjects> subjectsList = levels.getSubjectsList();
+            for (Subjects subjectsListSubjects : subjectsList) {
+                subjectsListSubjects.setLevelno(null);
+                subjectsListSubjects = em.merge(subjectsListSubjects);
             }
             em.remove(levels);
             utx.commit();

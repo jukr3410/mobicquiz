@@ -10,18 +10,16 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Quizs;
+import model.Subjects;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
-import jpacontroller.exceptions.IllegalOrphanException;
 import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.PreexistingEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
 import model.Levels;
-import model.Students;
 
 /**
  *
@@ -41,45 +39,27 @@ public class LevelsJpaController implements Serializable {
     }
 
     public void create(Levels levels) throws PreexistingEntityException, RollbackFailureException, Exception {
-        if (levels.getQuizsList() == null) {
-            levels.setQuizsList(new ArrayList<Quizs>());
-        }
-        if (levels.getStudentsList() == null) {
-            levels.setStudentsList(new ArrayList<Students>());
+        if (levels.getSubjectsList() == null) {
+            levels.setSubjectsList(new ArrayList<Subjects>());
         }
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            List<Quizs> attachedQuizsList = new ArrayList<Quizs>();
-            for (Quizs quizsListQuizsToAttach : levels.getQuizsList()) {
-                quizsListQuizsToAttach = em.getReference(quizsListQuizsToAttach.getClass(), quizsListQuizsToAttach.getQuizno());
-                attachedQuizsList.add(quizsListQuizsToAttach);
+            List<Subjects> attachedSubjectsList = new ArrayList<Subjects>();
+            for (Subjects subjectsListSubjectsToAttach : levels.getSubjectsList()) {
+                subjectsListSubjectsToAttach = em.getReference(subjectsListSubjectsToAttach.getClass(), subjectsListSubjectsToAttach.getSubjectno());
+                attachedSubjectsList.add(subjectsListSubjectsToAttach);
             }
-            levels.setQuizsList(attachedQuizsList);
-            List<Students> attachedStudentsList = new ArrayList<Students>();
-            for (Students studentsListStudentsToAttach : levels.getStudentsList()) {
-                studentsListStudentsToAttach = em.getReference(studentsListStudentsToAttach.getClass(), studentsListStudentsToAttach.getStudentno());
-                attachedStudentsList.add(studentsListStudentsToAttach);
-            }
-            levels.setStudentsList(attachedStudentsList);
+            levels.setSubjectsList(attachedSubjectsList);
             em.persist(levels);
-            for (Quizs quizsListQuizs : levels.getQuizsList()) {
-                Levels oldLevelnoOfQuizsListQuizs = quizsListQuizs.getLevelno();
-                quizsListQuizs.setLevelno(levels);
-                quizsListQuizs = em.merge(quizsListQuizs);
-                if (oldLevelnoOfQuizsListQuizs != null) {
-                    oldLevelnoOfQuizsListQuizs.getQuizsList().remove(quizsListQuizs);
-                    oldLevelnoOfQuizsListQuizs = em.merge(oldLevelnoOfQuizsListQuizs);
-                }
-            }
-            for (Students studentsListStudents : levels.getStudentsList()) {
-                Levels oldLevelnoOfStudentsListStudents = studentsListStudents.getLevelno();
-                studentsListStudents.setLevelno(levels);
-                studentsListStudents = em.merge(studentsListStudents);
-                if (oldLevelnoOfStudentsListStudents != null) {
-                    oldLevelnoOfStudentsListStudents.getStudentsList().remove(studentsListStudents);
-                    oldLevelnoOfStudentsListStudents = em.merge(oldLevelnoOfStudentsListStudents);
+            for (Subjects subjectsListSubjects : levels.getSubjectsList()) {
+                Levels oldLevelnoOfSubjectsListSubjects = subjectsListSubjects.getLevelno();
+                subjectsListSubjects.setLevelno(levels);
+                subjectsListSubjects = em.merge(subjectsListSubjects);
+                if (oldLevelnoOfSubjectsListSubjects != null) {
+                    oldLevelnoOfSubjectsListSubjects.getSubjectsList().remove(subjectsListSubjects);
+                    oldLevelnoOfSubjectsListSubjects = em.merge(oldLevelnoOfSubjectsListSubjects);
                 }
             }
             utx.commit();
@@ -100,70 +80,36 @@ public class LevelsJpaController implements Serializable {
         }
     }
 
-    public void edit(Levels levels) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Levels levels) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
             Levels persistentLevels = em.find(Levels.class, levels.getLevelno());
-            List<Quizs> quizsListOld = persistentLevels.getQuizsList();
-            List<Quizs> quizsListNew = levels.getQuizsList();
-            List<Students> studentsListOld = persistentLevels.getStudentsList();
-            List<Students> studentsListNew = levels.getStudentsList();
-            List<String> illegalOrphanMessages = null;
-            for (Quizs quizsListOldQuizs : quizsListOld) {
-                if (!quizsListNew.contains(quizsListOldQuizs)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Quizs " + quizsListOldQuizs + " since its levelno field is not nullable.");
-                }
+            List<Subjects> subjectsListOld = persistentLevels.getSubjectsList();
+            List<Subjects> subjectsListNew = levels.getSubjectsList();
+            List<Subjects> attachedSubjectsListNew = new ArrayList<Subjects>();
+            for (Subjects subjectsListNewSubjectsToAttach : subjectsListNew) {
+                subjectsListNewSubjectsToAttach = em.getReference(subjectsListNewSubjectsToAttach.getClass(), subjectsListNewSubjectsToAttach.getSubjectno());
+                attachedSubjectsListNew.add(subjectsListNewSubjectsToAttach);
             }
-            for (Students studentsListOldStudents : studentsListOld) {
-                if (!studentsListNew.contains(studentsListOldStudents)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Students " + studentsListOldStudents + " since its levelno field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            List<Quizs> attachedQuizsListNew = new ArrayList<Quizs>();
-            for (Quizs quizsListNewQuizsToAttach : quizsListNew) {
-                quizsListNewQuizsToAttach = em.getReference(quizsListNewQuizsToAttach.getClass(), quizsListNewQuizsToAttach.getQuizno());
-                attachedQuizsListNew.add(quizsListNewQuizsToAttach);
-            }
-            quizsListNew = attachedQuizsListNew;
-            levels.setQuizsList(quizsListNew);
-            List<Students> attachedStudentsListNew = new ArrayList<Students>();
-            for (Students studentsListNewStudentsToAttach : studentsListNew) {
-                studentsListNewStudentsToAttach = em.getReference(studentsListNewStudentsToAttach.getClass(), studentsListNewStudentsToAttach.getStudentno());
-                attachedStudentsListNew.add(studentsListNewStudentsToAttach);
-            }
-            studentsListNew = attachedStudentsListNew;
-            levels.setStudentsList(studentsListNew);
+            subjectsListNew = attachedSubjectsListNew;
+            levels.setSubjectsList(subjectsListNew);
             levels = em.merge(levels);
-            for (Quizs quizsListNewQuizs : quizsListNew) {
-                if (!quizsListOld.contains(quizsListNewQuizs)) {
-                    Levels oldLevelnoOfQuizsListNewQuizs = quizsListNewQuizs.getLevelno();
-                    quizsListNewQuizs.setLevelno(levels);
-                    quizsListNewQuizs = em.merge(quizsListNewQuizs);
-                    if (oldLevelnoOfQuizsListNewQuizs != null && !oldLevelnoOfQuizsListNewQuizs.equals(levels)) {
-                        oldLevelnoOfQuizsListNewQuizs.getQuizsList().remove(quizsListNewQuizs);
-                        oldLevelnoOfQuizsListNewQuizs = em.merge(oldLevelnoOfQuizsListNewQuizs);
-                    }
+            for (Subjects subjectsListOldSubjects : subjectsListOld) {
+                if (!subjectsListNew.contains(subjectsListOldSubjects)) {
+                    subjectsListOldSubjects.setLevelno(null);
+                    subjectsListOldSubjects = em.merge(subjectsListOldSubjects);
                 }
             }
-            for (Students studentsListNewStudents : studentsListNew) {
-                if (!studentsListOld.contains(studentsListNewStudents)) {
-                    Levels oldLevelnoOfStudentsListNewStudents = studentsListNewStudents.getLevelno();
-                    studentsListNewStudents.setLevelno(levels);
-                    studentsListNewStudents = em.merge(studentsListNewStudents);
-                    if (oldLevelnoOfStudentsListNewStudents != null && !oldLevelnoOfStudentsListNewStudents.equals(levels)) {
-                        oldLevelnoOfStudentsListNewStudents.getStudentsList().remove(studentsListNewStudents);
-                        oldLevelnoOfStudentsListNewStudents = em.merge(oldLevelnoOfStudentsListNewStudents);
+            for (Subjects subjectsListNewSubjects : subjectsListNew) {
+                if (!subjectsListOld.contains(subjectsListNewSubjects)) {
+                    Levels oldLevelnoOfSubjectsListNewSubjects = subjectsListNewSubjects.getLevelno();
+                    subjectsListNewSubjects.setLevelno(levels);
+                    subjectsListNewSubjects = em.merge(subjectsListNewSubjects);
+                    if (oldLevelnoOfSubjectsListNewSubjects != null && !oldLevelnoOfSubjectsListNewSubjects.equals(levels)) {
+                        oldLevelnoOfSubjectsListNewSubjects.getSubjectsList().remove(subjectsListNewSubjects);
+                        oldLevelnoOfSubjectsListNewSubjects = em.merge(oldLevelnoOfSubjectsListNewSubjects);
                     }
                 }
             }
@@ -189,7 +135,7 @@ public class LevelsJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -201,23 +147,10 @@ public class LevelsJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The levels with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<Quizs> quizsListOrphanCheck = levels.getQuizsList();
-            for (Quizs quizsListOrphanCheckQuizs : quizsListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Levels (" + levels + ") cannot be destroyed since the Quizs " + quizsListOrphanCheckQuizs + " in its quizsList field has a non-nullable levelno field.");
-            }
-            List<Students> studentsListOrphanCheck = levels.getStudentsList();
-            for (Students studentsListOrphanCheckStudents : studentsListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Levels (" + levels + ") cannot be destroyed since the Students " + studentsListOrphanCheckStudents + " in its studentsList field has a non-nullable levelno field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            List<Subjects> subjectsList = levels.getSubjectsList();
+            for (Subjects subjectsListSubjects : subjectsList) {
+                subjectsListSubjects.setLevelno(null);
+                subjectsListSubjects = em.merge(subjectsListSubjects);
             }
             em.remove(levels);
             utx.commit();

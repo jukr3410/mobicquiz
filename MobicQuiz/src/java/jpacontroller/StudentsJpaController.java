@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Levels;
 import model.Studentsubjects;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,7 @@ import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.PreexistingEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
 import model.Historys;
+import model.Quizs;
 import model.Students;
 
 /**
@@ -52,11 +52,6 @@ public class StudentsJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Levels levelno = students.getLevelno();
-            if (levelno != null) {
-                levelno = em.getReference(levelno.getClass(), levelno.getLevelno());
-                students.setLevelno(levelno);
-            }
             List<Studentsubjects> attachedStudentsubjectsList = new ArrayList<Studentsubjects>();
             for (Studentsubjects studentsubjectsListStudentsubjectsToAttach : students.getStudentsubjectsList()) {
                 studentsubjectsListStudentsubjectsToAttach = em.getReference(studentsubjectsListStudentsubjectsToAttach.getClass(), studentsubjectsListStudentsubjectsToAttach.getStudentsubjectno());
@@ -70,10 +65,6 @@ public class StudentsJpaController implements Serializable {
             }
             students.setHistorysList(attachedHistorysList);
             em.persist(students);
-            if (levelno != null) {
-                levelno.getStudentsList().add(students);
-                levelno = em.merge(levelno);
-            }
             for (Studentsubjects studentsubjectsListStudentsubjects : students.getStudentsubjectsList()) {
                 Students oldStudentnoOfStudentsubjectsListStudentsubjects = studentsubjectsListStudentsubjects.getStudentno();
                 studentsubjectsListStudentsubjects.setStudentno(students);
@@ -116,8 +107,6 @@ public class StudentsJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Students persistentStudents = em.find(Students.class, students.getStudentno());
-            Levels levelnoOld = persistentStudents.getLevelno();
-            Levels levelnoNew = students.getLevelno();
             List<Studentsubjects> studentsubjectsListOld = persistentStudents.getStudentsubjectsList();
             List<Studentsubjects> studentsubjectsListNew = students.getStudentsubjectsList();
             List<Historys> historysListOld = persistentStudents.getHistorysList();
@@ -142,10 +131,6 @@ public class StudentsJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (levelnoNew != null) {
-                levelnoNew = em.getReference(levelnoNew.getClass(), levelnoNew.getLevelno());
-                students.setLevelno(levelnoNew);
-            }
             List<Studentsubjects> attachedStudentsubjectsListNew = new ArrayList<Studentsubjects>();
             for (Studentsubjects studentsubjectsListNewStudentsubjectsToAttach : studentsubjectsListNew) {
                 studentsubjectsListNewStudentsubjectsToAttach = em.getReference(studentsubjectsListNewStudentsubjectsToAttach.getClass(), studentsubjectsListNewStudentsubjectsToAttach.getStudentsubjectno());
@@ -161,14 +146,6 @@ public class StudentsJpaController implements Serializable {
             historysListNew = attachedHistorysListNew;
             students.setHistorysList(historysListNew);
             students = em.merge(students);
-            if (levelnoOld != null && !levelnoOld.equals(levelnoNew)) {
-                levelnoOld.getStudentsList().remove(students);
-                levelnoOld = em.merge(levelnoOld);
-            }
-            if (levelnoNew != null && !levelnoNew.equals(levelnoOld)) {
-                levelnoNew.getStudentsList().add(students);
-                levelnoNew = em.merge(levelnoNew);
-            }
             for (Studentsubjects studentsubjectsListNewStudentsubjects : studentsubjectsListNew) {
                 if (!studentsubjectsListOld.contains(studentsubjectsListNewStudentsubjects)) {
                     Students oldStudentnoOfStudentsubjectsListNewStudentsubjects = studentsubjectsListNewStudentsubjects.getStudentno();
@@ -242,11 +219,6 @@ public class StudentsJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Levels levelno = students.getLevelno();
-            if (levelno != null) {
-                levelno.getStudentsList().remove(students);
-                levelno = em.merge(levelno);
             }
             em.remove(students);
             utx.commit();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package servlet;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -98,7 +98,7 @@ public class Teachersubjects implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Teachersubjects[ teachersubjectno=" + teachersubjectno + " ]";
+        return "servlet.Teachersubjects[ teachersubjectno=" + teachersubjectno + " ]";
     }
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package servlet;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -166,7 +166,7 @@ public class Questions implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Questions[ questionno=" + questionno + " ]";
+        return "servlet.Questions[ questionno=" + questionno + " ]";
     }
     
 }

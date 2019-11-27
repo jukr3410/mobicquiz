@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package servlet;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -46,6 +48,9 @@ public class Subjects implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "SUBJECT")
     private String subject;
+    @JoinColumn(name = "LEVELNO", referencedColumnName = "LEVELNO")
+    @ManyToOne
+    private Levels levelno;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectno")
     private List<Teachersubjects> teachersubjectsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectno")
@@ -79,6 +84,14 @@ public class Subjects implements Serializable {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public Levels getLevelno() {
+        return levelno;
+    }
+
+    public void setLevelno(Levels levelno) {
+        this.levelno = levelno;
     }
 
     @XmlTransient
@@ -130,7 +143,7 @@ public class Subjects implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Subjects[ subjectno=" + subjectno + " ]";
+        return "servlet.Subjects[ subjectno=" + subjectno + " ]";
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import com.sun.org.apache.xpath.internal.axes.SubContextList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import jpacontroller.QuestionsJpaController;
 import jpacontroller.QuizsJpaController;
+import jpacontroller.SubjectsJpaController;
 import model.Levels;
 import model.Questions;
 import model.Quizs;
@@ -37,8 +39,6 @@ public class CreateQuizServlet extends HttpServlet {
 
     @Resource
     UserTransaction utx;
-
-    List<Questions> newQuestions = new ArrayList(100);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -65,17 +65,43 @@ public class CreateQuizServlet extends HttpServlet {
         String ans4 = request.getParameter("ans4");
         String correctAns = request.getParameter("correctans");
 
-        QuizsJpaController quijc = new QuizsJpaController(utx, emf);
-        QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
-        if (teacher != null && subject != null && title != null && time != null && fullScore != null) {
-            Quizs quiz = new Quizs(title, Integer.valueOf(time), Integer.valueOf(fullScore), new Levels(level), new Subjects(subject), teacher);
-            session.setAttribute("newquiz", quiz);
+        if (teacher != null) {
 
-            Questions question = new Questions(newQuestion, ans1, ans2, ans3, ans4, correctAns, quiz);
-            newQuestions.add(question);
-            session.setAttribute("newquestions", newQuestions);
-            System.out.println("PASS!!");
+            Quizs newQuiz = (Quizs) session.getAttribute("newquiz");
+            List<Questions> newQuestions = (List<Questions>) session.getAttribute("newquestions");
+            if (newQuiz == null && newQuestions == null) {
+                newQuiz = new Quizs();
+                newQuestions = new ArrayList(100);
+                session.setAttribute("newquiz", newQuiz);
+                session.setAttribute("newquestions", newQuestions);
+            }
+
+            QuizsJpaController quijc = new QuizsJpaController(utx, emf);
+            QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
+            
+            if (title!=null && time !=null && fullScore != null) {
+                newQuiz.setQuizno(Integer.toString(quijc.getQuizsCount()+1));
+                newQuiz.setTitle(title);
+                SubjectsJpaController sjc = new SubjectsJpaController(utx, emf);
+                Subjects s = sjc.findSubjects(subject);
+                newQuiz.setSubjectno(s);
+                newQuiz.setLevelno(s.getLevelno());
+                newQuiz.setTime(Integer.valueOf(time));
+                newQuiz.setFullscore(Integer.valueOf(fullScore));
+                newQuiz.setTeacherno(teacher);
+                //session.setAttribute("newquiz", newQuiz);
+            }
+            
+            if (newQuestion != null && ans1 != null && ans2 != null && ans3 != null && ans4 != null && correctAns !=null) {            
+                Questions q = new Questions(Integer.toString(quijc.getQuizsCount()+1)+Integer.toString(newQuestions.size()+1), newQuestion, ans1, ans2, ans3, ans4, correctAns, newQuiz);
+                newQuestions.add(q);
+               
+            }
+
         }
+        SubjectsJpaController sjc = new SubjectsJpaController(utx, emf);
+        List<Subjects> subjectses = sjc.findSubjectsEntities();
+        request.setAttribute("subjects", subjectses);
 
         getServletContext().getRequestDispatcher("/CreateQuiz.jsp").forward(request, response);
     }

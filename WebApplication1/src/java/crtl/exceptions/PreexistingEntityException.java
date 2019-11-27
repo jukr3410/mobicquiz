@@ -1,4 +1,4 @@
-package ctrl.exceptions;
+package crtl.exceptions;
 
 public class PreexistingEntityException extends Exception {
     public PreexistingEntityException(String message, Throwable cause) {

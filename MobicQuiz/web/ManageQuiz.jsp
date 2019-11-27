@@ -64,13 +64,16 @@
                                 <h1 class="text-muted text-center">Manage Quiz</h1>
                                 <div>
 
-                                    <a href="CreateQuiz.jsp" class="btn btn-success btn-lg align-middle">
+                                    <a href="CreateQuiz" class="btn btn-success btn-lg align-middle">
                                         Create Quiz
                                     </a><br>
-                                    
+
                                     <br>
                                     <p style="color: red">
                                         ${errorremove}
+                                    </p>
+                                    <p style="color: red">
+                                        ${errorstatus}
                                     </p>
                                     <table class="table table-hover text-center" style="background-color: azure">
                                         <thead>
@@ -92,9 +95,20 @@
                                                     <td>${q.levelno.level}</td>
                                                     <td>${q.time}</td>
                                                     <td>
-                                                        <a href="OpenQuiz?quizno=${q.quizno}" class="btn btn-success btn-lg align-middle ">
-                                                            Enable
-                                                        </a>
+                                                        <c:choose>
+                                                            <c:when test="${q.status==null}">
+                                                                <a href="StatusQuiz?enablequiz=${q.quizno}" class="btn btn-lg align-middle btn-secondary">
+                                                                    Turn On
+                                                                </a>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <a href="StatusQuiz?disablequiz=${q.quizno}" class="btn btn-lg align-middle btn-primary">
+                                                                    Turn Off
+                                                                </a>
+                                                            </c:otherwise>
+                                                        </c:choose>
+
+
                                                         <a href="Remove?removequiz=${q.quizno}" class="btn btn-danger btn-lg align-middle ">
                                                             Remove
                                                         </a>

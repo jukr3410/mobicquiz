@@ -71,6 +71,14 @@
         <servlet-name>TestRemoveServlet</servlet-name>
         <servlet-class>TestRemoveServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FinishCreateQuizServlet</servlet-name>
+        <servlet-class>servlet.FinishCreateQuizServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StatusQuizServlet</servlet-name>
+        <servlet-class>servlet.StatusQuizServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -138,6 +146,14 @@
     <servlet-mapping>
         <servlet-name>TestRemoveServlet</servlet-name>
         <url-pattern>/TestRemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FinishCreateQuizServlet</servlet-name>
+        <url-pattern>/FinishCreateQuiz</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatusQuizServlet</servlet-name>
+        <url-pattern>/StatusQuiz</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
