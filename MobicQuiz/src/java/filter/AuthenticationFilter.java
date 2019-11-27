@@ -38,6 +38,7 @@ public class AuthenticationFilter implements Filter {
         //เช็คว่ามี Session หรือไม่
         if (session == null || session.getAttribute("user") == null) {
             config.getServletContext().getRequestDispatcher("/Login").forward(request, response); //ให้มันส่งหน้าเว็บ Login ไป
+            return;
         } else {
             chain.doFilter(request, response); //เปลี่ยน filter
         }
