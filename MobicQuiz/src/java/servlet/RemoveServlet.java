@@ -56,40 +56,60 @@ public class RemoveServlet extends HttpServlet {
         String removeQuiz = request.getParameter("removequiz");
         Teachers teacher = (Teachers) session.getAttribute("user");
         System.out.println(removeQuiz);
+        QuizsJpaController quijc = new QuizsJpaController(utx, emf);
+        QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
+        HistorysJpaController hjc = new HistorysJpaController(utx, emf);
         if (removeQuiz != null) {
 
-            QuizsJpaController quijc = new QuizsJpaController(utx, emf);
-            QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
-            HistorysJpaController hjc = new HistorysJpaController(utx, emf);          
-            Quizs quiz = quijc.findQuizs(removeQuiz);          
-            List<Historys> historysByQuiz = quiz.getHistorysList();
+            Quizs quiz = quijc.findQuizs(removeQuiz);
+            if (quiz != null) {
 
-            
+                List<Historys> historysByQuiz = quiz.getHistorysList();
+                List<Questions> questionses = quejc.findQuestionsByQuizNo(removeQuiz);
 
-            if (historysByQuiz != null) {
-                for (Historys history : historysByQuiz) {
-                    try {
-                        hjc.destroy(history.getHistoryno());
-                    } catch (RollbackFailureException ex) {
-                        Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (Exception ex) {
-                        Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                if (historysByQuiz != null) {
+                    for (Historys history : historysByQuiz) {
+                        try {
+                            hjc.destroy(history.getHistoryno());
+                        } catch (RollbackFailureException ex) {
+                            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
+                if (questionses != null) {
+                    for (Questions question : questionses) {
+                        try {
+                            quejc.deleteQuestionsByNo(removeQuiz);
+                        } catch (RollbackFailureException ex) {
+                            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+
+                try {
+                    quijc.destroy(removeQuiz);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println(quiz);
+                System.out.println(historysByQuiz);
+                System.out.println(questionses);
             }
 
-            try {
-                quijc.destroy(removeQuiz);
-            } catch (NonexistentEntityException ex) {
-                Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            response.sendRedirect("/MobicQuiz/ManageQuiz");
+            getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
+            //response.sendRedirect("/MobicQuiz/ManageQuiz");
             return;
         }
+        List<Quizs> quizses = quijc.findQuizsByTeacherNo(teacher.getTeacherno());
+        request.setAttribute("quizs", quizses);
         request.setAttribute("errorremove", "** Can not remove !!");
         getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
     }

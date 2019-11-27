@@ -13,6 +13,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.PreexistingEntityException;
@@ -191,9 +193,7 @@ public class QuestionsJpaController implements Serializable {
             em.close();
         }
     }
-    
-    
-    
+
     public List<Questions> findQuestionsByQuizNo(String quizno) {
         EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Questions.findByQuizno");
@@ -206,13 +206,35 @@ public class QuestionsJpaController implements Serializable {
         }
     }
 
-    public void deleteQuestionsByQuizNo(String quizno) {
+    public void deleteQuestionsByNo(String questionno) throws SystemException, NotSupportedException, RollbackFailureException, Exception {
+
         EntityManager em = getEntityManager();
-        Query query = em.createNativeQuery("Questions.deleteByQuizno");
-        query.setParameter("quizno", quizno);
-        query.executeUpdate();
-        em.close();
+        try {
+            utx.begin();
+            em = getEntityManager();
+            Questions questions;
+            try {
+                Query query = em.createNativeQuery("Delete from questions where questionno = ?");
+                query.setParameter(1, questionno);
+                query.executeUpdate();
+
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The questions with id " + questionno + " no longer exists.", enfe);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+
     }
 
-    
 }
