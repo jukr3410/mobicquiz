@@ -53,7 +53,7 @@ public class RemoveServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String removeQuiz = request.getParameter("removequiz");
+        String removeQuiz = request.getParameter("removequiz").trim();
         Teachers teacher = (Teachers) session.getAttribute("user");
         System.out.println(removeQuiz);
         QuizsJpaController quijc = new QuizsJpaController(utx, emf);
@@ -81,7 +81,7 @@ public class RemoveServlet extends HttpServlet {
                 if (questionses != null) {
                     for (Questions question : questionses) {
                         try {
-                            quejc.deleteQuestionsByNo(removeQuiz);
+                            quejc.deleteQuestionsByNo(question.getQuestionno());
                         } catch (RollbackFailureException ex) {
                             Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (Exception ex) {
@@ -98,19 +98,11 @@ public class RemoveServlet extends HttpServlet {
                     Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
                     Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                System.out.println(quiz);
-                System.out.println(historysByQuiz);
-                System.out.println(questionses);
-            }
-
-            getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
-            //response.sendRedirect("/MobicQuiz/ManageQuiz");
-            return;
+                }                              
+            }           
         }
         List<Quizs> quizses = quijc.findQuizsByTeacherNo(teacher.getTeacherno());
         request.setAttribute("quizs", quizses);
-        request.setAttribute("errorremove", "** Can not remove !!");
         getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
     }
 

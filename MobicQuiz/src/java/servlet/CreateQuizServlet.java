@@ -80,10 +80,12 @@ public class CreateQuizServlet extends HttpServlet {
             QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
             
             if (title!=null && time !=null && fullScore != null) {
-                newQuiz.setQuizno(Integer.toString(quijc.getQuizsCount()+1));
-                newQuiz.setTitle(title);
-                SubjectsJpaController sjc = new SubjectsJpaController(utx, emf);
+                SubjectsJpaController sjc = new SubjectsJpaController(utx, emf);   
                 Subjects s = sjc.findSubjects(subject);
+                
+                newQuiz.setQuizno(s.getSubjectno()+Integer.toString(quijc.getQuizsCount()+1));
+                newQuiz.setTitle(title);
+                            
                 newQuiz.setSubjectno(s);
                 newQuiz.setLevelno(s.getLevelno());
                 newQuiz.setTime(Integer.valueOf(time));

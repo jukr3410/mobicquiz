@@ -110,7 +110,7 @@
 
                                             <br><br>
                                             <c:if test="${sessionScope.newquiz.title!=null}">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">
                                                     Add Question
                                                 </button>
                                             </c:if>
