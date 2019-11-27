@@ -55,7 +55,7 @@ public class FinishExamServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Quizs quiz = (Quizs) session.getAttribute("quiz");
-        Students student = (Students) session.getAttribute("student");
+        Students student = (Students) session.getAttribute("user");
         QuestionsJpaController qjc = new QuestionsJpaController(utx, emf);
         if (quiz != null) {
             List<Questions> questions = qjc.findQuestionsByQuizNo(quiz.getQuizno());
@@ -73,7 +73,8 @@ public class FinishExamServlet extends HttpServlet {
                     }
                 }
             }
-
+            System.out.println(quiz);
+            System.out.println(student);
             HistorysJpaController hjc = new HistorysJpaController(utx, emf);
             
             Date date = new Date();
