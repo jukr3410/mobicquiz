@@ -55,7 +55,7 @@ public class StatusQuizServlet extends HttpServlet {
         if (enableQuiz!=null) {
             Quizs quiz = qjc.findQuizs(enableQuiz);
             if (quiz!=null) {
-                quiz.setStatus("no");
+                quiz.setStatus("on");
                 try {
                     qjc.edit(quiz);
                 } catch (NonexistentEntityException ex) {
