@@ -36,7 +36,7 @@
                                             Sign out
                                         </button></a>
                                 </li>
-                                
+
                             </ul>
                         </nav>
                         <h3 class="">MOBIC QUIZ</h3>
@@ -91,9 +91,9 @@
                                                                 <td>${q.title}</td>
                                                                 <td>
                                                                     <div>                           
-                                                                        <button type="button" class="btn btn-info btn-lg align-middle" data-toggle="modal" data-target="#myModal">View</button>
+                                                                        <button type="button" class="btn btn-info btn-lg align-middle" data-toggle="modal" data-target="#myModal${q.quizno}">View</button>
                                                                         <!-- Modal -->
-                                                                        <div class="modal fade" id="myModal" role="dialog">
+                                                                        <div class="modal fade" id="myModal${q.quizno}" role="dialog">
                                                                             <div class="modal-dialog">
 
                                                                                 <!-- Modal content-->
