@@ -36,7 +36,7 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = ((HttpServletRequest) request).getSession(false); //รับ Session มา, false หากไม่มีก็ไม่ต้องสร้าง 
 
         //เช็คว่ามี Session หรือไม่
-        if (session == null || session.getAttribute("student") == null) {
+        if (session == null || session.getAttribute("user") == null) {
             config.getServletContext().getRequestDispatcher("/Login").forward(request, response); //ให้มันส่งหน้าเว็บ Login ไป
         } else {
             chain.doFilter(request, response); //เปลี่ยน filter
