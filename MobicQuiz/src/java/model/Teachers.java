@@ -42,8 +42,9 @@ public class Teachers implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "TEACHERNO")
-    private Integer teacherno;
+    private String teacherno;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -68,36 +69,36 @@ public class Teachers implements Serializable {
     private String activated;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherno")
     private List<Teachersubjects> teachersubjectsList;
+    @OneToMany(mappedBy = "teacherno")
+    private List<Quizs> quizsList;
 
     public Teachers() {
     }
 
-    public Teachers(Integer teacherno) {
+    public Teachers(String teacherno) {
         this.teacherno = teacherno;
     }
 
-    public Teachers(Integer teacherno, String name, String email, String password) {
+    public Teachers(String teacherno, String name, String email, String password) {
         this.teacherno = teacherno;
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    public Teachers(Integer teacherno, String name, String email, String password, String activatekey) {
+    public Teachers(String teacherno, String name, String email, String password, String activatekey) {
         this.teacherno = teacherno;
         this.name = name;
         this.email = email;
         this.password = password;
         this.activatekey = activatekey;
     }
-    
-    
 
-    public Integer getTeacherno() {
+    public String getTeacherno() {
         return teacherno;
     }
 
-    public void setTeacherno(Integer teacherno) {
+    public void setTeacherno(String teacherno) {
         this.teacherno = teacherno;
     }
 
@@ -150,6 +151,15 @@ public class Teachers implements Serializable {
         this.teachersubjectsList = teachersubjectsList;
     }
 
+    @XmlTransient
+    public List<Quizs> getQuizsList() {
+        return quizsList;
+    }
+
+    public void setQuizsList(List<Quizs> quizsList) {
+        this.quizsList = quizsList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -174,5 +184,5 @@ public class Teachers implements Serializable {
     public String toString() {
         return "model.Teachers[ teacherno=" + teacherno + " ]";
     }
-    
+
 }

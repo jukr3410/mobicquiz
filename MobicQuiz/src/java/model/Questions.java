@@ -6,6 +6,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,18 +36,21 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Questions.findByAns2", query = "SELECT q FROM Questions q WHERE q.ans2 = :ans2")
     , @NamedQuery(name = "Questions.findByAns3", query = "SELECT q FROM Questions q WHERE q.ans3 = :ans3")
     , @NamedQuery(name = "Questions.findByAns4", query = "SELECT q FROM Questions q WHERE q.ans4 = :ans4")
-    , @NamedQuery(name = "Questions.findByCorrectans", query = "SELECT q FROM Questions q WHERE q.correctans = :correctans")})
+    , @NamedQuery(name = "Questions.findByCorrectans", query = "SELECT q FROM Questions q WHERE q.correctans = :correctans")
+    , @NamedQuery(name = "Questions.findByQuizno", query = "SELECT q FROM Questions q WHERE q.quizno.quizno = :quizno")
+    , @NamedQuery(name = "Questions.deleteByQuizno", query = "DELETE FROM Questions q WHERE q.quizno.quizno = :quizno")})
 public class Questions implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "QUESTIONNO")
-    private Integer questionno;
+    private String questionno;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 100)
     @Column(name = "QUESTION")
     private String question;
     @Size(max = 45)
@@ -66,24 +71,47 @@ public class Questions implements Serializable {
     @JoinColumn(name = "QUIZNO", referencedColumnName = "QUIZNO")
     @ManyToOne(optional = false)
     private Quizs quizno;
-
+    
+    private List<Questions> questionses = new ArrayList(100);
+    
     public Questions() {
     }
 
-    public Questions(Integer questionno) {
+    public Questions(String questionno) {
         this.questionno = questionno;
     }
 
-    public Questions(Integer questionno, String question) {
+    public Questions(String questionno, String question) {
         this.questionno = questionno;
         this.question = question;
     }
+    
+       public Questions(String question, String ans1, String ans2, String ans3, String ans4, String correctans, Quizs quizno) {
+        this.question = question;
+        this.ans1 = ans1;
+        this.ans2 = ans2;
+        this.ans3 = ans3;
+        this.ans4 = ans4;
+        this.correctans = correctans;
+        this.quizno = quizno;
+    }
 
-    public Integer getQuestionno() {
+    public Questions(String questionno, String question, String ans1, String ans2, String ans3, String ans4, String correctans, Quizs quizno) {
+        this.questionno = questionno;
+        this.question = question;
+        this.ans1 = ans1;
+        this.ans2 = ans2;
+        this.ans3 = ans3;
+        this.ans4 = ans4;
+        this.correctans = correctans;
+        this.quizno = quizno;
+    }
+
+    public String getQuestionno() {
         return questionno;
     }
 
-    public void setQuestionno(Integer questionno) {
+    public void setQuestionno(String questionno) {
         this.questionno = questionno;
     }
 
@@ -168,4 +196,21 @@ public class Questions implements Serializable {
         return "model.Questions[ questionno=" + questionno + " ]";
     }
     
+    
+    public boolean isCorrect(String myAns) {
+        return myAns.equals(correctans);
+    }
+
+    public List<Questions> addQuestion(Questions question) {
+        questionses.add(question);
+        return questionses;
+    }
+
+    public void deleteQuestion(Questions question) {
+        questionses.remove(question);
+    }
+
+    public void deleteAllQue() {
+        questionses = null;
+    }
 }

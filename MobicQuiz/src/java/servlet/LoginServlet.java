@@ -52,22 +52,41 @@ public class LoginServlet extends HttpServlet {
         if (id != null && password != null && usertype != null) {
             if (usertype.equals("student")) {
                 StudentsJpaController sjc = new StudentsJpaController(utx, emf);
-                Students student = sjc.findStudents(Integer.valueOf(id));
-                if (student != null && student.getPassword().equals(password)) {
-                    session.setAttribute("student", student);
+                Students studentEmail = sjc.findStudentsByEmail(id);
+                Students studentId = null;
+                if(studentEmail==null){
+                    studentId = sjc.findStudents(id);
+                }               
+                if (studentId != null && studentId.getPassword().equals(password)||
+                        studentEmail != null && studentEmail.getPassword().equals(password)) {
+                    if (studentId!=null) {
+                        session.setAttribute("user", studentId);
+                    } else {
+                        session.setAttribute("user", studentEmail);
+                    }
+                    
                     session.setAttribute("usertype", usertype);
-                    response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
+                    response.sendRedirect("/MobicQuiz/Homepage.jsp");
                     return;
                 }else{
                     request.setAttribute("errorlogin", "Wrong ID or password !!");
                 }
             } else if (usertype.equals("teacher")) {
                 TeachersJpaController tjc = new TeachersJpaController(utx, emf);
-                Teachers teacher = tjc.findTeachers(Integer.valueOf(id));
-                if (teacher != null && teacher.getPassword().equals(password)) {
-                    session.setAttribute("teacher", teacher);
+                Teachers teacherEmail = tjc.findTeachersByEmail(id);
+                Teachers teacherId = null;
+                if (teacherEmail==null) {
+                    teacherId = tjc.findTeachers(id);
+                }                
+                if (teacherId != null && teacherId.getPassword().equals(password)||
+                        teacherEmail !=null && teacherEmail.getPassword().equals(password)) {
+                    if (teacherId!=null) {
+                        session.setAttribute("user", teacherId);
+                    }else{
+                        session.setAttribute("user", teacherEmail);
+                    }                    
                     session.setAttribute("usertype", usertype);
-                    response.sendRedirect("/MobicQuiz/MobicQuiz.jsp");
+                    response.sendRedirect("/MobicQuiz/Homepage.jsp");
                     return;
                 }else{
                     request.setAttribute("errorlogin", "Wrong ID or password !!");

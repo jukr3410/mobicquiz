@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -16,16 +17,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
+import jpacontroller.HistorysJpaController;
+import jpacontroller.QuestionsJpaController;
 import jpacontroller.QuizsJpaController;
 import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
+import model.Historys;
+import model.Questions;
+import model.Quizs;
+import model.Teachers;
 
 /**
  *
- * @author Student
+ * @author ACER
  */
 public class RemoveServlet extends HttpServlet {
+
     @PersistenceUnit(unitName = "MobicQuizPU")
     EntityManagerFactory emf;
 
@@ -43,18 +52,58 @@ public class RemoveServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizsJpaController qjc = new QuizsJpaController(utx, emf);
-       String remove = request.getParameter("remove");
-        try {
-            qjc.destroy(Integer.valueOf(remove));
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RollbackFailureException ex) {
-            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+        HttpSession session = request.getSession();
+        String removeQuiz = request.getParameter("removequiz").trim();
+        Teachers teacher = (Teachers) session.getAttribute("user");
+        System.out.println(removeQuiz);
+        QuizsJpaController quijc = new QuizsJpaController(utx, emf);
+        QuestionsJpaController quejc = new QuestionsJpaController(utx, emf);
+        HistorysJpaController hjc = new HistorysJpaController(utx, emf);
+        if (removeQuiz != null) {
+
+            Quizs quiz = quijc.findQuizs(removeQuiz);
+            if (quiz != null) {
+
+                List<Historys> historysByQuiz = quiz.getHistorysList();
+                List<Questions> questionses = quejc.findQuestionsByQuizNo(removeQuiz);
+
+                if (historysByQuiz != null) {
+                    for (Historys history : historysByQuiz) {
+                        try {
+                            hjc.destroy(history.getHistoryno());
+                        } catch (RollbackFailureException ex) {
+                            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+                if (questionses != null) {
+                    for (Questions question : questionses) {
+                        try {
+                            quejc.deleteQuestionsByNo(question.getQuestionno());
+                        } catch (RollbackFailureException ex) {
+                            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+
+                try {
+                    quijc.destroy(removeQuiz);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(RemoveServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }                              
+            }           
         }
-        response.sendRedirect("/MobicQuiz/Manage");
+        List<Quizs> quizses = quijc.findQuizsByTeacherNo(teacher.getTeacherno());
+        request.setAttribute("quizs", quizses);
+        getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

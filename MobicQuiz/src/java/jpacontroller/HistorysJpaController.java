@@ -124,7 +124,7 @@ public class HistorysJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = historys.getHistoryno();
+                String id = historys.getHistoryno();
                 if (findHistorys(id) == null) {
                     throw new NonexistentEntityException("The historys with id " + id + " no longer exists.");
                 }
@@ -137,7 +137,7 @@ public class HistorysJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -199,7 +199,7 @@ public class HistorysJpaController implements Serializable {
         }
     }
 
-    public Historys findHistorys(Integer id) {
+    public Historys findHistorys(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Historys.class, id);
@@ -220,5 +220,29 @@ public class HistorysJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Historys> findHistorysByStudentNo(String studentno) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Historys.findByStudentno");
+        query.setParameter("studentno", studentno);
+        List<Historys> resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : resultList;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Historys> findHistorysByQuizNo(String quizno) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Historys.findByQuizno");
+        query.setParameter("quizno", quizno);
+        List<Historys> resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : resultList;
+        } finally {
+            em.close();
+        }
+    }
+
 }

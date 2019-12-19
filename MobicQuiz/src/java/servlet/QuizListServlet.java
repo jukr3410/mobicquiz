@@ -17,19 +17,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
-import jpacontroller.QuestionsJpaController;
 import jpacontroller.QuizsJpaController;
-import model.Questions;
+import model.Levels;
 import model.Quizs;
+import model.Students;
 
 /**
  *
  * @author Student
  */
-public class ManageServlet extends HttpServlet {
+public class QuizListServlet extends HttpServlet {
+
     @PersistenceUnit(unitName = "MobicQuizPU")
     EntityManagerFactory emf;
-    
+
     @Resource
     UserTransaction utx;
 
@@ -44,20 +45,23 @@ public class ManageServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String Title = request.getParameter("title");
-        String Time = request.getParameter("time");
-        String FullScore = request.getParameter("fullscore");
-        String LevelNo = request.getParameter("levelno");
-        String SubjectNo = request.getParameter("seubjectno");
-        QuizsJpaController qjc = new QuizsJpaController(utx, emf);
-        List<Quizs> quizs = qjc.findQuizsEntities();
-        
-        
-        request.setAttribute("quizs", quizs);
-        request.getServletContext().getRequestDispatcher("/ManageQuiz.jsp").forward(request, response);
-    }
 
+        HttpSession session = request.getSession();
+        Students student = (Students) session.getAttribute("user");
+        QuizsJpaController qjc = new QuizsJpaController(utx, emf);
+        if (student != null) {
+
+            List<Quizs> quizs = qjc.findQuizsByLevelNo(student.getLevelno().getLevelno());
+            if (quizs != null) {
+                request.setAttribute("myquizs", quizs);
+            }
+        }
+
+        getServletContext().getRequestDispatcher("/QuizList.jsp").forward(request, response);
+
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

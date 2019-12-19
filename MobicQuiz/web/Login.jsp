@@ -9,14 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        
-        <title>JSP Page</title>
+
+        <title>Login | MOBIC Quiz</title>
     </head>
     <body>
 
@@ -26,14 +26,14 @@
 
         <div class="container">
             <div class="header clearfix">
-                <h3 class="">MOBIC QUIZ</h3>
+                <h1>MobicQuiz</h1>
             </div>
             <div class="row">
                 <div class="col-md-1">
                 </div>
 
                 <div class="col-md-5">
-                </div>
+                    <img src="https://pngimage.net/wp-content/uploads/2018/06/learning-png-4.png" width="400" vspace="100"> </div>
                 <div class="col-md-5">
 
                     <div class="jumbotron text-center">
@@ -44,10 +44,10 @@
                         <br>
                         <form role="form" action="Login" method="post">
                             <div class="form-group">
-                                <input type="text" name="id" class="form-control" placeholder="ID" value="${param.id}" minlength="4" maxlength="8" required/>
+                                <input type="text" name="id" class="form-control" placeholder="ID or Email" value="${param.id}" minlength="4" maxlength="30" required/>
                             </div>
                             <div class="form-group">                               
-                                <input type="password" name="password" class="form-control" placeholder="Password" minlength="4" maxlength="8" required/>
+                                <input type="password" name="password" class="form-control" placeholder="Password" minlength="4" required/>
                             </div>
 
                             <div class="radio">
@@ -61,12 +61,12 @@
                             </button>
                         </form><br>
                         <div class="text-center">
-                            <a href="RePassword">Forgot your password?</a>
+                            <a href="ForgotPassword.jsp">Forgot your password?</a>
                         </div>
                         <hr><br>
                         <a href="Register"><button class="btn btn-success">
-                            Sign up
-                        </button></a>
+                                Sign up
+                            </button></a>
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -80,4 +80,5 @@
 
         </div> 
     </body>
+
 </html>

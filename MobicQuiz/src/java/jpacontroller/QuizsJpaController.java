@@ -10,8 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Levels;
-import model.Subjects;
+import model.Teachers;
 import model.Questions;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,15 +52,10 @@ public class QuizsJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Levels levelno = quizs.getLevelno();
-            if (levelno != null) {
-                levelno = em.getReference(levelno.getClass(), levelno.getLevelno());
-                quizs.setLevelno(levelno);
-            }
-            Subjects subjectno = quizs.getSubjectno();
-            if (subjectno != null) {
-                subjectno = em.getReference(subjectno.getClass(), subjectno.getSubjectno());
-                quizs.setSubjectno(subjectno);
+            Teachers teacherno = quizs.getTeacherno();
+            if (teacherno != null) {
+                teacherno = em.getReference(teacherno.getClass(), teacherno.getTeacherno());
+                quizs.setTeacherno(teacherno);
             }
             List<Questions> attachedQuestionsList = new ArrayList<Questions>();
             for (Questions questionsListQuestionsToAttach : quizs.getQuestionsList()) {
@@ -76,13 +70,9 @@ public class QuizsJpaController implements Serializable {
             }
             quizs.setHistorysList(attachedHistorysList);
             em.persist(quizs);
-            if (levelno != null) {
-                levelno.getQuizsList().add(quizs);
-                levelno = em.merge(levelno);
-            }
-            if (subjectno != null) {
-                subjectno.getQuizsList().add(quizs);
-                subjectno = em.merge(subjectno);
+            if (teacherno != null) {
+                teacherno.getQuizsList().add(quizs);
+                teacherno = em.merge(teacherno);
             }
             for (Questions questionsListQuestions : quizs.getQuestionsList()) {
                 Quizs oldQuiznoOfQuestionsListQuestions = questionsListQuestions.getQuizno();
@@ -126,10 +116,8 @@ public class QuizsJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Quizs persistentQuizs = em.find(Quizs.class, quizs.getQuizno());
-            Levels levelnoOld = persistentQuizs.getLevelno();
-            Levels levelnoNew = quizs.getLevelno();
-            Subjects subjectnoOld = persistentQuizs.getSubjectno();
-            Subjects subjectnoNew = quizs.getSubjectno();
+            Teachers teachernoOld = persistentQuizs.getTeacherno();
+            Teachers teachernoNew = quizs.getTeacherno();
             List<Questions> questionsListOld = persistentQuizs.getQuestionsList();
             List<Questions> questionsListNew = quizs.getQuestionsList();
             List<Historys> historysListOld = persistentQuizs.getHistorysList();
@@ -154,13 +142,9 @@ public class QuizsJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (levelnoNew != null) {
-                levelnoNew = em.getReference(levelnoNew.getClass(), levelnoNew.getLevelno());
-                quizs.setLevelno(levelnoNew);
-            }
-            if (subjectnoNew != null) {
-                subjectnoNew = em.getReference(subjectnoNew.getClass(), subjectnoNew.getSubjectno());
-                quizs.setSubjectno(subjectnoNew);
+            if (teachernoNew != null) {
+                teachernoNew = em.getReference(teachernoNew.getClass(), teachernoNew.getTeacherno());
+                quizs.setTeacherno(teachernoNew);
             }
             List<Questions> attachedQuestionsListNew = new ArrayList<Questions>();
             for (Questions questionsListNewQuestionsToAttach : questionsListNew) {
@@ -177,21 +161,13 @@ public class QuizsJpaController implements Serializable {
             historysListNew = attachedHistorysListNew;
             quizs.setHistorysList(historysListNew);
             quizs = em.merge(quizs);
-            if (levelnoOld != null && !levelnoOld.equals(levelnoNew)) {
-                levelnoOld.getQuizsList().remove(quizs);
-                levelnoOld = em.merge(levelnoOld);
+            if (teachernoOld != null && !teachernoOld.equals(teachernoNew)) {
+                teachernoOld.getQuizsList().remove(quizs);
+                teachernoOld = em.merge(teachernoOld);
             }
-            if (levelnoNew != null && !levelnoNew.equals(levelnoOld)) {
-                levelnoNew.getQuizsList().add(quizs);
-                levelnoNew = em.merge(levelnoNew);
-            }
-            if (subjectnoOld != null && !subjectnoOld.equals(subjectnoNew)) {
-                subjectnoOld.getQuizsList().remove(quizs);
-                subjectnoOld = em.merge(subjectnoOld);
-            }
-            if (subjectnoNew != null && !subjectnoNew.equals(subjectnoOld)) {
-                subjectnoNew.getQuizsList().add(quizs);
-                subjectnoNew = em.merge(subjectnoNew);
+            if (teachernoNew != null && !teachernoNew.equals(teachernoOld)) {
+                teachernoNew.getQuizsList().add(quizs);
+                teachernoNew = em.merge(teachernoNew);
             }
             for (Questions questionsListNewQuestions : questionsListNew) {
                 if (!questionsListOld.contains(questionsListNewQuestions)) {
@@ -224,7 +200,7 @@ public class QuizsJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = quizs.getQuizno();
+                String id = quizs.getQuizno();
                 if (findQuizs(id) == null) {
                     throw new NonexistentEntityException("The quizs with id " + id + " no longer exists.");
                 }
@@ -237,7 +213,7 @@ public class QuizsJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -267,15 +243,10 @@ public class QuizsJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Levels levelno = quizs.getLevelno();
-            if (levelno != null) {
-                levelno.getQuizsList().remove(quizs);
-                levelno = em.merge(levelno);
-            }
-            Subjects subjectno = quizs.getSubjectno();
-            if (subjectno != null) {
-                subjectno.getQuizsList().remove(quizs);
-                subjectno = em.merge(subjectno);
+            Teachers teacherno = quizs.getTeacherno();
+            if (teacherno != null) {
+                teacherno.getQuizsList().remove(quizs);
+                teacherno = em.merge(teacherno);
             }
             em.remove(quizs);
             utx.commit();
@@ -317,7 +288,7 @@ public class QuizsJpaController implements Serializable {
         }
     }
 
-    public Quizs findQuizs(Integer id) {
+    public Quizs findQuizs(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Quizs.class, id);
@@ -338,5 +309,29 @@ public class QuizsJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Quizs> findQuizsByLevelNo(String levelno) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Quizs.findByLevelno");
+        query.setParameter("levelno", levelno);
+        List<Quizs> resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : resultList;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Quizs> findQuizsByTeacherNo(String teacherno) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Quizs.findByTeacherno");
+        query.setParameter("teacherno", teacherno);
+        List<Quizs> resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : resultList;
+        } finally {
+            em.close();
+        }
+    }
+
 }

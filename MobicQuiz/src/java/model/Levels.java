@@ -8,7 +8,6 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -38,35 +37,34 @@ public class Levels implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "LEVELNO")
-    private Integer levelno;
+    private String levelno;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "LEVEL")
     private String level;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "levelno")
-    private List<Quizs> quizsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "levelno")
-    private List<Students> studentsList;
+    @OneToMany(mappedBy = "levelno")
+    private List<Subjects> subjectsList;
 
     public Levels() {
     }
 
-    public Levels(Integer levelno) {
+    public Levels(String levelno) {
         this.levelno = levelno;
     }
 
-    public Levels(Integer levelno, String level) {
+    public Levels(String levelno, String level) {
         this.levelno = levelno;
         this.level = level;
     }
 
-    public Integer getLevelno() {
+    public String getLevelno() {
         return levelno;
     }
 
-    public void setLevelno(Integer levelno) {
+    public void setLevelno(String levelno) {
         this.levelno = levelno;
     }
 
@@ -79,21 +77,12 @@ public class Levels implements Serializable {
     }
 
     @XmlTransient
-    public List<Quizs> getQuizsList() {
-        return quizsList;
+    public List<Subjects> getSubjectsList() {
+        return subjectsList;
     }
 
-    public void setQuizsList(List<Quizs> quizsList) {
-        this.quizsList = quizsList;
-    }
-
-    @XmlTransient
-    public List<Students> getStudentsList() {
-        return studentsList;
-    }
-
-    public void setStudentsList(List<Students> studentsList) {
-        this.studentsList = studentsList;
+    public void setSubjectsList(List<Subjects> subjectsList) {
+        this.subjectsList = subjectsList;
     }
 
     @Override

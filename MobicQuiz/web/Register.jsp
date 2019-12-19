@@ -15,7 +15,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-        <title>JSP Page</title>
+        <title>Register | MOBIC Quiz</title>
     </head>
     <body>
 
@@ -50,8 +50,8 @@
                                         </div> 
                                         Your Name (firstname lastname)<input type="text" name="name" class="form-control" placeholder="Name" required/>   
                                         Your ID<input type="text" name="id" class="form-control" placeholder="ID" required/>                                                                                                   
-                                        Password<input type="password" name="password" class="form-control" placeholder="Password" required/>
-                                        Confirm Password<input type="password" name="confirmpassword" class="form-control" placeholder="Confirm Password" required/>
+                                        Password<input type="password" name="password" id="password" class="form-control" placeholder="Password" required/>
+                                        Confirm Password<input type="password" name="confirmpassword" id="confirm_password" class="form-control" placeholder="Confirm Password" required/>
                                         Email<input type="email" name="email" class="form-control" placeholder="Email" required/><br>
                                         Grade ( Teacher Don't Check This )
                                         <div class="radio">
@@ -81,5 +81,18 @@
                 </div>
             </div>
         </div>
+        <script>
+            var password = document.getElementById("password")
+                    , confirm_password = document.getElementById("confirm_password");
+            function validatePassword() {
+                if (password.value !== confirm_password.value) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                } else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        </script>
     </body>
 </html>

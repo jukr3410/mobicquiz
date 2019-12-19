@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Levels;
 import model.Studentsubjects;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,7 @@ import jpacontroller.exceptions.NonexistentEntityException;
 import jpacontroller.exceptions.PreexistingEntityException;
 import jpacontroller.exceptions.RollbackFailureException;
 import model.Historys;
+import model.Quizs;
 import model.Students;
 
 /**
@@ -52,11 +52,6 @@ public class StudentsJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Levels levelno = students.getLevelno();
-            if (levelno != null) {
-                levelno = em.getReference(levelno.getClass(), levelno.getLevelno());
-                students.setLevelno(levelno);
-            }
             List<Studentsubjects> attachedStudentsubjectsList = new ArrayList<Studentsubjects>();
             for (Studentsubjects studentsubjectsListStudentsubjectsToAttach : students.getStudentsubjectsList()) {
                 studentsubjectsListStudentsubjectsToAttach = em.getReference(studentsubjectsListStudentsubjectsToAttach.getClass(), studentsubjectsListStudentsubjectsToAttach.getStudentsubjectno());
@@ -70,10 +65,6 @@ public class StudentsJpaController implements Serializable {
             }
             students.setHistorysList(attachedHistorysList);
             em.persist(students);
-            if (levelno != null) {
-                levelno.getStudentsList().add(students);
-                levelno = em.merge(levelno);
-            }
             for (Studentsubjects studentsubjectsListStudentsubjects : students.getStudentsubjectsList()) {
                 Students oldStudentnoOfStudentsubjectsListStudentsubjects = studentsubjectsListStudentsubjects.getStudentno();
                 studentsubjectsListStudentsubjects.setStudentno(students);
@@ -116,8 +107,6 @@ public class StudentsJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Students persistentStudents = em.find(Students.class, students.getStudentno());
-            Levels levelnoOld = persistentStudents.getLevelno();
-            Levels levelnoNew = students.getLevelno();
             List<Studentsubjects> studentsubjectsListOld = persistentStudents.getStudentsubjectsList();
             List<Studentsubjects> studentsubjectsListNew = students.getStudentsubjectsList();
             List<Historys> historysListOld = persistentStudents.getHistorysList();
@@ -142,10 +131,6 @@ public class StudentsJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (levelnoNew != null) {
-                levelnoNew = em.getReference(levelnoNew.getClass(), levelnoNew.getLevelno());
-                students.setLevelno(levelnoNew);
-            }
             List<Studentsubjects> attachedStudentsubjectsListNew = new ArrayList<Studentsubjects>();
             for (Studentsubjects studentsubjectsListNewStudentsubjectsToAttach : studentsubjectsListNew) {
                 studentsubjectsListNewStudentsubjectsToAttach = em.getReference(studentsubjectsListNewStudentsubjectsToAttach.getClass(), studentsubjectsListNewStudentsubjectsToAttach.getStudentsubjectno());
@@ -161,14 +146,6 @@ public class StudentsJpaController implements Serializable {
             historysListNew = attachedHistorysListNew;
             students.setHistorysList(historysListNew);
             students = em.merge(students);
-            if (levelnoOld != null && !levelnoOld.equals(levelnoNew)) {
-                levelnoOld.getStudentsList().remove(students);
-                levelnoOld = em.merge(levelnoOld);
-            }
-            if (levelnoNew != null && !levelnoNew.equals(levelnoOld)) {
-                levelnoNew.getStudentsList().add(students);
-                levelnoNew = em.merge(levelnoNew);
-            }
             for (Studentsubjects studentsubjectsListNewStudentsubjects : studentsubjectsListNew) {
                 if (!studentsubjectsListOld.contains(studentsubjectsListNewStudentsubjects)) {
                     Students oldStudentnoOfStudentsubjectsListNewStudentsubjects = studentsubjectsListNewStudentsubjects.getStudentno();
@@ -200,7 +177,7 @@ public class StudentsJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = students.getStudentno();
+                String id = students.getStudentno();
                 if (findStudents(id) == null) {
                     throw new NonexistentEntityException("The students with id " + id + " no longer exists.");
                 }
@@ -213,7 +190,7 @@ public class StudentsJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -242,11 +219,6 @@ public class StudentsJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Levels levelno = students.getLevelno();
-            if (levelno != null) {
-                levelno.getStudentsList().remove(students);
-                levelno = em.merge(levelno);
             }
             em.remove(students);
             utx.commit();
@@ -288,7 +260,7 @@ public class StudentsJpaController implements Serializable {
         }
     }
 
-    public Students findStudents(Integer id) {
+    public Students findStudents(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Students.class, id);
@@ -309,5 +281,17 @@ public class StudentsJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public Students findStudentsByEmail(String email) {
+        EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Students.findByEmail");
+        query.setParameter("email", email);
+        List resultList = query.getResultList();
+        try {
+            return resultList.isEmpty() ? null : (Students) resultList.get(0);
+        } finally {
+            em.close();
+        }
+    }
+
 }
